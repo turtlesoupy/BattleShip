@@ -114,3 +114,7 @@ debug_traces/
 # Local extraction / scratch directories used during debugging
 extract/
 test.zip
+
+# WASM build + packaged web distribution
+build-wasm/
+web-dist/

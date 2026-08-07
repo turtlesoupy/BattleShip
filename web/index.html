@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BattleShip (WASM)</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; height: 100%; overflow: hidden; }
+  #wrap { display: flex; align-items: center; justify-content: center; height: 100%; }
+  canvas { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; outline: none; }
+  #status {
+    position: fixed; left: 12px; bottom: 10px; color: #9f9;
+    font: 12px/1.4 ui-monospace, monospace; white-space: pre; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div id="wrap"><canvas id="canvas" tabindex="0" oncontextmenu="event.preventDefault()"></canvas></div>
+<div id="status">loading…</div>
+<script>
+window.__lastError = null;
+window.addEventListener('unhandledrejection', (e) => {
+  window.__lastError = (e.reason && e.reason.stack) ? String(e.reason.stack) : String(e.reason);
+});
+window.addEventListener('error', (e) => {
+  if (e.error && e.error.stack) window.__lastError = String(e.error.stack);
+});
+const statusEl = document.getElementById('status');
+const setStatus = (t) => { statusEl.textContent = t; };
+
+var Module = {
+  canvas: document.getElementById('canvas'),
+  arguments: [],
+  preRun: [async function () {
+    addRunDependency('battleship-files');
+    try {
+      const manifest = await (await fetch('manifest.json')).json();
+      let done = 0;
+      await Promise.all(manifest.files.map(async (f) => {
+        const resp = await fetch(f.url);
+        if (!resp.ok) throw new Error(`fetch ${f.url}: ${resp.status}`);
+        const data = new Uint8Array(await resp.arrayBuffer());
+        // Ensure parent directories exist, then write the file.
+        const dir = f.path.substring(0, f.path.lastIndexOf('/')) || '/';
+        FS.mkdirTree(dir);
+        FS.writeFile(f.path, data);
+        setStatus(`files ${++done}/${manifest.files.length}`);
+      }));
+      setStatus('starting…');
+    } catch (e) {
+      setStatus('asset load failed: ' + e.message);
+      throw e;
+    } finally {
+      removeRunDependency('battleship-files');
+    }
+  }],
+  onRuntimeInitialized: function () {
+    // INVOKE_RUN=0: start the game ourselves once the FS is staged.
+    setStatus('');
+    Module.callMain(Module.arguments);
+  },
+  print: (t) => console.log(t),
+  printErr: (t) => console.warn(t),
+};
+</script>
+<script src="BattleShip.js"></script>
+</body>
+</html>

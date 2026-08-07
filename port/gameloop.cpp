@@ -101,9 +101,15 @@ extern OSMesgQueue gSYSchedulerTaskMesgQueue;
  */
 static inline OSMesg port_make_os_mesg_int(uint32_t code)
 {
+#ifdef __EMSCRIPTEN__
+	/* wasm: OSMesg is a plain void* (see message.h — union-by-value has a
+	 * mismatched ABI against the C implementations on wasm32). */
+	return (OSMesg)(uintptr_t)code;
+#else
 	OSMesg m{};          /* zero-initialise every union member */
 	m.data32 = code;     /* then set the scalar we care about */
 	return m;
+#endif
 }
 
 /* ========================================================================= */
@@ -732,7 +738,7 @@ void PortPushFrame(void)
 	port_enhancement_stage_hazards_tick();
 	port_widescreen_tick();
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
 	ssb64::enhancements::TickDiscordPresence(); // DRP
 #endif
 
@@ -829,6 +835,7 @@ void PortPushFrame(void)
 			}
 
 			if (!idlePresented) {
+#ifndef __EMSCRIPTEN__
 				/* Fallback pace to one VI period if there is no cached
 				 * framebuffer yet. Normal idle presents pace through the
 				 * backend's SwapBuffers path. */
@@ -841,6 +848,11 @@ void PortPushFrame(void)
 				while (std::chrono::steady_clock::now() < target) {
 					/* busy-wait */
 				}
+#else
+				/* WASM: this code can run inside a fiber, where Asyncify
+				 * sleeps are illegal and busy-waiting stalls the tab.
+				 * Frame pacing happens on the main context in port.cpp. */
+#endif
 			}
 		}
 	}

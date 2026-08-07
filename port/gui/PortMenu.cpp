@@ -357,7 +357,7 @@ void RenderPostProcessDiagnostics(WidgetInfo& /*widget*/) {
     }
 }
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
 // Shader-pack downloader UI is gated off on Android (the libretro
 // catalog fetch + ZIP-extract pipeline doesn't fit Play Store distro;
 // port/enhancements/ShaderDownloader.cpp is not compiled into libmain.so).
@@ -858,7 +858,7 @@ void PortMenu::AddMenuSettings() {
         .RaceDisable(false)
         .Options(CheckboxOptions().Tooltip("Gives the search input focus when it becomes visible."));
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     // DRP — Android drops discord-rpc entirely (no curl + Play Store
     // distribution friction; the Discord SDK isn't built for mobile).
     AddWidget(path, "Enable Discord Rich Presence", WIDGET_CVAR_CHECKBOX)
@@ -937,7 +937,7 @@ void PortMenu::AddMenuSettings() {
                      .DefaultValue(1));
 #endif
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     // Post-process / CRT shader stack — hidden on Android. The libretro
     // slang→SPIR-V→backend transpile path hasn't been validated against
     // GLES on mobile, and the libretro shader catalog download (curl +
@@ -977,7 +977,7 @@ void PortMenu::AddMenuSettings() {
                      .ComboMap(kEnhancedFpsMap)
                      .DefaultIndex(0));
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     AddWidget(path, "Windowed Fullscreen", WIDGET_CVAR_CHECKBOX)
         .CVar(CVAR_SDL_WINDOWED_FULLSCREEN)
         .RaceDisable(false)
@@ -1402,7 +1402,7 @@ void PortMenu::AddMenuAssets() {
     // Pack-authoring dump tooling is desktop-only — it writes hundreds of
     // files into <app>/ and is driven from a separate offline conversion
     // pipeline, neither of which makes sense on a touch device.
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     AddWidget(path, "Pack Authoring", WIDGET_SEPARATOR_TEXT);
     AddWidget(path,
               "Dump Source Textures writes one .bin per unique texture into "
@@ -1667,7 +1667,7 @@ void PortMenu::AddMenuAbout() {
     AddWidget(path, "Zorkats: C Modding Documentation", WIDGET_TEXT);
 
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     // BUILT-IN UPDATER — hidden on Android. App updates come through the
     // Play Store on mobile; a curl-driven GitHub-releases updater can't
     // replace a system-managed installation, and the curl shell-out
@@ -1850,7 +1850,7 @@ void PortMenu::DrawElement() {
     }
 
     RenderPostProcessLowResWarnModal();
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     RenderShaderPackModal();
 #endif
 }

@@ -23,7 +23,8 @@
  * the symbols aren't linkable. For the Android spike, stub these out — a
  * production build can either raise minSdk or use libunwind directly.
  */
-#if defined(__ANDROID__) && __ANDROID_API__ < 33
+#if (defined(__ANDROID__) && __ANDROID_API__ < 33) || defined(__EMSCRIPTEN__)
+/* Emscripten: no <execinfo.h>; JS engines provide backtraces themselves. */
 static inline int backtrace(void * /*frames*/[], int /*max*/) { return 0; }
 static inline void backtrace_symbols_fd(void *const /*frames*/[], int /*n*/, int /*fd*/) {}
 #else
@@ -545,17 +546,24 @@ extern "C" void port_watchdog_init(void) {
     sigaction(SIGFPE,  &csa, nullptr);
     sigaction(SIGABRT, &csa, nullptr);
 #endif
+#ifndef __EMSCRIPTEN__
+    /* WASM: no threads in the single-threaded build; a hang watchdog is
+     * the browser tab's job anyway. Yield tracking (note_yield/note_frame)
+     * stays live, only the watcher thread is skipped. */
     sWatchdogThread = std::thread(WatchdogLoop);
     port_log("SSB64: watchdog started (hang threshold=%llums)\n",
              (unsigned long long)kHangThresholdMs);
+#endif
 }
 
 extern "C" void port_watchdog_shutdown(void) {
     if (!sStarted.load()) return;
     sShutdown.store(true, std::memory_order_release);
+#ifndef __EMSCRIPTEN__
     if (sWatchdogThread.joinable()) {
         sWatchdogThread.join();
     }
+#endif
 }
 
 extern "C" void port_watchdog_note_yield(void) {

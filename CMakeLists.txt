@@ -130,6 +130,15 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Android")
     set(USE_OPENGLES ON CACHE BOOL "" FORCE)
 endif()
 
+# Emscripten/WASM: GLES3 -> WebGL2, no runtime function hooking (no JIT in
+# WASM), no shader transpiler (glslang/SPIRV-Cross bulk; the GLES shader
+# path doesn't need it).
+if (EMSCRIPTEN)
+    set(USE_OPENGLES ON CACHE BOOL "" FORCE)
+    set(DISABLE_SCRIPTING ON CACHE BOOL "" FORCE)
+    set(LUS_ENABLE_POSTPROCESS_TRANSPILER OFF CACHE BOOL "" FORCE)
+endif()
+
 # Build Torch as the original standalone sidecar executable on desktop.
 # Android ships Torch as a SHARED library (libtorch_runner.so) inside the
 # APK so the first-run UI can extract the user's ROM on-device via JNI —
@@ -482,6 +491,17 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Android")
         "port/enhancements/(Updater|DiscordRichPresence|ShaderDownloader)\\.cpp$")
     list(FILTER SSB64_SRC_PORT EXCLUDE REGEX "port/port_window_icon\\.cpp$")
 endif()
+if (EMSCRIPTEN)
+    # renderdoc_app.h has no Emscripten platform branch (graphics debugger,
+    # meaningless in a browser).
+    list(FILTER SSB64_SRC_PORT EXCLUDE REGEX "port/renderdoc_trigger\\.cpp$")
+    # Same network-dependent feature drops as Android (no curl, no discord),
+    # plus the JNI torch bridge which is Android-only anyway.
+    list(FILTER SSB64_SRC_PORT EXCLUDE REGEX "port/android_torch_bridge\\.cpp$")
+    list(FILTER SSB64_SRC_PORT EXCLUDE REGEX
+        "port/enhancements/(Updater|DiscordRichPresence|ShaderDownloader)\\.cpp$")
+    list(FILTER SSB64_SRC_PORT EXCLUDE REGEX "port/port_window_icon\\.cpp$")
+endif()
 # Treat the generated icon header as a source so CMake schedules it ahead
 # of any port TU compilation (port_window_icon.cpp #includes it).
 if (NOT CMAKE_SYSTEM_NAME STREQUAL "Android")
@@ -766,7 +786,7 @@ endif()
 # Fetch Discord RPC (desktop only — Android drops Discord Rich Presence
 # along with the rest of the network-dependent features).
 ################################################################################
-if (NOT CMAKE_SYSTEM_NAME STREQUAL "Android")
+if (NOT CMAKE_SYSTEM_NAME STREQUAL "Android" AND NOT EMSCRIPTEN)
     # discord-rpc v3.4.0's CMakeLists declares cmake_minimum_required(VERSION 2.x),
     # which CMake 3.30+ refuses to honor. Force a baseline policy version for the
     # fetched subdir so the build still configures with current CMake.
@@ -876,6 +896,31 @@ endif()
 if (CMAKE_SYSTEM_NAME STREQUAL "Android")
     add_dependencies(${PROJECT_NAME} libultraship)
     target_link_libraries(${PROJECT_NAME} PRIVATE libultraship)
+elseif (EMSCRIPTEN)
+    # Torch still runs (as a host binary via ExternalProject) to extract
+    # assets at build time; discord-rpc is desktop-only.
+    add_dependencies(${PROJECT_NAME} libultraship TorchExternal)
+    target_link_libraries(${PROJECT_NAME} PRIVATE libultraship)
+
+    # Emits BattleShip.js + BattleShip.wasm; the HTML shell is ours (web/).
+    # ASYNCIFY powers the N64-thread fibers (port/coroutine_emscripten.cpp)
+    # and lets the game keep its blocking main loop (SDL_Delay -> browser).
+    target_link_options(${PROJECT_NAME} PRIVATE
+        -sASYNCIFY=1
+        -sASYNCIFY_STACK_SIZE=131072
+        -sFULL_ES3=1
+        -sMIN_WEBGL_VERSION=2
+        -sMAX_WEBGL_VERSION=2
+        -sGL_ENABLE_GET_PROC_ADDRESS=1
+        -sALLOW_MEMORY_GROWTH=1
+        -sSTACK_SIZE=8388608
+        -sFORCE_FILESYSTEM=1
+        -sEXPORTED_RUNTIME_METHODS=FS,callMain
+        -sINVOKE_RUN=0
+        -sEXIT_RUNTIME=0
+        -sASSERTIONS=1
+        -g2
+    )
 else()
     add_dependencies(${PROJECT_NAME} libultraship TorchExternal discord-rpc)
     target_link_libraries(${PROJECT_NAME} PRIVATE libultraship discord-rpc)

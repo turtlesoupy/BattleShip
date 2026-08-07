@@ -27,6 +27,17 @@ int port_log_get_fd(void)
 
 void port_log(const char *fmt, ...)
 {
+#ifdef __EMSCRIPTEN__
+	/* WASM: mirror to stderr (browser console) — the MEMFS log file is
+	 * unreadable while the main thread is blocked, which is exactly when
+	 * these breadcrumbs matter. */
+	{
+		va_list ap2;
+		va_start(ap2, fmt);
+		vfprintf(stderr, fmt, ap2);
+		va_end(ap2);
+	}
+#endif
 	if (sLogFile == NULL) return;
 	va_list ap;
 	va_start(ap, fmt);

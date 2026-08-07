@@ -38,8 +38,12 @@
 #include "hires/HiResHook.h"
 #include "hires/HiResPack.h"
 #endif
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
 #include "port_window_icon.h"
+#endif
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#include <chrono>
 #endif
 #if defined(__ANDROID__)
 #include <android/api-level.h>  // android_get_device_api_level (audio-driver gate)
@@ -900,13 +904,14 @@ static int PortInitImpl(int argc, char* argv[]) {
 			port_log("SSB64: Port menu attached\n");
 		}
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
 		// Linux: WMs only show the app icon if SDL_SetWindowIcon is called
 		// on the live window. .ico/.icns paths are baked into the .exe /
 		// .app on Windows / macOS so this is a no-op there. Android pulls
 		// its launcher icon from the APK resources at install time, so
 		// the runtime SDL_SetWindowIcon path is skipped entirely there
 		// (and port_window_icon.cpp isn't compiled into libmain.so).
+		// Emscripten: the "window icon" is the browser favicon.
 		ssb64::SetWindowIcon();
 #endif
 	}
@@ -1273,9 +1278,15 @@ int main(int argc, char* argv[]) {
 	// can hook D3D11 before LUS creates the device.
 	portRenderDocInit();
 
+#ifdef __EMSCRIPTEN__
+	fprintf(stderr, "SSB64[wasm]: entering PortInit\n");
+#endif
 	if (PortInit(argc, argv) != 0) {
 		return 1;
 	}
+#ifdef __EMSCRIPTEN__
+	fprintf(stderr, "SSB64[wasm]: PortInit done\n");
+#endif
 
 #if defined(__ANDROID__)
 	// === Android JNI cache warm-up ===
@@ -1348,7 +1359,13 @@ int main(int argc, char* argv[]) {
 	try {
 
 	// Initialize the game boot sequence (coroutines, thread init, etc.)
+#ifdef __EMSCRIPTEN__
+	fprintf(stderr, "SSB64[wasm]: entering PortGameInit\n");
+#endif
 	PortGameInit();
+#ifdef __EMSCRIPTEN__
+	fprintf(stderr, "SSB64[wasm]: PortGameInit done — entering main loop\n");
+#endif
 
 	// Main frame loop — each iteration runs one frame of game logic
 	// and rendering through the coroutine system. PortPushFrame posts
@@ -1367,6 +1384,31 @@ int main(int argc, char* argv[]) {
 	while (WindowIsRunning()) {
 		PortPushFrame();
 		frame++;
+
+#ifdef __EMSCRIPTEN__
+		/* Browser: yield to the event loop once per frame — this is the
+		 * only legal place for an Asyncify sleep (never inside a fiber;
+		 * PortPushFrame has returned to the main context here). Also
+		 * paces the game to ~60Hz since the in-fiber pacer is disabled
+		 * on WASM (see gameloop.cpp). */
+		{
+			if ((frame % 60) == 1) {
+				EM_ASM({ document.title = 'BattleShip f=' + $0; }, frame);
+			}
+			static auto sNextFrame = std::chrono::steady_clock::now();
+			sNextFrame += std::chrono::microseconds(16667);
+			auto now = std::chrono::steady_clock::now();
+			auto waitMs = std::chrono::duration_cast<std::chrono::milliseconds>(sNextFrame - now).count();
+			if (waitMs > 0) {
+				emscripten_sleep((unsigned int)waitMs);
+			} else {
+				emscripten_sleep(0);
+				if (waitMs < -100) {
+					sNextFrame = now; /* resync after a long stall */
+				}
+			}
+		}
+#endif
 
 		if (!firstRunHintShown && frame == 60) {
 			auto cv = sContext->GetConsoleVariables();

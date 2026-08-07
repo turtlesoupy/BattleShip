@@ -25,6 +25,16 @@
  *                                  for symmetry).
  */
 
+#ifdef __EMSCRIPTEN__
+
+/* WASM: renderdoc_trigger.cpp is not compiled (renderdoc_app.h has no
+ * Emscripten branch and there is no RenderDoc in a browser anyway). */
+static inline void portRenderDocInit(void) {}
+static inline void portRenderDocOnFrame(unsigned int frame_count) { (void)frame_count; }
+static inline void portRenderDocShutdown(void) {}
+
+#else
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -36,3 +46,5 @@ void portRenderDocShutdown(void);
 #ifdef __cplusplus
 }
 #endif
+
+#endif /* __EMSCRIPTEN__ */
