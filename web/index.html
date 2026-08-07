@@ -39,6 +39,11 @@ var Module = {
   canvas: document.getElementById('canvas'),
   arguments: [],
   preRun: [async function () {
+    // ASan builds only (no-op otherwise): report every error and keep
+    // running instead of aborting on the first one.
+    if (typeof ENV !== 'undefined') {
+      ENV.ASAN_OPTIONS = 'halt_on_error=0:detect_container_overflow=0';
+    }
     addRunDependency('battleship-files');
     try {
       const manifest = await (await fetch('manifest.json')).json();
@@ -70,6 +75,6 @@ var Module = {
   printErr: (t) => console.warn(t),
 };
 </script>
-<script src="BattleShip.js"></script>
+<script src="BattleShip.js?v=BUILD_VERSION"></script>
 </body>
 </html>

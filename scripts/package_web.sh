@@ -10,8 +10,14 @@ OUT_DIR="${2:-web-dist}"
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
-cp web/index.html "$OUT_DIR/"
-cp "$BUILD_DIR/BattleShip.js" "$BUILD_DIR/BattleShip.wasm" "$OUT_DIR/"
+# Stamp a content-derived version into the shell so a redeploy always busts
+# the browser cache for the JS glue (a stale glue + fresh wasm pair hangs).
+BUILD_VERSION=$(shasum "$BUILD_DIR/BattleShip.wasm" | cut -c1-12)
+sed "s/BUILD_VERSION/$BUILD_VERSION/g" web/index.html > "$OUT_DIR/index.html"
+# The glue fetches "BattleShip.wasm" by name — version that URL too so the
+# js/wasm pair always cache-busts together.
+sed "s|BattleShip\.wasm|BattleShip.wasm?v=$BUILD_VERSION|g" "$BUILD_DIR/BattleShip.js" > "$OUT_DIR/BattleShip.js"
+cp "$BUILD_DIR/BattleShip.wasm" "$OUT_DIR/"
 
 # Runtime files the game reads from its working directory. Mirrored into
 # files/ and listed in manifest.json; the shell stages them into MEMFS.
@@ -25,6 +31,15 @@ for f in BattleShip.o2r BattleShip.o2r.recipe f3d.o2r gamecontrollerdb.txt confi
 done
 if [ -d "$BUILD_DIR/assets" ]; then
   cp -R "$BUILD_DIR/assets" "$OUT_DIR/files/assets"
+fi
+
+# Hi-res texture packs are staged into MEMFS at /mods as ZIPs (HiResPack
+# reads zips in place). Zip-only on wasm: the pack grammar's '#' characters
+# in loose-PNG filenames hang the boot-time file scan on MEMFS, and '#'
+# breaks URLs anyway — inside a zip both problems vanish.
+if [ -d web/mods ]; then
+  mkdir -p "$OUT_DIR/files/mods"
+  cp web/mods/*.zip "$OUT_DIR/files/mods/" 2>/dev/null || true
 fi
 
 # Recipe sidecar: on native the game writes this after first-run extraction;
@@ -45,7 +60,11 @@ fi
   first=1
   find . -type f | sed 's|^\./||' | LC_ALL=C sort | while read -r p; do
     [ $first -eq 1 ] && first=0 || echo ','
-    printf '  { "path": "/%s", "url": "files/%s" }' "$p" "$p"
+    # URL-encode characters that break URLs (notably '#' in HiResPack names —
+    # an unencoded '#' starts the fragment and the server sees a truncated
+    # path). The MEMFS path stays raw.
+    enc=$(printf '%s' "$p" | sed -e 's/%/%25/g' -e 's/#/%23/g' -e 's/ /%20/g' -e 's/?/%3F/g')
+    printf '  { "path": "/%s", "url": "files/%s" }' "$p" "$enc"
   done
   echo ''
   echo ']}'
