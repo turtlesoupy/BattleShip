@@ -16,11 +16,39 @@
 
 #include "coroutine.h"
 
+#include <emscripten.h>
 #include <emscripten/fiber.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+/* Boot-livelock tracing: synchronous XHR per coroutine event to the dev
+ * server — its access log stays readable even when the main thread wedges,
+ * unlike the console or any eval channel. Enabled by ENV
+ * SSB64_TRACE_SWAPS=1; auto-disarms after kTraceMax events. */
+static int sTraceArmed = -1;
+static unsigned sTraceCount = 0;
+static const unsigned kTraceMax = 6000;
+
+static void trace_event(const char *tag, void *co)
+{
+	if (sTraceArmed < 0) {
+		const char *env = getenv("SSB64_TRACE_SWAPS");
+		sTraceArmed = (env != NULL && env[0] == '1') ? 1 : 0;
+	}
+	if (!sTraceArmed || sTraceCount >= kTraceMax) {
+		return;
+	}
+	sTraceCount++;
+	EM_ASM({
+		try {
+			var x = new XMLHttpRequest();
+			x.open('GET', '/trace?n=' + $0 + '&e=' + UTF8ToString($1) + '&co=' + ($2 >>> 0).toString(16), false);
+			x.send();
+		} catch (e) {}
+	}, sTraceCount, tag, (uint32_t)(uintptr_t)co);
+}
 
 #define MIN_STACK_SIZE 32768
 /* Frames unwound at a switch point are copied to the asyncify stack. The
@@ -157,9 +185,11 @@ void port_coroutine_resume(PortCoroutine *co)
 	PortCoroutine *prev = sCurrentCoroutine;
 	emscripten_fiber_t *from = current_fiber();
 
+	trace_event("resume", co);
 	co->caller_fiber = from;
 	sCurrentCoroutine = co;
 	emscripten_fiber_swap(from, &co->fiber);
+	trace_event("resume-ret", co);
 
 	sCurrentCoroutine = prev;
 }
@@ -172,8 +202,10 @@ void port_coroutine_yield(void)
 		return;
 	}
 
+	trace_event("yield", co);
 	sCurrentCoroutine = NULL;
 	emscripten_fiber_swap(&co->fiber, co->caller_fiber);
+	trace_event("yield-ret", co);
 	/* Returns here when resumed. */
 }
 

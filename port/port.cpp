@@ -44,6 +44,7 @@
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #include <chrono>
+extern "C" void port_audio_boot_complete(void);
 #endif
 #if defined(__ANDROID__)
 #include <android/api-level.h>  // android_get_device_api_level (audio-driver gate)
@@ -1381,6 +1382,11 @@ int main(int argc, char* argv[]) {
 	}
 	int frame = 0;
 	bool firstRunHintShown = false;
+#ifdef __EMSCRIPTEN__
+	/* Boot chain is done and the deep fiber swaps are behind us — safe to
+	 * let SDL's audio drain callback re-enter wasm from here on. */
+	port_audio_boot_complete();
+#endif
 	while (WindowIsRunning()) {
 		PortPushFrame();
 		frame++;
