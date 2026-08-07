@@ -6,7 +6,15 @@
 <style>
   html, body { margin: 0; padding: 0; background: #000; height: 100%; overflow: hidden; }
   #wrap { display: flex; align-items: center; justify-content: center; height: 100%; }
-  canvas { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; outline: none; }
+  /* Hold the canvas element at 4:3 and letterbox inside the viewport;
+   * SDL sizes the GL buffer to match the element, so the game renders at
+   * the aspect the element has — a free-size canvas means a stretched game. */
+  canvas {
+    width: min(100vw, calc(100vh * 4 / 3));
+    height: min(100vh, calc(100vw * 3 / 4));
+    image-rendering: pixelated;
+    outline: none;
+  }
   #status {
     position: fixed; left: 12px; bottom: 10px; color: #9f9;
     font: 12px/1.4 ui-monospace, monospace; white-space: pre; pointer-events: none;
