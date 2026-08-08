@@ -920,6 +920,7 @@ elseif (EMSCRIPTEN)
         -sINVOKE_RUN=0
         -sEXIT_RUNTIME=0
         -sASSERTIONS=1
+        -sUSE_OFFSET_CONVERTER=1
         -g2
     )
 else()
