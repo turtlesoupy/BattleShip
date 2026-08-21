@@ -830,10 +830,23 @@ static int PortInitImpl(int argc, char* argv[]) {
 	 * host, libultraship's Config::GetWindowBackend() fallback
 	 * downgrades to OpenGL automatically — this write only changes the
 	 * preferred default. */
-	sContext->GetConfig()->SetInt(
-		"Window.Backend.Id",
-		static_cast<int>(Ship::WindowBackend::FAST3D_SDL_METAL));
-	sContext->GetConfig()->SetString("Window.Backend.Name", "Metal");
+	/* SSB64_GFX_BACKEND=opengl opts out of the Metal force — the OpenGL
+	 * backend is the only one with portFastCaptureBackbufferPNG support
+	 * on macOS, so the OpenSmash screenshot harness needs it. */
+	{
+		const char* backendEnv = std::getenv("SSB64_GFX_BACKEND");
+		if (backendEnv != nullptr && strcasecmp(backendEnv, "opengl") == 0) {
+			sContext->GetConfig()->SetInt(
+				"Window.Backend.Id",
+				static_cast<int>(Ship::WindowBackend::FAST3D_SDL_OPENGL));
+			sContext->GetConfig()->SetString("Window.Backend.Name", "OpenGL");
+		} else {
+			sContext->GetConfig()->SetInt(
+				"Window.Backend.Id",
+				static_cast<int>(Ship::WindowBackend::FAST3D_SDL_METAL));
+			sContext->GetConfig()->SetString("Window.Backend.Name", "Metal");
+		}
+	}
 #endif
 
 	/* New init order:
