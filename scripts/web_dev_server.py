@@ -15,7 +15,7 @@ import time
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8600
 ROOT = os.path.abspath(sys.argv[2] if len(sys.argv) > 2 else
                        os.path.join(os.path.dirname(__file__), "..", "web-dist"))
-CAPS = os.path.join(ROOT, "captures")
+CAPS = os.path.join(os.path.dirname(ROOT), "web-captures")
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):

@@ -118,3 +118,4 @@ test.zip
 # WASM build + packaged web distribution
 build-wasm/
 web-dist/
+web-captures/

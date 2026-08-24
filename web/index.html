@@ -132,9 +132,16 @@ var Module = {
       if (k.startsWith('SSB64_') && typeof ENV !== 'undefined') ENV[k] = v;
     }
     try {
+      if (params.has('inject_ui')) {
+        const url = params.get('inject_ui');
+        const resp = await fetch(url, { cache: 'no-cache' });
+        if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
+        FS.writeFile('/inject.osbui', new Uint8Array(await resp.arrayBuffer()));
+        if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_UI = '/inject.osbui';
+      }
       if (params.has('inject')) {
         const url = params.get('inject');
-        const resp = await fetch(url);
+        const resp = await fetch(url, { cache: 'no-cache' });
         if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
         FS.writeFile('/inject.osb', new Uint8Array(await resp.arrayBuffer()));
         if (typeof ENV !== 'undefined') {
