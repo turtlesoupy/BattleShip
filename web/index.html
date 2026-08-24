@@ -19,11 +19,85 @@
     position: fixed; left: 12px; bottom: 10px; color: #9f9;
     font: 12px/1.4 ui-monospace, monospace; white-space: pre; pointer-events: none;
   }
+  #pad {
+    position: fixed; left: 50%; bottom: 8px; transform: translateX(-50%);
+    z-index: 10; text-align: center; user-select: none;
+    font: 12px/1 ui-monospace, monospace;
+  }
+  #pad-toggle {
+    display: inline-block; padding: 5px 14px; border-radius: 14px;
+    background: rgba(0,0,0,0.6); color: #ccc; cursor: pointer;
+    border: 1px solid #444;
+  }
+  #pad-toggle:hover { color: #fff; border-color: #777; }
+  #pad-panel {
+    margin-bottom: 6px; padding: 8px 10px 4px; border-radius: 10px;
+    background: rgba(10,10,10,0.82); border: 1px solid #333;
+  }
+  #pad-panel svg { display: block; width: 420px; max-width: 80vw; height: auto; }
+  #pad.collapsed #pad-panel { display: none; }
 </style>
 </head>
 <body>
 <div id="wrap"><canvas id="canvas" tabindex="0" oncontextmenu="event.preventDefault()"></canvas></div>
 <div id="status">loading…</div>
+<div id="pad" class="collapsed">
+<div id="pad-panel">
+<svg viewBox="0 0 460 265" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace,monospace">
+  <!-- shoulders -->
+  <rect x="55" y="6" width="80" height="16" rx="8" fill="#7d8087"/>
+  <rect x="325" y="6" width="80" height="16" rx="8" fill="#7d8087"/>
+  <!-- body: wings + center prong + grips -->
+  <ellipse cx="112" cy="72" rx="72" ry="50" fill="#b9bcc2" stroke="#84878d"/>
+  <ellipse cx="348" cy="72" rx="72" ry="50" fill="#b9bcc2" stroke="#84878d"/>
+  <rect x="150" y="22" width="160" height="110" rx="42" fill="#b9bcc2" stroke="#84878d"/>
+  <g transform="rotate(20 78 165)"><rect x="55" y="100" width="46" height="130" rx="23" fill="#b9bcc2" stroke="#84878d"/></g>
+  <g transform="rotate(-20 382 165)"><rect x="359" y="100" width="46" height="130" rx="23" fill="#b9bcc2" stroke="#84878d"/></g>
+  <rect x="203" y="105" width="54" height="115" rx="26" fill="#b9bcc2" stroke="#84878d"/>
+  <!-- d-pad -->
+  <path d="M100 58 h24 v14 h14 v24 h-14 v14 h-24 v-14 h-14 v-24 h14 z" fill="#4a4d52"/>
+  <!-- start -->
+  <circle cx="230" cy="62" r="11" fill="#c22"/>
+  <!-- analog stick -->
+  <circle cx="230" cy="152" r="24" fill="#9a9da3" stroke="#6f7278"/>
+  <circle cx="230" cy="152" r="15" fill="#5a5d63"/>
+  <!-- B and A -->
+  <circle cx="303" cy="76" r="13" fill="#109e48"/>
+  <text x="303" y="81" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">B</text>
+  <circle cx="332" cy="102" r="16" fill="#2662d9"/>
+  <text x="332" y="107" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">A</text>
+  <!-- C buttons -->
+  <g fill="#e0b420">
+    <circle cx="371" cy="46" r="10"/><circle cx="371" cy="90" r="10"/>
+    <circle cx="349" cy="68" r="10"/><circle cx="393" cy="68" r="10"/>
+  </g>
+  <g fill="#7a5f00" font-size="9" text-anchor="middle">
+    <text x="371" y="49">&#9650;</text><text x="371" y="94">&#9660;</text>
+    <text x="349" y="71">&#9664;</text><text x="393" y="71">&#9654;</text>
+  </g>
+  <!-- keycap chips -->
+  <g font-size="11" text-anchor="middle">
+    <g><rect x="212" y="180" width="38" height="16" rx="3" fill="#222" stroke="#888"/><text x="231" y="192" fill="#fff">WASD</text></g>
+    <g><rect x="216" y="30" width="46" height="16" rx="3" fill="#222" stroke="#888"/><text x="239" y="42" fill="#fff">Space</text></g>
+    <g><rect x="324" y="124" width="16" height="16" rx="3" fill="#222" stroke="#888"/><text x="332" y="136" fill="#fff">X</text></g>
+    <g><rect x="284" y="49" width="16" height="16" rx="3" fill="#222" stroke="#888"/><text x="292" y="61" fill="#fff">C</text></g>
+    <g><rect x="352" y="108" width="40" height="16" rx="3" fill="#222" stroke="#888"/><text x="372" y="120" fill="#fff">&#8593;&#8595;&#8592;&#8594;</text></g>
+    <g><rect x="88" y="102" width="48" height="16" rx="3" fill="#222" stroke="#888"/><text x="112" y="114" fill="#fff">Enter</text></g>
+    <g><rect x="30" y="6" width="16" height="16" rx="3" fill="#222" stroke="#888"/><text x="38" y="18" fill="#fff">E</text></g>
+    <g><rect x="414" y="6" width="16" height="16" rx="3" fill="#222" stroke="#888"/><text x="422" y="18" fill="#fff">R</text></g>
+    <g><rect x="196" y="237" width="16" height="16" rx="3" fill="#222" stroke="#888"/><text x="204" y="249" fill="#fff">Z</text></g>
+  </g>
+  <!-- labels -->
+  <g font-size="10" fill="#999">
+    <text x="66" y="18">L</text><text x="390" y="18">R</text>
+    <text x="216" y="249" text-anchor="start" fill="#777">= Z (under)</text>
+    <text x="112" y="132" text-anchor="middle" fill="#777">d-pad &#8593;</text>
+  </g>
+</svg>
+</div>
+<span id="pad-toggle" onclick="const p=document.getElementById('pad');p.classList.toggle('collapsed');try{localStorage.setItem('padOpen',p.classList.contains('collapsed')?'0':'1')}catch(e){}">&#127918; controls</span>
+</div>
+<script>try{if(localStorage.getItem('padOpen')==='1')document.getElementById('pad').classList.remove('collapsed');}catch(e){}</script>
 <script>
 window.__lastError = null;
 window.addEventListener('unhandledrejection', (e) => {
@@ -39,13 +113,36 @@ var Module = {
   canvas: document.getElementById('canvas'),
   arguments: [],
   preRun: [async function () {
+    // MUST be registered synchronously, before any await in this
+    // function — an await suspends the async preRun and the runtime
+    // proceeds to main() unless a dependency is already pending.
+    addRunDependency('battleship-files');
     // ASan builds only (no-op otherwise): report every error and keep
     // running instead of aborting on the first one.
     if (typeof ENV !== 'undefined') {
       ENV.ASAN_OPTIONS = 'halt_on_error=0:detect_container_overflow=0';
     }
-    addRunDependency('battleship-files');
+    // Dev harness: every SSB64_* query param becomes an environment
+    // variable, so the browser build keeps the native hook contract
+    // (?SSB64_BOOT_BATTLE=0,8,4 etc). `inject` is the one alias with
+    // extra behavior: it names a bundle URL, fetched into MEMFS, and
+    // sets SSB64_INJECT_BUNDLE to the staged path.
+    const params = new URLSearchParams(location.search);
+    for (const [k, v] of params) {
+      if (k.startsWith('SSB64_') && typeof ENV !== 'undefined') ENV[k] = v;
+    }
     try {
+      if (params.has('inject')) {
+        const url = params.get('inject');
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
+        FS.writeFile('/inject.osb', new Uint8Array(await resp.arrayBuffer()));
+        if (typeof ENV !== 'undefined') {
+          ENV.SSB64_INJECT_BUNDLE = '/inject.osb';
+          ENV.SSB64_INJECT_FKIND = params.get('fkind') || '0';
+          if (params.has('player')) ENV.SSB64_INJECT_PLAYER = params.get('player');
+        }
+      }
       const manifest = await (await fetch('manifest.json')).json();
       let done = 0;
       await Promise.all(manifest.files.map(async (f) => {
@@ -68,12 +165,41 @@ var Module = {
   }],
   onRuntimeInitialized: function () {
     // INVOKE_RUN=0: start the game ourselves once the FS is staged.
+    console.warn('[shell] onRuntimeInitialized: o2r exists =',
+      FS.analyzePath('/BattleShip.o2r').exists, 'f3d =', FS.analyzePath('/f3d.o2r').exists);
     setStatus('');
     Module.callMain(Module.arguments);
+    console.warn('[shell] callMain returned');
   },
   print: (t) => console.log(t),
   printErr: (t) => console.warn(t),
+  // Lets captureFrame() read back the last presented frame.
+  webglContextAttributes: { preserveDrawingBuffer: true },
 };
+
+// ---- dev capture helpers ------------------------------------------------
+// captureFrame(): PNG data-URL of the current canvas.
+// startClip(ms): records a WebM of the canvas, resolves to an object URL.
+window.captureFrame = () => Module.canvas.toDataURL('image/png');
+window.startClip = (ms = 3000, fps = 30) => new Promise((resolve, reject) => {
+  const stream = Module.canvas.captureStream(fps);
+  const rec = new MediaRecorder(stream, { mimeType: 'video/webm' });
+  const chunks = [];
+  rec.ondataavailable = (e) => chunks.push(e.data);
+  rec.onstop = () => resolve(URL.createObjectURL(new Blob(chunks, { type: 'video/webm' })));
+  rec.onerror = reject;
+  rec.start();
+  setTimeout(() => rec.stop(), ms);
+});
+// pressKey(code, ms): synthetic key hold on the canvas (SDL listens on it).
+window.pressKey = (code, ms = 120) => new Promise((resolve) => {
+  const t = Module.canvas;
+  t.dispatchEvent(new KeyboardEvent('keydown', { code, bubbles: true }));
+  setTimeout(() => {
+    t.dispatchEvent(new KeyboardEvent('keyup', { code, bubbles: true }));
+    resolve();
+  }, ms);
+});
 </script>
 <script src="BattleShip.js?v=BUILD_VERSION"></script>
 </body>

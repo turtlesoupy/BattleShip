@@ -37,6 +37,12 @@ fi
 # reads zips in place). Zip-only on wasm: the pack grammar's '#' characters
 # in loose-PNG filenames hang the boot-time file scan on MEMFS, and '#'
 # breaks URLs anyway — inside a zip both problems vanish.
+# Extra defaults staged verbatim into MEMFS (e.g. BattleShip.cfg.json with
+# the 4:3 render-buffer size — the browser has no persisted config).
+if [ -d web/files-extra ]; then
+  cp web/files-extra/* "$OUT_DIR/files/"
+fi
+
 if [ -d web/mods ]; then
   mkdir -p "$OUT_DIR/files/mods"
   cp web/mods/*.zip "$OUT_DIR/files/mods/" 2>/dev/null || true
