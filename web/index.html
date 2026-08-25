@@ -36,11 +36,134 @@
   }
   #pad-panel svg { display: block; width: 420px; max-width: 80vw; height: auto; }
   #pad.collapsed #pad-panel { display: none; }
+  #boot {
+    position: fixed; left: 12px; top: 10px; z-index: 10;
+    font: 12px/1.5 ui-monospace, monospace; user-select: none;
+  }
+  #boot-toggle {
+    display: inline-block; padding: 5px 14px; border-radius: 14px;
+    background: rgba(0,0,0,0.6); color: #ccc; cursor: pointer;
+    border: 1px solid #444;
+  }
+  #boot-toggle:hover { color: #fff; border-color: #777; }
+  #boot-panel {
+    margin-top: 6px; padding: 12px 14px; border-radius: 10px;
+    background: rgba(10,10,10,0.88); border: 1px solid #333;
+    display: grid; grid-template-columns: auto auto; gap: 8px 10px;
+    align-items: center; color: #ccc;
+  }
+  #boot.collapsed #boot-panel { display: none; }
+  #boot-panel label { color: #8a8f98; text-align: right; }
+  #boot-panel select {
+    background: #1a1c20; color: #ddd; border: 1px solid #444;
+    border-radius: 6px; padding: 4px 6px; font: inherit; min-width: 170px;
+  }
+  #boot-go {
+    grid-column: 1 / -1; margin-top: 4px; padding: 7px 0; border-radius: 8px;
+    background: #2c5e3a; color: #dff5e4; border: 1px solid #3f7d50;
+    font: inherit; font-weight: 700; cursor: pointer; letter-spacing: .04em;
+  }
+  #boot-go:hover { background: #357146; }
+  #boot-note { grid-column: 1 / -1; color: #6d727c; font-size: 11px; }
 </style>
 </head>
 <body>
 <div id="wrap"><canvas id="canvas" tabindex="0" oncontextmenu="event.preventDefault()"></canvas></div>
 <div id="status">loading…</div>
+<div id="boot" class="collapsed">
+<span id="boot-toggle" onclick="const b=document.getElementById('boot');b.classList.toggle('collapsed');try{localStorage.setItem('bootOpen',b.classList.contains('collapsed')?'0':'1')}catch(e){}">&#9654; characters</span>
+<div id="boot-panel">
+  <label for="boot-char">character</label><select id="boot-char"></select>
+  <label for="boot-slot">plays as</label><select id="boot-slot"></select>
+  <label for="boot-opp">opponent</label><select id="boot-opp"></select>
+  <label for="boot-stage">stage</label>
+  <select id="boot-stage">
+    <option value="4">Hyrule Castle</option>
+    <option value="6">Yoshi's Island</option>
+  </select>
+  <button id="boot-go">BOOT MATCH</button>
+  <div id="boot-note">reloads the page with the picked matchup; only converted character&times;fighter combos are listed</div>
+</div>
+</div>
+<script>
+(() => {
+  const FK = { mario:0, fox:1, dk:2, donkey:2, samus:3, luigi:4, link:5,
+               yoshi:6, captain:7, kirby:8, pikachu:9, purin:10, jigglypuff:10, ness:11 };
+  const FIGHTER_NAMES = ["Mario","Fox","Donkey Kong","Samus","Luigi","Link",
+                         "Yoshi","Captain Falcon","Kirby","Pikachu","Jigglypuff","Ness"];
+  const charSel = document.getElementById('boot-char');
+  const slotSel = document.getElementById('boot-slot');
+  const oppSel  = document.getElementById('boot-opp');
+  const stageSel = document.getElementById('boot-stage');
+  const chars = {};   // name -> { fkind -> bundle file }
+
+  FIGHTER_NAMES.forEach((n, k) => {
+    const o = document.createElement('option');
+    o.value = k; o.textContent = n;
+    oppSel.appendChild(o);
+  });
+  oppSel.value = '8';
+
+  function fillSlots() {
+    const c = chars[charSel.value] || {};
+    slotSel.innerHTML = '';
+    Object.keys(c).map(Number).sort((a,b)=>a-b).forEach(k => {
+      const o = document.createElement('option');
+      o.value = k; o.textContent = FIGHTER_NAMES[k];
+      slotSel.appendChild(o);
+    });
+  }
+
+  const uiBundles = new Set();
+  fetch('/bundles.json', { cache: 'no-cache' }).then(r => r.json()).then(files => {
+    files.forEach(f => {
+      if (f.endsWith('.osbui')) { uiBundles.add(f); return; }
+      const base = f.replace(/\.osb$/, '');
+      const dash = base.lastIndexOf('-');
+      const suffix = dash >= 0 ? base.slice(dash + 1) : null;
+      let name = base, fk = 0;   // no fighter suffix -> a Mario-target bundle
+      if (suffix !== null && FK[suffix] !== undefined) {
+        name = base.slice(0, dash); fk = FK[suffix];
+      }
+      (chars[name] = chars[name] || {})[fk] = f;
+    });
+    Object.keys(chars).sort().forEach(n => {
+      const o = document.createElement('option');
+      o.value = n; o.textContent = n;
+      charSel.appendChild(o);
+    });
+    // preselect whatever this page was booted with
+    const q = new URLSearchParams(location.search);
+    const inj = (q.get('inject') || '').split('/').pop();
+    const boot = (q.get('SSB64_BOOT_BATTLE') || '').split(',');
+    for (const [n, slots] of Object.entries(chars)) {
+      for (const [k, f] of Object.entries(slots)) {
+        if (f === inj) { charSel.value = n; fillSlots(); slotSel.value = k; }
+      }
+    }
+    if (!slotSel.options.length) fillSlots();
+    if (boot[1] !== undefined) oppSel.value = boot[1];
+    if (boot[2] !== undefined && stageSel.querySelector(`option[value="${boot[2]}"]`)) stageSel.value = boot[2];
+  }).catch(() => { document.getElementById('boot-note').textContent = 'bundle list unavailable (dev server not running?)'; });
+
+  charSel.addEventListener('change', fillSlots);
+  document.getElementById('boot-go').addEventListener('click', () => {
+    const c = chars[charSel.value] || {};
+    const fk = slotSel.value;
+    const file = c[fk];
+    if (!file) return;
+    const p = new URLSearchParams();
+    p.set('inject', 'bundles/' + file);
+    p.set('fkind', fk);
+    const ui = charSel.value + '.osbui';
+    if (uiBundles.has(ui)) p.set('inject_ui', 'bundles/' + ui);
+    p.set('SSB64_BOOT_BATTLE', `${fk},${oppSel.value},${stageSel.value}`);
+    p.set('cb', Date.now());
+    location.href = location.pathname + '?' + p.toString();
+  });
+  try { if (localStorage.getItem('bootOpen') === '1') document.getElementById('boot').classList.remove('collapsed'); } catch (e) {}
+})();
+</script>
 <div id="pad" class="collapsed">
 <div id="pad-panel">
 <svg viewBox="0 0 460 265" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace,monospace">

@@ -7,8 +7,21 @@ cd "$(dirname "$0")/.."
 BUILD_DIR="${1:-build-wasm}"
 OUT_DIR="${2:-web-dist}"
 
+# Preserve staged character bundles across repackages: bundles/ is populated
+# by the pipeline, not the build, and wiping it here silently reverts the
+# playable characters to whatever gets ad-hoc re-copied afterwards (that
+# exact mixup shipped stale pre-BLNK bundles once — see
+# docs/bugs/osb5_stale_owner_css_previews_2026-08-25.md's sibling incident).
+if [ -d "$OUT_DIR/bundles" ]; then
+  BUNDLE_STASH=$(mktemp -d)
+  mv "$OUT_DIR/bundles" "$BUNDLE_STASH/bundles"
+fi
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
+if [ -n "${BUNDLE_STASH:-}" ]; then
+  mv "$BUNDLE_STASH/bundles" "$OUT_DIR/bundles"
+  rmdir "$BUNDLE_STASH"
+fi
 
 # Stamp a content-derived version into the shell so a redeploy always busts
 # the browser cache for the JS glue (a stale glue + fresh wasm pair hangs).
