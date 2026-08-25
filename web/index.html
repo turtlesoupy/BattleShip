@@ -139,6 +139,13 @@ var Module = {
         FS.writeFile('/inject.osbui', new Uint8Array(await resp.arrayBuffer()));
         if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_UI = '/inject.osbui';
       }
+      if (params.has('inject_voice')) {
+        const url = params.get('inject_voice');
+        const resp = await fetch(url, { cache: 'no-cache' });
+        if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
+        FS.writeFile('/inject-voice.wav', new Uint8Array(await resp.arrayBuffer()));
+        if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_VOICE = '/inject-voice.wav';
+      }
       if (params.has('inject')) {
         const url = params.get('inject');
         const resp = await fetch(url, { cache: 'no-cache' });

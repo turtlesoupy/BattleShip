@@ -14,6 +14,7 @@
 
 #include "audio_playback.h"
 #include "port_log.h"
+#include "voice_inject.h"
 
 #include <libultraship/bridge/audiobridge.h>
 
@@ -236,6 +237,16 @@ extern "C" void portAudioSubmitFrame(const void *buf, int sampleCount)
         }
     }
     const int16_t* pcm = reinterpret_cast<const int16_t*>(buf);
+
+    // Injected announcer voice: mix on top of the synthesized frame before
+    // the output filter, so the clip shares the game's anti-imaging rolloff.
+    static int16_t sVoiceMixBuf[MAX_SAMPLES_STEREO];
+    if (portVoiceInjectPlaying() && sampleCount * 2 <= MAX_SAMPLES_STEREO) {
+        std::memcpy(sVoiceMixBuf, pcm, byteLen);
+        portVoiceInjectMix(sVoiceMixBuf, sampleCount);
+        pcm = sVoiceMixBuf;
+    }
+
     pcm = applyOutputFilter(pcm, sampleCount);
 
     wavAppend(pcm, byteLen);
