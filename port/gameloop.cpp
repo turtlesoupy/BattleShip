@@ -54,6 +54,9 @@ extern "C" bool port_drain_pending_menu_toggle(void);
 
 #include "port_log.h"
 #include "renderdoc_trigger.h"
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
 /* Backbuffer screenshot capture — implemented in libultraship's DX11 backend.
  * Returns 1 on success, 0 on failure (silent). Never throws. */
@@ -870,6 +873,14 @@ void PortPushFrame(void)
 	/* Screenshot capture: env-var driven, zero cost when disabled. */
 	port_screenshot_init_once();
 	port_screenshot_maybe_capture(sFrameCount);
+
+#ifdef __EMSCRIPTEN__
+	/* Web capture hook: hand the completed tick number to the page. The
+	 * shell installs Module.onGameTick to capture the canvas at exact
+	 * game ticks (pose-capture eval runs) — wall-clock-free, so replay
+	 * determinism is unaffected by capture stalls. */
+	EM_ASM({ if (Module.onGameTick) Module.onGameTick($0); }, sFrameCount);
+#endif
 
 	/* RenderDoc capture trigger: env-var driven, zero cost when disabled.
 	 * TriggerCapture() tells RenderDoc to capture the NEXT Present interval,

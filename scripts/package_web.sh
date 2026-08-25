@@ -12,14 +12,19 @@ OUT_DIR="${2:-web-dist}"
 # playable characters to whatever gets ad-hoc re-copied afterwards (that
 # exact mixup shipped stale pre-BLNK bundles once — see
 # docs/bugs/osb5_stale_owner_css_previews_2026-08-25.md's sibling incident).
-if [ -d "$OUT_DIR/bundles" ]; then
-  BUNDLE_STASH=$(mktemp -d)
-  mv "$OUT_DIR/bundles" "$BUNDLE_STASH/bundles"
-fi
+BUNDLE_STASH=""
+for KEEP in bundles eval replays; do
+  if [ -d "$OUT_DIR/$KEEP" ]; then
+    [ -n "$BUNDLE_STASH" ] || BUNDLE_STASH=$(mktemp -d)
+    mv "$OUT_DIR/$KEEP" "$BUNDLE_STASH/$KEEP"
+  fi
+done
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 if [ -n "${BUNDLE_STASH:-}" ]; then
-  mv "$BUNDLE_STASH/bundles" "$OUT_DIR/bundles"
+  for KEEP in bundles eval replays; do
+    if [ -d "$BUNDLE_STASH/$KEEP" ]; then mv "$BUNDLE_STASH/$KEEP" "$OUT_DIR/$KEEP"; fi
+  done
   rmdir "$BUNDLE_STASH"
 fi
 

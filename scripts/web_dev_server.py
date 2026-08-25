@@ -65,7 +65,16 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             ext = "webm"
         os.makedirs(CAPS, exist_ok=True)
         name = self.headers.get("X-Capture-Name") or f"cap_{int(time.time()*1000)}"
-        path = os.path.join(CAPS, f"{name}.{ext}")
+        # allow relative subdirs (eval capture runs upload frame sets), but
+        # never let a path escape the captures root
+        name = name.replace("\\", "/").lstrip("/")
+        if ".." in name.split("/"):
+            self.send_error(400)
+            return
+        if not name.endswith(f".{ext}"):
+            name = f"{name}.{ext}"
+        path = os.path.join(CAPS, name)
+        os.makedirs(os.path.dirname(path) or CAPS, exist_ok=True)
         with open(path, "wb") as f:
             f.write(body)
         print(f"capture -> {path}", flush=True)

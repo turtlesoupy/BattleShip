@@ -222,6 +222,20 @@
 </div>
 <script>try{if(localStorage.getItem('padOpen')==='1')document.getElementById('pad').classList.remove('collapsed');}catch(e){}</script>
 <script>
+// Capture runs need readable canvas contents at arbitrary points; SDL
+// creates the GL context with preserveDrawingBuffer=false, so patch
+// getContext before the engine loads. Gated to ?capture= runs only.
+if (new URLSearchParams(location.search).has('capture')) {
+  const _gc = HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext = function (type, attrs) {
+    if (typeof type === 'string' && type.indexOf('webgl') === 0) {
+      attrs = Object.assign({}, attrs || {}, { preserveDrawingBuffer: true });
+    }
+    return _gc.call(this, type, attrs);
+  };
+}
+</script>
+<script>
 window.__lastError = null;
 window.addEventListener('unhandledrejection', (e) => {
   window.__lastError = (e.reason && e.reason.stack) ? String(e.reason.stack) : String(e.reason);
@@ -262,6 +276,42 @@ var Module = {
         FS.writeFile('/inject.osbui', new Uint8Array(await resp.arrayBuffer()));
         if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_UI = '/inject.osbui';
       }
+      if (params.has('capture')) {
+        // frame-exact capture: the engine calls Module.onGameTick(frame)
+        // after every completed game tick; grab the canvas at target ticks
+        // and upload. Tick-based, so capture stalls can't desync replays.
+        const [cs, ce, cstep] = params.get('capture').split(':').map(Number);
+        const capname = params.get('capname') || 'cap';
+        const targets = new Set();
+        for (let f = cs; f < ce; f += cstep) targets.add(f);
+        const total = targets.size;
+        const pend = [];
+        // Inline capture on the exact tick: valid in ANY tab state because
+        // the head script forced preserveDrawingBuffer=true on the GL
+        // context for capture runs (otherwise the compositor clears the
+        // buffer between tasks and reads come back black in visible tabs;
+        // rAF-based reads are no better — rAF never fires in hidden tabs).
+        Module.onGameTick = (f) => {
+          if (!targets.delete(f)) return;
+          const d = Module.canvas.toDataURL('image/png');
+          pend.push(fetch('/upload', { method: 'POST', body: d,
+            headers: { 'X-Capture-Name': capname + '/frame_' + f + '.png' } }));
+          if (targets.size % 25 === 0) setStatus(`capturing ${total - targets.size}/${total}`);
+          if (targets.size === 0) {
+            Promise.all(pend).then(() => {
+              setStatus(`CAPTURE DONE (${total} frames)`);
+              document.title = 'CAPTURE-DONE';
+            });
+          }
+        };
+      }
+      if (params.has('replay')) {
+        const url = params.get('replay');
+        const resp = await fetch(url, { cache: 'no-cache' });
+        if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
+        FS.writeFile('/replay.rpl', new Uint8Array(await resp.arrayBuffer()));
+        if (typeof ENV !== 'undefined') ENV.SSB64_REPLAY_PLAY = '/replay.rpl';
+      }
       if (params.has('inject_voice')) {
         const url = params.get('inject_voice');
         const resp = await fetch(url, { cache: 'no-cache' });
@@ -277,7 +327,10 @@ var Module = {
         if (typeof ENV !== 'undefined') {
           ENV.SSB64_INJECT_BUNDLE = '/inject.osb';
           ENV.SSB64_INJECT_FKIND = params.get('fkind') || '0';
-          if (params.has('player')) ENV.SSB64_INJECT_PLAYER = params.get('player');
+          // default player 0: in mirror matches (eval runs) BOTH fighters
+          // share the inject fkind, and an unpinned attach lets P2 steal
+          // ownership, leaving P1 blanked and invisible.
+          ENV.SSB64_INJECT_PLAYER = params.get('player') || '0';
         }
       }
       const manifest = await (await fetch('manifest.json')).json();
