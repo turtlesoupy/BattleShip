@@ -49,7 +49,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 slug = f[:-4]
                 variants = sorted(g[len(slug) + 1:-4] for g in files
                                   if g.startswith(slug + "-") and g.endswith(".osb"))
-                display, short = slug, slug.upper()[:7]
+                display, short, base = slug, slug.upper()[:7], None
                 cj = os.path.join(os.path.dirname(ROOT), "..", "pipeline",
                                   "play", "ui", slug, "character.json")
                 try:
@@ -57,10 +57,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     display = cd.get("display", display)
                     short = cd.get("short") or "".join(
                         ch for ch in display.upper() if ch.isalpha())[:7]
+                    # which vanilla fighter this character plays as
+                    # (skeleton/moveset); absent = the tile they sit on
+                    base = cd.get("base")
                 except Exception:
                     pass
                 chars.append({"slug": slug, "display": display, "short": short,
-                              "variants": variants,
+                              "base": base, "variants": variants,
                               "ui": f"{slug}.osbui" in files,
                               "voice": f"{slug}.wav" in files})
             body = json.dumps(chars).encode()

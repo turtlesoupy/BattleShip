@@ -142,6 +142,38 @@
   </div>
 </div>
 <script>
+// Shared roster helpers. ROSTER_VARIANT: skeleton-variant name per fighter
+// kind (index = fkind, '' = the mario-default bundle). rosterBaseFk: which
+// fighter a character actually PLAYS as — resolution order:
+//   URL ?base=slug:target,slug:target  (ad-hoc experiments)
+//   > character.json "base"            (the pipeline's assignment)
+//   > the tile the character sits on   (legacy behavior)
+// The tile only decides WHERE the character appears on the select screen;
+// the base decides skeleton, moveset and which mesh variant is staged.
+window.ROSTER_VARIANT = ['', 'fox', 'donkey', 'samus', 'luigi', 'link',
+                         'yoshi', 'captain', 'kirby', 'pikachu', 'purin', 'ness'];
+window.rosterBaseFk = (c, tileFk) => {
+  const V = window.ROSTER_VARIANT;
+  const alias = { mario: '', donkeykong: 'donkey', dk: 'donkey',
+                  jigglypuff: 'purin', falcon: 'captain', captainfalcon: 'captain' };
+  let name = null;
+  for (const kv of (new URLSearchParams(location.search).get('base') || '').split(',')) {
+    const [s, t] = kv.split(':');
+    if (s === c.slug && t) name = t;
+  }
+  name = name ?? c.base ?? V[tileFk];
+  name = alias[name] ?? name;
+  let fk = name === '' ? 0 : V.indexOf(name);
+  if (fk < 0) { console.warn(`roster: unknown base '${name}' for ${c.slug}`); fk = tileFk; }
+  return fk;
+};
+// stageable = the character's resolved base variant bundle exists
+window.rosterStageable = (c, tileFk) => {
+  const fk = window.rosterBaseFk(c, tileFk);
+  return fk === 0 || (c.variants || []).includes(window.ROSTER_VARIANT[fk]);
+};
+</script>
+<script>
 // Roster search: typeahead over /roster.json (plus the vanilla twelve).
 // When the game is already running with the roster loaded, highlighting a
 // character insta-switches the select screen to their page via the wasm
@@ -219,17 +251,14 @@
     if (roster === null) {
       fetch('/roster.json', { cache: 'no-cache' }).then(r => r.json()).then(cs => {
         // tile assignment mirrors the shell's roster staging: sequential,
-        // skipping characters without the needed skeleton variant
-        const VARIANT = ['', 'fox', 'donkey', 'samus', 'luigi', 'link',
-                         'yoshi', 'captain', 'kirby', 'pikachu', 'purin', 'ness'];
+        // skipping characters whose resolved base variant is missing
         roster = VANILLA.map((n, fk) => ({
           display: n, slug: n.toLowerCase().replace(/[^a-z0-9]/g, ''),
           vanilla: true, fk
         }));
         let tile = 0;
         for (const c of cs) {
-          const fk = tile % 12;
-          if (fk !== 0 && !(c.variants || []).includes(VARIANT[fk])) continue;
+          if (!window.rosterStageable(c, tile % 12)) continue;
           roster.push({ ...c, tile });
           tile++;
         }
@@ -604,8 +633,7 @@ var Module = {
       // the bundles move to on-demand fetch; portraits stay tiny.)
       if (params.has('roster')) {
         try {
-          const VARIANT = ['', 'fox', 'donkey', 'samus', 'luigi', 'link',
-                           'yoshi', 'captain', 'kirby', 'pikachu', 'purin', 'ness'];
+          const VARIANT = window.ROSTER_VARIANT;
           const roster = await (await fetch('/roster.json', { cache: 'no-cache' })).json();
           FS.mkdirTree('/roster');
           const lines = [];
@@ -613,15 +641,18 @@ var Module = {
           let tile = 0;
           for (const c of roster) {
             const fk = tile % 12;
-            const file = fk === 0 ? `${c.slug}.osb` : `${c.slug}-${VARIANT[fk]}.osb`;
-            if (fk !== 0 && !(c.variants || []).includes(VARIANT[fk])) {
-              console.warn(`roster: ${c.slug} has no ${VARIANT[fk]} variant — skipped`);
+            if (!window.rosterStageable(c, fk)) {
+              console.warn(`roster: ${c.slug} missing its base variant — skipped`);
               continue;
             }
+            // the staged mesh targets the BASE fighter's skeleton, which
+            // may differ from the tile the character sits on
+            const baseFk = window.rosterBaseFk(c, fk);
+            const file = baseFk === 0 ? `${c.slug}.osb` : `${c.slug}-${VARIANT[baseFk]}.osb`;
             tile++;
             const ui = c.ui ? `/roster/${c.slug}.osbui` : '';
             const vox = c.voice ? `/roster/${c.slug}.wav` : '';
-            lines.push(`${c.slug}|${fk}|/roster/${c.slug}.osb|${ui}|${vox}|${c.short || ''}`);
+            lines.push(`${c.slug}|${fk}|/roster/${c.slug}.osb|${ui}|${vox}|${c.short || ''}|${baseFk}`);
             jobs.push((async () => {
               const r = await fetch('bundles/' + file, { cache: 'no-cache' });
               if (!r.ok) throw new Error(`fetch bundles/${file}: ${r.status}`);
