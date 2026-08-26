@@ -682,7 +682,14 @@ static int PortInitImpl(int argc, char* argv[]) {
 
 	port_log("SSB64: Context instance created\n");
 
-	if (!sContext->InitLogging()) { port_log("SSB64: InitLogging failed\n"); return 1; }
+	{
+		// SSB64_LOG_INFO=1: release builds default to warn, which silences the
+		// SSB64_RENDER_DIAG / import-trace SPDLOG_INFO diagnostics entirely.
+		const char *logInfoEnv = std::getenv("SSB64_LOG_INFO");
+		spdlog::level::level_enum relLevel =
+		    (logInfoEnv != nullptr && logInfoEnv[0] == '1') ? spdlog::level::info : spdlog::level::warn;
+		if (!sContext->InitLogging(spdlog::level::debug, relLevel)) { port_log("SSB64: InitLogging failed\n"); return 1; }
+	}
 	port_log("SSB64: Logging OK\n");
 
 	if (!sContext->InitConfiguration()) { port_log("SSB64: InitConfiguration failed\n"); return 1; }
