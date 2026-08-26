@@ -508,6 +508,92 @@ window.addEventListener('error', (e) => {
 const statusEl = document.getElementById('status');
 const setStatus = (t) => { statusEl.textContent = t; };
 
+// ---- stall watch (?SSB64_STALL_WATCH=1) ---------------------------------
+// __stalls  : per-hitch records pushed by Module.onStall (engine side).
+// __heapLog : 250ms JS-heap samples. setInterval cannot fire while the main
+//             thread is blocked, so a gap in this log brackets the freeze —
+//             and a sharp usedJSHeapSize DROP across that gap is the
+//             signature of a major GC, as opposed to engine work.
+// dumpStalls(): console.table of everything, called by hand after a demo.
+window.__stalls = [];
+window.__heapLog = [];
+window.__visLog = [];
+// Gamepad-poll instrumentation: Chrome allocates fresh Gamepad/button/axis
+// wrapper objects on EVERY navigator.getGamepads() call (per connected pad).
+// SDL polls each frame, so connected controllers are a steady per-frame JS
+// allocator that no-pad test rigs never see. Count calls + pads so
+// dumpStalls can correlate heap growth with polling.
+window.__gpStats = { calls: 0, pads: 0 };
+window.__slowLoads = [];
+if (navigator.getGamepads) {
+  const origGP = navigator.getGamepads.bind(navigator);
+  navigator.getGamepads = function () {
+    const r = origGP();
+    window.__gpStats.calls++;
+    let n = 0; for (const g of r) if (g) n++;
+    window.__gpStats.pads = n;
+    return r;
+  };
+}
+if (new URLSearchParams(location.search).get('SSB64_STALL_WATCH') === '1') {
+  setInterval(() => {
+    const H = window.__heapLog;
+    H.push({
+      t: Math.round(performance.now()),
+      jsMb: performance.memory ? (performance.memory.usedJSHeapSize >> 20) : -1,
+      wasmMb: (typeof Module !== 'undefined' && Module.HEAPU8) ? (Module.HEAPU8.byteLength >> 20) : 0,
+      // dlmalloc break (high-water) — what INITIAL_MEMORY actually must cover.
+      usedMb: (typeof Module !== 'undefined' && Module.calledRun && Module._port_heap_used) ? (Module._port_heap_used() >>> 20) : -1,
+      // Chrome clamps setTimeout/setInterval to 1000ms for a tab it considers
+      // hidden — which includes NATIVE WINDOW OCCLUSION (another app's window
+      // covering the browser, e.g. OBS). The pacer in port.cpp rides
+      // emscripten_sleep -> setTimeout, so a clamp drops the game to 1fps and
+      // starves the audio queue. Stamping visibility on every sample tells a
+      // throttle apart from a GC pause or engine work.
+      vis: document.visibilityState[0],   // 'v'isible / 'h'idden
+      foc: document.hasFocus() ? 1 : 0,
+    });
+    if (H.length > 4000) H.shift();
+  }, 250);
+  // Discrete visibility transitions, so a gap can be attributed even if it
+  // straddles two samples.
+  document.addEventListener('visibilitychange', () => {
+    window.__visLog.push({ t: Math.round(performance.now()), vis: document.visibilityState });
+  });
+  window.addEventListener('blur',  () => window.__visLog.push({ t: Math.round(performance.now()), vis: 'blur' }));
+  window.addEventListener('focus', () => window.__visLog.push({ t: Math.round(performance.now()), vis: 'focus' }));
+}
+window.dumpStalls = () => {
+  console.table(window.__stalls);
+  // Sampler gaps > 1s, with the heap delta across each gap.
+  const gaps = [];
+  for (let i = 1; i < window.__heapLog.length; i++) {
+    const a = window.__heapLog[i - 1], b = window.__heapLog[i];
+    if (b.t - a.t > 1000) {
+      gaps.push({ atMs: a.t, gapMs: b.t - a.t, jsMbBefore: a.jsMb, jsMbAfter: b.jsMb,
+                  jsDelta: b.jsMb - a.jsMb, wasmBefore: a.wasmMb, wasmAfter: b.wasmMb });
+    }
+  }
+  console.table(gaps);
+  console.table(window.__visLog);
+  // Sampler intervals during each gap: a RUN of ~1000ms intervals is Chrome
+  // throttling the tab's timers; a single long interval with the rest at
+  // 250ms is a real one-shot pause (GC or engine work).
+  const clamped = window.__heapLog.filter((s, i, a) => i && a[i].t - a[i-1].t > 900 && a[i].t - a[i-1].t < 1200).length;
+  const verdict = clamped > 3 ? 'TIMER THROTTLING (occlusion/hidden tab) — see __visLog'
+                : gaps.some(g => g.jsDelta < -50) ? 'GC pause (large JS heap drop across the gap)'
+                : gaps.some(g => g.wasmBefore !== g.wasmAfter) ? 'wasm heap growth (ALLOW_MEMORY_GROWTH copy)'
+                : window.__stalls.some(s => s.blame === 'wasm') ? 'engine work inside PortPushFrame'
+                : window.__stalls.length ? `${window.__stalls.length} brief browser-side hold(s), no heap drop / no throttling — minor GC or scheduler blip`
+                : 'no stalls recorded';
+  console.log('%c' + verdict, 'font-weight:bold');
+  const gp = window.__gpStats, upSec = performance.now()/1000;
+  if (window.__slowLoads.length) console.table(window.__slowLoads);
+  return { stalls: window.__stalls.length, gaps: gaps.length, clampedIntervals: clamped, verdict,
+           gamepadPollsPerSec: +(gp.calls/upSec).toFixed(1), padsConnected: gp.pads,
+           slowLoads: window.__slowLoads.length };
+};
+
 var Module = {
   canvas: document.getElementById('canvas'),
   arguments: [],
@@ -702,8 +788,33 @@ var Module = {
     Module.callMain(Module.arguments);
     console.warn('[shell] callMain returned');
   },
+  // Stall attributor sink (?SSB64_STALL_WATCH=1). The engine calls this
+  // only for frames whose wall time exceeded 250ms. Records go to a ring
+  // buffer, NOT the console: a console.log burst is itself one of the
+  // candidate causes, so printing here would corrupt the measurement.
+  onStall: function (frame, workMs, reqMs, sleptMs, heapMb) {
+    const S = window.__stalls;
+    const overshoot = sleptMs - reqMs;
+    S.push({
+      t: Math.round(performance.now()),
+      frame, workMs, reqMs, sleptMs, heapMb,
+      wasmMb: Module.HEAPU8 ? (Module.HEAPU8.byteLength >> 20) : 0,
+      jsMb: (performance.memory ? (performance.memory.usedJSHeapSize >> 20) : -1),
+      // Which side of the yield ate the time.
+      blame: workMs >= overshoot ? 'wasm' : 'browser',
+    });
+    if (S.length > 500) S.shift();
+  },
   print: (t) => console.log(t),
-  printErr: (t) => console.warn(t),
+  printErr: (t) => {
+    // Timestamp slow-inline-load reports so dumpStalls can correlate them
+    // with stall records (both use performance.now()-based t).
+    if (typeof t === 'string' && t.includes('slow inline')) {
+      window.__slowLoads.push({ t: Math.round(performance.now()), msg: t });
+      if (window.__slowLoads.length > 200) window.__slowLoads.shift();
+    }
+    console.warn(t);
+  },
   // Lets captureFrame() read back the last presented frame.
   webglContextAttributes: { preserveDrawingBuffer: true },
 };

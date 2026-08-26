@@ -141,8 +141,18 @@ PortCoroutine *port_coroutine_create(void (*entry)(void *), void *arg,
 		co->asyncify_size = ASYNCIFY_STACK_MAX;
 	}
 
-	co->c_stack = (char *)malloc(stack_size);
-	co->asyncify_stack = (char *)malloc(co->asyncify_size);
+	/* 16-align both stacks. Wasm codegen keeps SP 16-aligned only relative
+	 * to its starting value, and plain malloc gives 8 — so any EM_ASM with
+	 * arguments executed inside a fiber can land its alloca'd argument
+	 * buffer at 8-mod-16 and trip readEmAsmArgs' `buf % 16` assert (the
+	 * historical "EM_ASM asserts" flakiness; deterministic once the lazy
+	 * bundle hook in ftport.c ran EM_ASM at every injected spawn). */
+	if (posix_memalign((void **)&co->c_stack, 16, stack_size) != 0) {
+		co->c_stack = NULL;
+	}
+	if (posix_memalign((void **)&co->asyncify_stack, 16, co->asyncify_size) != 0) {
+		co->asyncify_stack = NULL;
+	}
 	if (co->c_stack == NULL || co->asyncify_stack == NULL) {
 		free(co->c_stack);
 		free(co->asyncify_stack);

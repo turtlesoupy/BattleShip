@@ -43,6 +43,16 @@
 #endif
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
+#include <emscripten/heap.h>
+#include <unistd.h>
+/* Wasm-heap usage probe for the shell's stall watch (Module._port_heap_used).
+ * sbrk(0) is dlmalloc's arena top measured from address 0, so it bounds
+ * static data + stack + everything ever malloc'd — the number INITIAL_MEMORY
+ * actually has to cover. dlmalloc rarely lowers the break, making this a
+ * high-water mark; used to size down -sINITIAL_MEMORY from the 1GB guess. */
+extern "C" EMSCRIPTEN_KEEPALIVE uintptr_t port_heap_used(void) {
+	return (uintptr_t)sbrk(0);
+}
 #include <chrono>
 extern "C" void port_audio_boot_complete(void);
 #endif
@@ -1408,6 +1418,23 @@ int main(int argc, char* argv[]) {
 	port_audio_boot_complete();
 #endif
 	while (WindowIsRunning()) {
+#ifdef __EMSCRIPTEN__
+		/* Stall attributor (SSB64_STALL_WATCH=1, off by default).
+		 * Splits each frame's wall time into work done INSIDE wasm
+		 * (PortPushFrame) versus time the browser held the main thread
+		 * across the pacing sleep. A multi-second hitch lands in exactly
+		 * one of the two buckets, which is the whole point: engine work
+		 * (bundle parse / DL build / texture upload / inline resource
+		 * load) versus a browser-side pause (GC, heap growth, compositor).
+		 * Reported to the shell via Module.onStall — never printed, since
+		 * console spam is itself a candidate cause. */
+		static int sStallWatch = -1;
+		if (sStallWatch < 0) {
+			const char *sw = std::getenv("SSB64_STALL_WATCH");
+			sStallWatch = (sw != NULL && sw[0] == '1') ? 1 : 0;
+		}
+		auto tWorkStart = std::chrono::steady_clock::now();
+#endif
 		PortPushFrame();
 		frame++;
 
@@ -1431,6 +1458,19 @@ int main(int argc, char* argv[]) {
 				emscripten_sleep(0);
 				if (waitMs < -100) {
 					sNextFrame = now; /* resync after a long stall */
+				}
+			}
+			if (sStallWatch) {
+				auto tEnd = std::chrono::steady_clock::now();
+				long workMs = (long)std::chrono::duration_cast<std::chrono::milliseconds>(
+					now - tWorkStart).count();
+				long sleptMs = (long)std::chrono::duration_cast<std::chrono::milliseconds>(
+					tEnd - now).count();
+				long reqMs = (waitMs > 0) ? (long)waitMs : 0;
+				if (workMs + sleptMs > 250) {
+					EM_ASM({ if (Module.onStall) Module.onStall($0, $1, $2, $3, $4); },
+					       frame, (int)workMs, (int)reqMs, (int)sleptMs,
+					       (int)(emscripten_get_heap_size() >> 20));
 				}
 			}
 		}

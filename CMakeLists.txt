@@ -913,15 +913,27 @@ elseif (EMSCRIPTEN)
         -sMAX_WEBGL_VERSION=2
         -sGL_ENABLE_GET_PROC_ADDRESS=1
         -sALLOW_MEMORY_GROWTH=1
-        -sINITIAL_MEMORY=1024MB
+        # Measured via Module._port_heap_used (sbrk high-water): ~320MB through
+        # CSS + a battle with an injected character. 512MB = ~60% headroom;
+        # growth stays on so an overshoot costs one buffer copy, not a crash.
+        # The old 1024MB guess doubled the tab's committed memory for nothing —
+        # on low-RAM machines that pressure lengthens browser GC pauses (the
+        # intermittent demo freeze).
+        -sINITIAL_MEMORY=512MB
         -sSTACK_SIZE=8388608
         -sFORCE_FILESYSTEM=1
         -sEXPORTED_RUNTIME_METHODS=FS,callMain
         -sINVOKE_RUN=0
         -sEXIT_RUNTIME=0
-        -sASSERTIONS=1
+        # ASSERTIONS=0 + -g1 for demo/production wasm: ASSERTIONS wraps the
+        # JS runtime paths (asyncify, import boundaries — crossed ~30k/s by
+        # the DL interpreter) in checking code. Measured while chasing the
+        # intermittent demo GC stall: the checked build generated multi-MB/s
+        # of JS garbage at CSS idle, feeding 2-5s major GCs under OBS load.
+        # Flip back to -sASSERTIONS=1 -g2 when debugging boot/runtime issues.
+        -sASSERTIONS=0
         -sUSE_OFFSET_CONVERTER=1
-        -g2
+        -g1
     )
 else()
     add_dependencies(${PROJECT_NAME} libultraship TorchExternal discord-rpc)
