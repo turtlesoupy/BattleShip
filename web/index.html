@@ -65,6 +65,38 @@
   }
   #boot-go:hover { background: #357146; }
   #boot-note { grid-column: 1 / -1; color: #6d727c; font-size: 11px; }
+  #search-btn {
+    position: fixed; right: 12px; top: 10px; z-index: 10;
+    padding: 5px 14px; border-radius: 14px; cursor: pointer; user-select: none;
+    background: rgba(0,0,0,0.6); color: #ccc; border: 1px solid #444;
+    font: 12px/1.5 ui-monospace, monospace;
+  }
+  #search-btn:hover { color: #fff; border-color: #777; }
+  #search-overlay {
+    position: fixed; inset: 0; z-index: 20; display: none;
+    background: rgba(0,0,0,0.55); backdrop-filter: blur(2px);
+  }
+  #search-overlay.open { display: block; }
+  #search-box {
+    position: absolute; left: 50%; top: 18%; transform: translateX(-50%);
+    width: min(440px, 90vw); border-radius: 12px; overflow: hidden;
+    background: rgba(14,15,18,0.97); border: 1px solid #3a3d44;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    font: 14px/1.5 ui-monospace, monospace;
+  }
+  #search-input {
+    width: 100%; box-sizing: border-box; padding: 13px 16px;
+    background: transparent; color: #eee; border: 0; outline: none;
+    border-bottom: 1px solid #2b2e33; font: inherit; font-size: 16px;
+  }
+  #search-list { max-height: 46vh; overflow-y: auto; }
+  .search-item {
+    padding: 9px 16px; color: #cfd3da; cursor: pointer;
+    display: flex; justify-content: space-between; gap: 12px;
+  }
+  .search-item small { color: #6d727c; }
+  .search-item.sel, .search-item:hover { background: #24303d; color: #fff; }
+  #search-empty { padding: 12px 16px; color: #6d727c; }
 </style>
 </head>
 <body>
@@ -101,6 +133,102 @@
   <div id="boot-note">reloads the page with the picked matchup; only converted character&times;fighter combos are listed. "also inject" puts extra characters on their slots for multi-injection demos (pick them on the select screen).</div>
 </div>
 </div>
+<div id="search-btn">&#128269; search</div>
+<div id="search-overlay">
+  <div id="search-box">
+    <input id="search-input" type="text" placeholder="find a fighter&hellip;" autocomplete="off">
+    <div id="search-list"></div>
+  </div>
+</div>
+<script>
+// Roster search: typeahead over /roster.json; picking a character reloads
+// straight onto the character-select page that holds them, pre-selected
+// as 1P with a vanilla CPU opponent — the 1000+-roster navigation path.
+(() => {
+  const overlay = document.getElementById('search-overlay');
+  const input = document.getElementById('search-input');
+  const list = document.getElementById('search-list');
+  let roster = null, view = [], sel = 0;
+
+  function boot(i) {
+    const c = view[i];
+    if (!c) return;
+    const page = 1 + Math.floor(c.tile / 12);
+    const fk = c.tile % 12;
+    const p = new URLSearchParams();
+    p.set('roster', '1');
+    p.set('SSB64_START_SCENE', '16');
+    p.set('SSB64_ROSTER_PAGE', String(page));
+    p.set('SSB64_PLAYER_CHARS', c.slug);
+    p.set('SSB64_BOOT_BATTLE', `${fk},2,4,1`);
+    p.set('cb', Date.now());
+    location.href = location.pathname + '?' + p.toString();
+  }
+
+  function render() {
+    const q = input.value.trim().toLowerCase();
+    view = (roster || []).filter(c =>
+      !q || c.display.toLowerCase().includes(q) || c.slug.includes(q));
+    if (sel >= view.length) sel = 0;
+    list.innerHTML = '';
+    if (!view.length) {
+      const d = document.createElement('div');
+      d.id = 'search-empty';
+      d.textContent = roster === null ? 'loading roster…' : 'no matches';
+      list.appendChild(d);
+      return;
+    }
+    view.forEach((c, i) => {
+      const d = document.createElement('div');
+      d.className = 'search-item' + (i === sel ? ' sel' : '');
+      d.innerHTML = `<span>${c.display}</span><small>page ${1 + Math.floor(c.tile / 12)}</small>`;
+      d.addEventListener('click', () => boot(i));
+      list.appendChild(d);
+    });
+  }
+
+  function open() {
+    overlay.classList.add('open');
+    input.value = ''; sel = 0;
+    render();
+    input.focus();
+    if (roster === null) {
+      fetch('/roster.json', { cache: 'no-cache' }).then(r => r.json()).then(cs => {
+        // tile assignment mirrors the shell's roster staging: sequential,
+        // skipping characters without the needed skeleton variant
+        const VARIANT = ['', 'fox', 'donkey', 'samus', 'luigi', 'link',
+                         'yoshi', 'captain', 'kirby', 'pikachu', 'purin', 'ness'];
+        roster = [];
+        let tile = 0;
+        for (const c of cs) {
+          const fk = tile % 12;
+          if (fk !== 0 && !(c.variants || []).includes(VARIANT[fk])) continue;
+          roster.push({ ...c, tile });
+          tile++;
+        }
+        render();
+      }).catch(() => { roster = []; render(); });
+    }
+  }
+
+  document.getElementById('search-btn').addEventListener('click', open);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+  input.addEventListener('input', () => { sel = 0; render(); });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { overlay.classList.remove('open'); e.stopPropagation(); }
+    else if (e.key === 'ArrowDown') { sel = Math.min(sel + 1, view.length - 1); render(); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { sel = Math.max(sel - 1, 0); render(); e.preventDefault(); }
+    else if (e.key === 'Enter') { boot(sel); }
+    e.stopPropagation();   // keep game keybinds out of the dialog
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !overlay.classList.contains('open') &&
+        document.activeElement.tagName !== 'INPUT') { open(); e.preventDefault(); }
+  });
+})();
+</script>
 <script>
 (() => {
   const FK = { mario:0, fox:1, dk:2, donkey:2, samus:3, luigi:4, link:5,
@@ -226,6 +354,7 @@
     }
     if (document.getElementById('boot-mode').value === 'css') {
       p.set('SSB64_START_SCENE', '16');   // VS character select
+      p.set('roster', '1');               // paged roster + search targets
       if (extraFks.length) {
         // demo preset: CPUs pre-placed on the extra injections (+ the
         // vanilla opponent); 1P token stays free so you pick yours live
@@ -439,6 +568,52 @@ var Module = {
           ENV.SSB64_INJECT_SET = set.join(',');
           if (uiset.length) ENV.SSB64_INJECT_UI_SET = uiset.join(',');
           if (vset.length) ENV.SSB64_INJECT_VOICE_SET = vset.join(',');
+        }
+      }
+      // Scalable roster (?roster=1): stage every character into MEMFS and
+      // write /roster.txt for the engine's paged character select. Each
+      // character sits on tile i%12 of page 1+i/12 and ships the mesh
+      // variant conformed to that tile's skeleton. (At 1000+ characters
+      // the bundles move to on-demand fetch; portraits stay tiny.)
+      if (params.has('roster')) {
+        try {
+          const VARIANT = ['', 'fox', 'donkey', 'samus', 'luigi', 'link',
+                           'yoshi', 'captain', 'kirby', 'pikachu', 'purin', 'ness'];
+          const roster = await (await fetch('/roster.json', { cache: 'no-cache' })).json();
+          FS.mkdirTree('/roster');
+          const lines = [];
+          const jobs = [];
+          let tile = 0;
+          for (const c of roster) {
+            const fk = tile % 12;
+            const file = fk === 0 ? `${c.slug}.osb` : `${c.slug}-${VARIANT[fk]}.osb`;
+            if (fk !== 0 && !(c.variants || []).includes(VARIANT[fk])) {
+              console.warn(`roster: ${c.slug} has no ${VARIANT[fk]} variant — skipped`);
+              continue;
+            }
+            tile++;
+            const ui = c.ui ? `/roster/${c.slug}.osbui` : '';
+            const vox = c.voice ? `/roster/${c.slug}.wav` : '';
+            lines.push(`${c.slug}|${fk}|/roster/${c.slug}.osb|${ui}|${vox}|${c.short || ''}`);
+            jobs.push((async () => {
+              const r = await fetch('bundles/' + file, { cache: 'no-cache' });
+              if (!r.ok) throw new Error(`fetch bundles/${file}: ${r.status}`);
+              FS.writeFile(`/roster/${c.slug}.osb`, new Uint8Array(await r.arrayBuffer()));
+              if (c.ui) {
+                const u = await fetch(`bundles/${c.slug}.osbui`, { cache: 'no-cache' });
+                if (u.ok) FS.writeFile(`/roster/${c.slug}.osbui`, new Uint8Array(await u.arrayBuffer()));
+              }
+              if (c.voice) {
+                const w = await fetch(`bundles/${c.slug}.wav`, { cache: 'no-cache' });
+                if (w.ok) FS.writeFile(`/roster/${c.slug}.wav`, new Uint8Array(await w.arrayBuffer()));
+              }
+            })());
+          }
+          await Promise.all(jobs);
+          FS.writeFile('/roster.txt', lines.join('\n') + '\n');
+          console.log(`roster: staged ${lines.length} characters`);
+        } catch (e) {
+          console.warn('roster staging failed:', e);
         }
       }
       const manifest = await (await fetch('manifest.json')).json();

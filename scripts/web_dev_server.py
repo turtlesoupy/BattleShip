@@ -36,6 +36,40 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
             return
+        # character roster: base characters + available skeleton variants +
+        # display names (from the pipeline's character.json when present)
+        if self.path.split("?")[0] == "/roster.json":
+            import json
+            bdir = os.path.join(ROOT, "bundles")
+            files = set(os.listdir(bdir)) if os.path.isdir(bdir) else set()
+            chars = []
+            for f in sorted(files):
+                if not f.endswith(".osb") or "-" in f[:-4]:
+                    continue
+                slug = f[:-4]
+                variants = sorted(g[len(slug) + 1:-4] for g in files
+                                  if g.startswith(slug + "-") and g.endswith(".osb"))
+                display, short = slug, slug.upper()[:7]
+                cj = os.path.join(os.path.dirname(ROOT), "..", "pipeline",
+                                  "play", "ui", slug, "character.json")
+                try:
+                    cd = json.load(open(cj))
+                    display = cd.get("display", display)
+                    short = cd.get("short") or "".join(
+                        ch for ch in display.upper() if ch.isalpha())[:7]
+                except Exception:
+                    pass
+                chars.append({"slug": slug, "display": display, "short": short,
+                              "variants": variants,
+                              "ui": f"{slug}.osbui" in files,
+                              "voice": f"{slug}.wav" in files})
+            body = json.dumps(chars).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         super().do_GET()
 
     def do_POST(self):
