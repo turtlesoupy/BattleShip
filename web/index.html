@@ -78,10 +78,22 @@
   <label for="boot-opp">opponent</label><select id="boot-opp"></select>
   <label for="boot-stage">stage</label>
   <select id="boot-stage">
-    <option value="4">Hyrule Castle</option>
-    <option value="6">Yoshi's Island</option>
+    <option value="0">Peach's Castle</option>
+    <option value="1">Sector Z</option>
+    <option value="2">Kongo Jungle</option>
+    <option value="3">Planet Zebes</option>
+    <option value="4" selected>Hyrule Castle</option>
+    <option value="5">Yoshi's Island</option>
+    <option value="6">Dream Land</option>
+    <option value="7">Saffron City</option>
+    <option value="8">Mushroom Kingdom</option>
   </select>
-  <button id="boot-go">BOOT MATCH</button>
+  <label for="boot-mode">boot into</label>
+  <select id="boot-mode">
+    <option value="match">match</option>
+    <option value="css">character select</option>
+  </select>
+  <button id="boot-go">BOOT</button>
   <div id="boot-note">reloads the page with the picked matchup; only converted character&times;fighter combos are listed</div>
 </div>
 </div>
@@ -115,9 +127,11 @@
   }
 
   const uiBundles = new Set();
+  const voiceBundles = new Set();
   fetch('/bundles.json', { cache: 'no-cache' }).then(r => r.json()).then(files => {
     files.forEach(f => {
       if (f.endsWith('.osbui')) { uiBundles.add(f); return; }
+      if (f.endsWith('.wav')) { voiceBundles.add(f); return; }
       const base = f.replace(/\.osb$/, '');
       const dash = base.lastIndexOf('-');
       const suffix = dash >= 0 ? base.slice(dash + 1) : null;
@@ -157,7 +171,13 @@
     p.set('fkind', fk);
     const ui = charSel.value + '.osbui';
     if (uiBundles.has(ui)) p.set('inject_ui', 'bundles/' + ui);
-    p.set('SSB64_BOOT_BATTLE', `${fk},${oppSel.value},${stageSel.value}`);
+    const vox = charSel.value + '.wav';
+    if (voiceBundles.has(vox)) p.set('inject_voice', 'bundles/' + vox);
+    if (document.getElementById('boot-mode').value === 'css') {
+      p.set('SSB64_START_SCENE', '16');   // VS character select
+    } else {
+      p.set('SSB64_BOOT_BATTLE', `${fk},${oppSel.value},${stageSel.value}`);
+    }
     p.set('cb', Date.now());
     location.href = location.pathname + '?' + p.toString();
   });

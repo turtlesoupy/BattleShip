@@ -23,7 +23,7 @@
 
 #include <stdint.h>
 
-/* 4230 symbols from the vendored table, 1771 extra stubs from src/. */
+/* 4230 symbols from the vendored table, 1772 extra stubs from src/. */
 
 #define llRelocFileCount ((intptr_t)2132)
 #define llMNCommonFileID ((intptr_t)0x0)
@@ -4611,6 +4611,7 @@
 #define llFTDonkeyAnimWin1FileID ((intptr_t)0) /* STUBBED */
 #define llFTDonkeyAnimWin2FileID ((intptr_t)0) /* STUBBED */
 #define llFTDonkeyAnimWin3FileID ((intptr_t)0) /* STUBBED */
+#define llFTEmblemSprites ((intptr_t)0) /* STUBBED */
 #define llFTFoxAnimAppearFileID ((intptr_t)0) /* STUBBED */
 #define llFTFoxAnimArwingFileID ((intptr_t)0) /* STUBBED */
 #define llFTFoxAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */

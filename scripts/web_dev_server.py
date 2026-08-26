@@ -28,7 +28,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             import json
             bdir = os.path.join(ROOT, "bundles")
             names = sorted(f for f in os.listdir(bdir)
-                           if f.endswith((".osb", ".osbui"))) if os.path.isdir(bdir) else []
+                           if f.endswith((".osb", ".osbui", ".wav"))) if os.path.isdir(bdir) else []
             body = json.dumps(names).encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
