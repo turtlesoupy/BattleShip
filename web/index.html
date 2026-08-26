@@ -134,45 +134,7 @@
 </div>
 </div>
 <div id="search-btn">&#128269; search</div>
-<div id="page-left" class="page-arrow" title="previous roster page">&#9664;</div>
-<div id="page-right" class="page-arrow" title="next roster page">&#9654;</div>
-<style>
-  .page-arrow {
-    position: fixed; top: 50%; transform: translateY(-50%); z-index: 15;
-    display: none; padding: 14px 10px; border-radius: 10px; cursor: pointer;
-    background: rgba(0,0,0,0.55); color: #ffc828; border: 1px solid #444;
-    font: 20px/1 ui-monospace, monospace; user-select: none;
-  }
-  .page-arrow:hover { color: #ffe17a; border-color: #777; }
-  #page-left { left: 8px; }
-  #page-right { right: 8px; }
-</style>
-<script>
-// Roster page hotspots: drive the select screen's pagination through the
-// wasm bridge. Shown only when a multi-page roster is live.
-(() => {
-  const L = document.getElementById('page-left');
-  const R = document.getElementById('page-right');
-  function flip(dir) {
-    try {
-      const n = Module._port_roster_page_count();
-      const p = (Module._port_roster_page() + dir + n) % n;
-      Module._port_roster_request_page(p);
-    } catch (e) {}
-  }
-  L.addEventListener('click', () => flip(-1));
-  R.addEventListener('click', () => flip(1));
-  setInterval(() => {
-    let on = false;
-    try {
-      on = new URLSearchParams(location.search).has('roster') &&
-           typeof Module !== 'undefined' && Module._port_roster_page_count &&
-           Module._port_roster_page_count() > 1;
-    } catch (e) {}
-    L.style.display = R.style.display = on ? 'block' : 'none';
-  }, 1500);
-})();
-</script>
+
 <div id="search-overlay">
   <div id="search-box">
     <input id="search-input" type="text" placeholder="find a fighter&hellip;" autocomplete="off">
