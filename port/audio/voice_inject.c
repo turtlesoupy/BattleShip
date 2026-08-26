@@ -14,11 +14,22 @@
 #include <string.h>
 
 #define OUTPUT_RATE 32000
+#define MAX_CLIPS 16
 
-static short *sPcm = NULL;     /* mono s16 at OUTPUT_RATE */
-static int    sLen = 0;        /* samples in sPcm */
-static int    sCursor = -1;    /* -1 = idle */
-static int    sLoadState = 0;  /* 0 = not tried, 1 = ok, -1 = failed */
+/* One decoded clip per WAV path — a roster of injected characters plays a
+ * different announcer line per fighter kind, so clips are cached by path. */
+typedef struct
+{
+    char   path[512];
+    short *pcm;        /* mono s16 at OUTPUT_RATE */
+    int    len;        /* samples in pcm */
+    int    state;      /* 0 = not tried, 1 = ok, -1 = failed */
+} VoiceClip;
+
+static VoiceClip  sClips[MAX_CLIPS];
+static int        sNClips = 0;
+static VoiceClip *sActive = NULL;  /* last clip started (results-wait uses its length) */
+static int        sCursor = -1;    /* -1 = idle */
 
 static unsigned rd_u32le(const unsigned char *p)
 {
@@ -30,9 +41,9 @@ static unsigned rd_u16le(const unsigned char *p)
     return (unsigned)p[0] | ((unsigned)p[1] << 8);
 }
 
-static int load_clip(void)
+static int load_clip(VoiceClip *clip)
 {
-    const char *path = getenv("SSB64_INJECT_VOICE");
+    const char *path = clip->path;
     unsigned char *raw = NULL;
     long raw_len;
     FILE *f;
@@ -40,9 +51,8 @@ static int load_clip(void)
     const unsigned char *data = NULL;
     unsigned data_len = 0;
 
-    if (sLoadState != 0) return sLoadState > 0;
-    sLoadState = -1;
-    if (path == NULL) return 0;
+    if (clip->state != 0) return clip->state > 0;
+    clip->state = -1;
 
     f = fopen(path, "rb");
     if (f == NULL)
@@ -134,30 +144,54 @@ static int load_clip(void)
             }
             out[i] = (short)(a + (((b - a) * (long)frac) >> 16));
         }
-        sPcm = out;
-        sLen = (int)out_len;
+        clip->pcm = out;
+        clip->len = (int)out_len;
     }
     free(raw);
-    sLoadState = 1;
-    port_log("VOICE: loaded %s (%d samples @ 32 kHz, %.2fs)\n", path, sLen, sLen / 32000.0);
+    clip->state = 1;
+    port_log("VOICE: loaded %s (%d samples @ 32 kHz, %.2fs)\n", path, clip->len, clip->len / 32000.0);
     return 1;
+}
+
+static VoiceClip *clip_for_path(const char *path)
+{
+    int i;
+    if (path == NULL || path[0] == '\0' || strlen(path) >= sizeof(sClips[0].path))
+    {
+        return NULL;
+    }
+    for (i = 0; i < sNClips; i++)
+    {
+        if (strcmp(sClips[i].path, path) == 0) return &sClips[i];
+    }
+    if (sNClips >= MAX_CLIPS) return NULL;
+    strcpy(sClips[sNClips].path, path);
+    return &sClips[sNClips++];
 }
 
 int portVoiceInjectAvailable(void)
 {
-    return getenv("SSB64_INJECT_VOICE") != NULL;
+    return getenv("SSB64_INJECT_VOICE") != NULL ||
+           getenv("SSB64_INJECT_VOICE_SET") != NULL;
 }
 
 int portVoiceInjectPlaying(void)
 {
-    return sCursor >= 0 && sPcm != NULL;
+    return sCursor >= 0 && sActive != NULL && sActive->pcm != NULL;
+}
+
+void portVoiceInjectPlayPath(const char *path)
+{
+    VoiceClip *clip = clip_for_path(path);
+    if (clip == NULL || !load_clip(clip)) return;
+    sActive = clip;
+    sCursor = 0;
+    port_log("VOICE: play %s\n", path);
 }
 
 void portVoiceInjectPlay(void)
 {
-    if (!load_clip()) return;
-    sCursor = 0;
-    port_log("VOICE: play\n");
+    portVoiceInjectPlayPath(getenv("SSB64_INJECT_VOICE"));
 }
 
 void portVoiceInjectStop(void)
@@ -167,21 +201,28 @@ void portVoiceInjectStop(void)
 
 int portVoiceInjectDurationTics(void)
 {
-    if (!load_clip()) return 0;
-    return (sLen * 60 + OUTPUT_RATE - 1) / OUTPUT_RATE;
+    if (sActive == NULL)
+    {
+        /* nothing started yet: fall back to the single-target clip */
+        VoiceClip *clip = clip_for_path(getenv("SSB64_INJECT_VOICE"));
+        if (clip == NULL || !load_clip(clip)) return 0;
+        return (clip->len * 60 + OUTPUT_RATE - 1) / OUTPUT_RATE;
+    }
+    if (!load_clip(sActive)) return 0;
+    return (sActive->len * 60 + OUTPUT_RATE - 1) / OUTPUT_RATE;
 }
 
 void portVoiceInjectMix(short *stereo, int sampleCount)
 {
     int i;
-    if (sCursor < 0 || sPcm == NULL) return;
-    for (i = 0; i < sampleCount && sCursor < sLen; i++, sCursor++)
+    if (sCursor < 0 || sActive == NULL || sActive->pcm == NULL) return;
+    for (i = 0; i < sampleCount && sCursor < sActive->len; i++, sCursor++)
     {
-        int v = sPcm[sCursor];
+        int v = sActive->pcm[sCursor];
         int l = stereo[i * 2] + v;
         int r = stereo[i * 2 + 1] + v;
         stereo[i * 2]     = (short)(l < -32768 ? -32768 : (l > 32767 ? 32767 : l));
         stereo[i * 2 + 1] = (short)(r < -32768 ? -32768 : (r > 32767 ? 32767 : r));
     }
-    if (sCursor >= sLen) sCursor = -1;
+    if (sCursor >= sActive->len) sCursor = -1;
 }

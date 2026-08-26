@@ -20,6 +20,10 @@ int portVoiceInjectPlaying(void);
 // first call; logs and no-ops if the file is missing or malformed.
 void portVoiceInjectPlay(void);
 
+// Same, for an explicit WAV path — a roster of injected characters plays a
+// different announcer line per fighter kind. Clips are cached per path.
+void portVoiceInjectPlayPath(const char *path);
+
 // Cut the clip (a different vanilla announcer name superseded it).
 void portVoiceInjectStop(void);
 

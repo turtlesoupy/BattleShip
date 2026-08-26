@@ -93,8 +93,12 @@
     <option value="match">match</option>
     <option value="css">character select</option>
   </select>
+  <label for="boot-extra1">also inject</label>
+  <select id="boot-extra1"></select><select id="boot-extra1-slot"></select>
+  <label for="boot-extra2">and</label>
+  <select id="boot-extra2"></select><select id="boot-extra2-slot"></select>
   <button id="boot-go">BOOT</button>
-  <div id="boot-note">reloads the page with the picked matchup; only converted character&times;fighter combos are listed</div>
+  <div id="boot-note">reloads the page with the picked matchup; only converted character&times;fighter combos are listed. "also inject" puts extra characters on their slots for multi-injection demos (pick them on the select screen).</div>
 </div>
 </div>
 <script>
@@ -126,6 +130,19 @@
     });
   }
 
+  function fillExtraSlots(i) {
+    const cs = document.getElementById('boot-extra' + i);
+    const ss = document.getElementById('boot-extra' + i + '-slot');
+    const c = chars[cs.value] || {};
+    ss.innerHTML = '';
+    Object.keys(c).map(Number).sort((a,b)=>a-b).forEach(k => {
+      const o = document.createElement('option');
+      o.value = k; o.textContent = FIGHTER_NAMES[k];
+      ss.appendChild(o);
+    });
+    ss.style.display = cs.value ? '' : 'none';
+  }
+
   const uiBundles = new Set();
   const voiceBundles = new Set();
   fetch('/bundles.json', { cache: 'no-cache' }).then(r => r.json()).then(files => {
@@ -145,6 +162,20 @@
       const o = document.createElement('option');
       o.value = n; o.textContent = n;
       charSel.appendChild(o);
+    });
+    // extra-injection rows (demo mode): none by default
+    [1, 2].forEach(i => {
+      const cs = document.getElementById('boot-extra' + i);
+      const none = document.createElement('option');
+      none.value = ''; none.textContent = '—';
+      cs.appendChild(none);
+      Object.keys(chars).sort().forEach(n => {
+        const o = document.createElement('option');
+        o.value = n; o.textContent = n;
+        cs.appendChild(o);
+      });
+      cs.addEventListener('change', () => fillExtraSlots(i));
+      fillExtraSlots(i);
     });
     // preselect whatever this page was booted with
     const q = new URLSearchParams(location.search);
@@ -173,8 +204,34 @@
     if (uiBundles.has(ui)) p.set('inject_ui', 'bundles/' + ui);
     const vox = charSel.value + '.wav';
     if (voiceBundles.has(vox)) p.set('inject_voice', 'bundles/' + vox);
+    // extra injections -> roster set (dedup by slot, main char's slot wins)
+    const extraFks = [];
+    {
+      const taken = new Set([Number(fk)]);
+      const setEnts = [];
+      [1, 2].forEach(i => {
+        const cs = document.getElementById('boot-extra' + i);
+        const ss = document.getElementById('boot-extra' + i + '-slot');
+        const ec = chars[cs.value] || {};
+        const efk = Number(ss.value);
+        if (!cs.value || !ec[efk] || taken.has(efk)) return;
+        taken.add(efk);
+        extraFks.push(efk);
+        setEnts.push(`${ec[efk]}:${efk}:${cs.value}`);
+      });
+      if (setEnts.length) {
+        setEnts.unshift(`${file}:${fk}:${charSel.value}`);
+        p.set('inject_set', setEnts.join(','));
+      }
+    }
     if (document.getElementById('boot-mode').value === 'css') {
       p.set('SSB64_START_SCENE', '16');   // VS character select
+      if (extraFks.length) {
+        // demo preset: CPUs pre-placed on the extra injections (+ the
+        // vanilla opponent); 1P token stays free so you pick yours live
+        p.set('SSB64_BOOT_BATTLE',
+              `-1,${oppSel.value},${stageSel.value},1,${extraFks[0]},${extraFks[1] !== undefined ? extraFks[1] : -1}`);
+      }
     } else {
       p.set('SSB64_BOOT_BATTLE', `${fk},${oppSel.value},${stageSel.value}`);
     }
@@ -351,6 +408,37 @@ var Module = {
           // share the inject fkind, and an unpinned attach lets P2 steal
           // ownership, leaving P1 blanked and invisible.
           ENV.SSB64_INJECT_PLAYER = params.get('player') || '0';
+        }
+      }
+      // Roster injection (demo mode): inject_set=<osbfile>:<fkind>:<char>,...
+      // Each entry pulls bundles/<osbfile> plus that character's .osbui and
+      // announcer .wav when staged (missing extras are skipped silently).
+      if (params.has('inject_set')) {
+        const set = [], uiset = [], vset = [];
+        await Promise.all(params.get('inject_set').split(',').map(async (ent) => {
+          const [file, fk, chr] = ent.split(':');
+          if (!file || fk === undefined) return;
+          const r = await fetch('bundles/' + file, { cache: 'no-cache' });
+          if (!r.ok) throw new Error(`fetch bundles/${file}: ${r.status}`);
+          FS.writeFile(`/inject_fk${fk}.osb`, new Uint8Array(await r.arrayBuffer()));
+          set.push(`/inject_fk${fk}.osb:${fk}`);
+          if (chr) {
+            const ui = await fetch(`bundles/${chr}.osbui`, { cache: 'no-cache' });
+            if (ui.ok) {
+              FS.writeFile(`/inject_fk${fk}.osbui`, new Uint8Array(await ui.arrayBuffer()));
+              uiset.push(`/inject_fk${fk}.osbui:${fk}`);
+            }
+            const wav = await fetch(`bundles/${chr}.wav`, { cache: 'no-cache' });
+            if (wav.ok) {
+              FS.writeFile(`/inject_fk${fk}.wav`, new Uint8Array(await wav.arrayBuffer()));
+              vset.push(`/inject_fk${fk}.wav:${fk}`);
+            }
+          }
+        }));
+        if (typeof ENV !== 'undefined' && set.length) {
+          ENV.SSB64_INJECT_SET = set.join(',');
+          if (uiset.length) ENV.SSB64_INJECT_UI_SET = uiset.join(',');
+          if (vset.length) ENV.SSB64_INJECT_VOICE_SET = vset.join(',');
         }
       }
       const manifest = await (await fetch('manifest.json')).json();
