@@ -134,6 +134,45 @@
 </div>
 </div>
 <div id="search-btn">&#128269; search</div>
+<div id="page-left" class="page-arrow" title="previous roster page">&#9664;</div>
+<div id="page-right" class="page-arrow" title="next roster page">&#9654;</div>
+<style>
+  .page-arrow {
+    position: fixed; top: 50%; transform: translateY(-50%); z-index: 15;
+    display: none; padding: 14px 10px; border-radius: 10px; cursor: pointer;
+    background: rgba(0,0,0,0.55); color: #ffc828; border: 1px solid #444;
+    font: 20px/1 ui-monospace, monospace; user-select: none;
+  }
+  .page-arrow:hover { color: #ffe17a; border-color: #777; }
+  #page-left { left: 8px; }
+  #page-right { right: 8px; }
+</style>
+<script>
+// Roster page hotspots: drive the select screen's pagination through the
+// wasm bridge. Shown only when a multi-page roster is live.
+(() => {
+  const L = document.getElementById('page-left');
+  const R = document.getElementById('page-right');
+  function flip(dir) {
+    try {
+      const n = Module._port_roster_page_count();
+      const p = (Module._port_roster_page() + dir + n) % n;
+      Module._port_roster_request_page(p);
+    } catch (e) {}
+  }
+  L.addEventListener('click', () => flip(-1));
+  R.addEventListener('click', () => flip(1));
+  setInterval(() => {
+    let on = false;
+    try {
+      on = new URLSearchParams(location.search).has('roster') &&
+           typeof Module !== 'undefined' && Module._port_roster_page_count &&
+           Module._port_roster_page_count() > 1;
+    } catch (e) {}
+    L.style.display = R.style.display = on ? 'block' : 'none';
+  }, 1500);
+})();
+</script>
 <div id="search-overlay">
   <div id="search-box">
     <input id="search-input" type="text" placeholder="find a fighter&hellip;" autocomplete="off">
@@ -141,26 +180,47 @@
   </div>
 </div>
 <script>
-// Roster search: typeahead over /roster.json; picking a character reloads
-// straight onto the character-select page that holds them, pre-selected
-// as 1P with a vanilla CPU opponent — the 1000+-roster navigation path.
+// Roster search: typeahead over /roster.json (plus the vanilla twelve).
+// When the game is already running with the roster loaded, highlighting a
+// character insta-switches the select screen to their page via the wasm
+// bridge; otherwise picking one reloads straight onto their page,
+// pre-selected as 1P with a vanilla CPU opponent.
 (() => {
   const overlay = document.getElementById('search-overlay');
   const input = document.getElementById('search-input');
   const list = document.getElementById('search-list');
+  const VANILLA = ["Mario","Fox","Donkey Kong","Samus","Luigi","Link",
+                   "Yoshi","Captain Falcon","Kirby","Pikachu","Jigglypuff","Ness"];
   let roster = null, view = [], sel = 0;
 
-  function boot(i) {
+  function pageOf(c) { return c.vanilla ? 0 : 1 + Math.floor(c.tile / 12); }
+  function fkOf(c) { return c.vanilla ? c.fk : c.tile % 12; }
+
+  function liveBridge() {
+    // in-page navigation: game running + roster staged in this session
+    try {
+      return (typeof Module !== 'undefined' && Module._port_roster_request_page &&
+              new URLSearchParams(location.search).has('roster'))
+             ? Module._port_roster_request_page : null;
+    } catch (e) { return null; }
+  }
+
+  function goto(i, commit) {
     const c = view[i];
     if (!c) return;
-    const page = 1 + Math.floor(c.tile / 12);
-    const fk = c.tile % 12;
+    const bridge = liveBridge();
+    if (bridge) {
+      bridge(pageOf(c));       // insta-switch the CSS to their page
+      if (commit) overlay.classList.remove('open');
+      return;
+    }
+    if (!commit) return;       // no live game: only navigate on commit
     const p = new URLSearchParams();
     p.set('roster', '1');
     p.set('SSB64_START_SCENE', '16');
-    p.set('SSB64_ROSTER_PAGE', String(page));
-    p.set('SSB64_PLAYER_CHARS', c.slug);
-    p.set('SSB64_BOOT_BATTLE', `${fk},2,4,1`);
+    p.set('SSB64_ROSTER_PAGE', String(pageOf(c)));
+    if (!c.vanilla) p.set('SSB64_PLAYER_CHARS', c.slug);
+    p.set('SSB64_BOOT_BATTLE', `${fkOf(c)},2,4,1`);
     p.set('cb', Date.now());
     location.href = location.pathname + '?' + p.toString();
   }
@@ -168,7 +228,7 @@
   function render() {
     const q = input.value.trim().toLowerCase();
     view = (roster || []).filter(c =>
-      !q || c.display.toLowerCase().includes(q) || c.slug.includes(q));
+      !q || c.display.toLowerCase().includes(q) || (c.slug || '').includes(q));
     if (sel >= view.length) sel = 0;
     list.innerHTML = '';
     if (!view.length) {
@@ -181,10 +241,12 @@
     view.forEach((c, i) => {
       const d = document.createElement('div');
       d.className = 'search-item' + (i === sel ? ' sel' : '');
-      d.innerHTML = `<span>${c.display}</span><small>page ${1 + Math.floor(c.tile / 12)}</small>`;
-      d.addEventListener('click', () => boot(i));
+      const where = c.vanilla ? 'vanilla' : `page ${pageOf(c)}`;
+      d.innerHTML = `<span>${c.display}</span><small>${where}</small>`;
+      d.addEventListener('click', () => goto(i, true));
       list.appendChild(d);
     });
+    goto(sel, false);   // insta-switch preview while browsing (live mode only)
   }
 
   function open() {
@@ -198,7 +260,10 @@
         // skipping characters without the needed skeleton variant
         const VARIANT = ['', 'fox', 'donkey', 'samus', 'luigi', 'link',
                          'yoshi', 'captain', 'kirby', 'pikachu', 'purin', 'ness'];
-        roster = [];
+        roster = VANILLA.map((n, fk) => ({
+          display: n, slug: n.toLowerCase().replace(/[^a-z0-9]/g, ''),
+          vanilla: true, fk
+        }));
         let tile = 0;
         for (const c of cs) {
           const fk = tile % 12;
@@ -220,7 +285,7 @@
     if (e.key === 'Escape') { overlay.classList.remove('open'); e.stopPropagation(); }
     else if (e.key === 'ArrowDown') { sel = Math.min(sel + 1, view.length - 1); render(); e.preventDefault(); }
     else if (e.key === 'ArrowUp') { sel = Math.max(sel - 1, 0); render(); e.preventDefault(); }
-    else if (e.key === 'Enter') { boot(sel); }
+    else if (e.key === 'Enter') { goto(sel, true); }
     e.stopPropagation();   // keep game keybinds out of the dialog
   });
   document.addEventListener('keydown', (e) => {
