@@ -53,6 +53,8 @@ ROOT = Path(__file__).resolve().parent.parent
 # pre-submodule path was ROOT/src; it's still on disk during the submodule
 # migration but slated for deletion. Prefer the submodule path when present.
 SRC_DIR = (ROOT / "decomp" / "src") if (ROOT / "decomp" / "src").is_dir() else (ROOT / "src")
+DECOMP_TOOLS = (ROOT / "decomp" / "tools") if (ROOT / "decomp" / "tools").is_dir() else (ROOT / "tools")
+_VERSION = "us"
 
 # Per-version inputs/outputs. US keeps the legacy flat header name so its
 # generated output path AND contents are byte-for-byte unchanged from before
@@ -69,7 +71,8 @@ SYMBOLS_TXT = ROOT / "tools" / VERSIONS["us"]["symbols"]
 
 def select_version(version):
     """Repoint the symbols-input / header-output globals at the version."""
-    global HEADER_OUT, SYMBOLS_TXT
+    global HEADER_OUT, SYMBOLS_TXT, _VERSION
+    _VERSION = version
     cfg = VERSIONS[version]
     SYMBOLS_TXT = ROOT / "tools" / cfg["symbols"]
     HEADER_OUT = ROOT / "include" / cfg["header"]
@@ -92,6 +95,8 @@ def strip_noncode(text: str) -> str:
     """Blank out comments and literals, preserving newlines for line numbers."""
     return COMMENT_RE.sub(lambda m: "\n" * m.group(0).count("\n"), text)
 ASSIGN_RE = re.compile(r"^\s*(ll[A-Za-z_][A-Za-z0-9_]*)\s*=\s*([^;]+?)\s*;\s*$")
+DESCRIPTION_RE = re.compile(r"^-(\d+):\s*(\S+)\s*$")
+NAME_RE = re.compile(r"[A-Za-z0-9_]+")
 
 
 def collect_src_symbols() -> set[str]:
@@ -111,6 +116,50 @@ def collect_src_symbols() -> set[str]:
         for match in SYMBOL_RE.findall(strip_noncode(text)):
             symbols.add(match)
     return symbols
+
+
+def derive_described_symbols() -> dict[str, str]:
+    """Recover `ll<Name>FileID` values from the decomp's per-version file list.
+
+    decomp/tools/relocFileDescriptions.<version>.txt names every reloc file as
+    `-NNN: Name`, so `-500: FTMarioAnimWalk1` fixes
+    `llFTMarioAnimWalk1FileID == 500`. The vendored symbol table only carries
+    the subset the ROM's linker exported by name, which is why ~1770 perfectly
+    well-defined file IDs used to fall through to `((intptr_t)0)`.
+
+    This MUST be read per version. US and JP use different file ID spaces —
+    upstream says so in src/relocData/converted_files.jp.mk, and 1937 of the
+    2107 names they share resolve to different IDs. Deriving JP values from
+    anything US-shaped (e.g. the `<id>_<Name>.c` relocData filenames, which
+    encode US IDs only) would silently mis-address every JP animation.
+
+    The vendored table still wins on conflict; it is the authority. Validated
+    at introduction: zero disagreements against the vendored table on either
+    version (285 overlapping symbols on US, 260 on JP).
+    """
+    path = DECOMP_TOOLS / f"relocFileDescriptions.{_VERSION}.txt"
+    if not path.is_file():
+        print(f"warning: {path.name} not found; file IDs that the vendored "
+              f"table lacks will stay stubbed", file=sys.stderr)
+        return {}
+    derived: dict[str, str] = {}
+    seen: dict[str, int] = {}
+    for line in path.read_text(encoding="utf-8", errors="ignore").splitlines():
+        m = DESCRIPTION_RE.match(line.strip())
+        if not m:
+            continue
+        file_id, name = int(m.group(1)), m.group(2)
+        if not NAME_RE.fullmatch(name):
+            continue
+        symbol = f"ll{name}FileID"
+        if seen.get(symbol, file_id) != file_id:
+            print(f"warning: {symbol} maps to both {seen[symbol]} and "
+                  f"{file_id}; leaving it unresolved", file=sys.stderr)
+            derived.pop(symbol, None)
+            continue
+        seen[symbol] = file_id
+        derived[symbol] = str(file_id)
+    return derived
 
 
 def parse_symbol_values() -> dict[str, str]:
@@ -216,11 +265,20 @@ def main() -> None:
 
     values = parse_symbol_values()
     src_symbols = collect_src_symbols()
+
+    # Fill gaps in the vendored table from relocData filenames. The table is
+    # authoritative wherever it has an entry, so derived values only ever
+    # replace what would otherwise have been a ((intptr_t)0) stub.
+    derived = derive_described_symbols()
+    from_table = len(src_symbols & set(values.keys()))
+    filled = {k: v for k, v in derived.items() if k not in values}
+    values.update(filled)
     extra_stubs = src_symbols - set(values.keys())
 
-    print(f"Loaded {len(values)} symbols from {SYMBOLS_TXT.relative_to(ROOT)}")
+    print(f"Loaded {len(values) - len(filled)} symbols from {SYMBOLS_TXT.relative_to(ROOT)}")
     print(f"Scanned src/ and found {len(src_symbols)} ll* references")
-    print(f"  {len(src_symbols & set(values.keys()))} referenced symbols resolve from the table")
+    print(f"  {from_table} referenced symbols resolve from the table")
+    print(f"  {len(src_symbols & set(filled))} referenced symbols resolve from relocFileDescriptions")
     print(f"  {len(extra_stubs)} referenced symbols stub to ((intptr_t)0)")
 
     write_header(values, extra_stubs)

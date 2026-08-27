@@ -23,7 +23,7 @@
 
 #include <stdint.h>
 
-/* 4230 symbols from the vendored table, 1770 extra stubs from src/. */
+/* 6077 symbols from the vendored table, 2 extra stubs from src/. */
 
 #define llRelocFileCount ((intptr_t)2132)
 #define llMNCommonFileID ((intptr_t)0x0)
@@ -4255,1776 +4255,1855 @@
 #define llDonkeySpecial2EntryTaruAnimJoint ((intptr_t)0x0850)
 #define llMarioSpecial2EntryDokanDObjDesc ((intptr_t)0x0608)
 #define llMarioSpecial2EntryDokanAnimJoint ((intptr_t)0x06C0)
+#define llIFCommonItemNamesFileID ((intptr_t)29)
+#define llIFCommonObjectFileID ((intptr_t)39)
+#define llLBTransitionPaperAirplaneFileID ((intptr_t)47)
+#define llITCommonObjectFileID ((intptr_t)86)
+#define llStageInishieBackgroundFileID ((intptr_t)91)
+#define llStageLastBackgroundFileID ((intptr_t)96)
+#define llStageBattlefieldBackgroundFileID ((intptr_t)97)
+#define llStageMetalBackgroundFileID ((intptr_t)98)
+#define llStagePupupuBetaImagesFileID ((intptr_t)100)
+#define llStagePupupuBeta1FileID ((intptr_t)101)
+#define llStagePupupuBeta2FileID ((intptr_t)102)
+#define llStagePupupuImagesFileID ((intptr_t)103)
+#define llStagePupupuFile2FileID ((intptr_t)104)
+#define llStageZebesFile2FileID ((intptr_t)105)
+#define llStageCastleFile2FileID ((intptr_t)106)
+#define llStageInishieFile2FileID ((intptr_t)107)
+#define llStageJungleFile2FileID ((intptr_t)108)
+#define llStageSectorFile2FileID ((intptr_t)109)
+#define llStageYosterImagesFileID ((intptr_t)110)
+#define llStageYosterFile2FileID ((intptr_t)111)
+#define llStageYamabukiFile2FileID ((intptr_t)112)
+#define llStageHyruleFile2FileID ((intptr_t)113)
+#define llStageLastFile2FileID ((intptr_t)114)
+#define llStageExplainFile2FileID ((intptr_t)115)
+#define llStageBattlefieldFile2FileID ((intptr_t)116)
+#define llStageMetalFile2FileID ((intptr_t)117)
+#define llStageYosterSmallFile2FileID ((intptr_t)118)
+#define llBonus1CommonBackgroundFileID ((intptr_t)119)
+#define llBonus1CommonImages1FileID ((intptr_t)120)
+#define llBonus1CommonImages2FileID ((intptr_t)121)
+#define llBonus1CommonImages3FileID ((intptr_t)122)
+#define llBonus1CommonImages4FileID ((intptr_t)123)
+#define llGRBonus1MarioFile2FileID ((intptr_t)124)
+#define llGRBonus1FoxFile2FileID ((intptr_t)125)
+#define llGRBonus1DonkeyFile2FileID ((intptr_t)126)
+#define llGRBonus1SamusFile2FileID ((intptr_t)127)
+#define llGRBonus1LuigiFile2FileID ((intptr_t)128)
+#define llGRBonus1LinkFile2FileID ((intptr_t)129)
+#define llGRBonus1YoshiFile2FileID ((intptr_t)130)
+#define llGRBonus1CaptainFile2FileID ((intptr_t)131)
+#define llGRBonus1KirbyFile2FileID ((intptr_t)132)
+#define llGRBonus1PikachuFile2FileID ((intptr_t)133)
+#define llGRBonus1PurinFile2FileID ((intptr_t)134)
+#define llGRBonus1NessFile2FileID ((intptr_t)135)
+#define llGRBonus2MarioFile2FileID ((intptr_t)137)
+#define llGRBonus2FoxFile2FileID ((intptr_t)138)
+#define llGRBonus2DonkeyFile2FileID ((intptr_t)139)
+#define llGRBonus2SamusFile2FileID ((intptr_t)140)
+#define llGRBonus2LuigiFile2FileID ((intptr_t)141)
+#define llGRBonus2LinkFile2FileID ((intptr_t)142)
+#define llGRBonus2YoshiFile2FileID ((intptr_t)143)
+#define llGRBonus2CaptainFile2FileID ((intptr_t)144)
+#define llGRBonus2KirbyFile2FileID ((intptr_t)145)
+#define llGRBonus2PikachuFile2FileID ((intptr_t)146)
+#define llGRBonus2PurinFile2FileID ((intptr_t)147)
+#define llGRBonus2NessFile2FileID ((intptr_t)148)
+#define llGRBonus3File2FileID ((intptr_t)149)
+#define llITBonus1ObjectFileID ((intptr_t)150)
+#define llStagePupupuFile3FileID ((intptr_t)152)
+#define llStageSectorFile3FileID ((intptr_t)153)
+#define llStageYosterFile3FileID ((intptr_t)154)
+#define llStageInishieFile3FileID ((intptr_t)155)
+#define llStageCastleFile3FileID ((intptr_t)156)
+#define llStageZebesFile3FileID ((intptr_t)157)
+#define llStageJungleFile3FileID ((intptr_t)158)
+#define llStageYamabukiFile3FileID ((intptr_t)159)
+#define llStageYamabukiFile4FileID ((intptr_t)160)
+#define llGRBonus3File3FileID ((intptr_t)162)
+#define llFTCommonMovesetFileID ((intptr_t)201)
+#define llKirbySpecial1FileID ((intptr_t)230)
+#define llITBonus1ObjectHeaderFileID ((intptr_t)253)
+#define llMarioSecondaryImageFileID ((intptr_t)299)
+#define llNCommonTextureFileID ((intptr_t)302)
+#define llFoxUnknownFileID ((intptr_t)315)
+#define llLinkBoomerangModelFileID ((intptr_t)326)
+#define llFTMarioAnimWin2FileID ((intptr_t)357)
+#define llFTMarioAnimWin3FileID ((intptr_t)358)
+#define llFTMarioAnimSelectedFileID ((intptr_t)359)
+#define llFTMarioAnimWinBetaFileID ((intptr_t)360)
+#define llFTMarioAnimClapsFileID ((intptr_t)361)
+#define llFTMarioAnimDollPickUpFileID ((intptr_t)362)
+#define llFTMarioAnimDollFallsFileID ((intptr_t)363)
+#define llFTMarioAnimDollRevivalFileID ((intptr_t)364)
+#define llFTMarioAnimIntroVsKirbyFileID ((intptr_t)365)
+#define llFTMarioAnimIntroFileID ((intptr_t)366)
+#define llFTMarioAnimIntro2FileID ((intptr_t)367)
+#define llFTMarioAnimPoseFileID ((intptr_t)368)
+#define llFTMarioAnimPose2FileID ((intptr_t)369)
+#define llFTFoxAnimWin1FileID ((intptr_t)370)
+#define llFTFoxAnimWin2FileID ((intptr_t)371)
+#define llFTFoxAnimSelectedFileID ((intptr_t)372)
+#define llFTFoxAnimClapsFileID ((intptr_t)373)
+#define llFTFoxAnimDollPickUpFileID ((intptr_t)374)
+#define llFTFoxAnimDollFallFileID ((intptr_t)375)
+#define llFTFoxAnimDollFileID ((intptr_t)376)
+#define llFTFoxAnimDollRevivalFileID ((intptr_t)377)
+#define llFTFoxAnimPose1FrameFileID ((intptr_t)378)
+#define llFTFoxAnimPosePostBlasterFileID ((intptr_t)379)
+#define llFTFoxAnimPoseBlaster2FileID ((intptr_t)380)
+#define llFTDonkeyAnimSelectedFileID ((intptr_t)381)
+#define llFTDonkeyAnimWin1FileID ((intptr_t)382)
+#define llFTDonkeyAnimWin2FileID ((intptr_t)383)
+#define llFTDonkeyAnimWin3FileID ((intptr_t)384)
+#define llFTDonkeyAnimClapsFileID ((intptr_t)385)
+#define llFTDonkeyAnimDollPickUpFileID ((intptr_t)386)
+#define llFTDonkeyAnimDollFallFileID ((intptr_t)387)
+#define llFTDonkeyAnimDollRevivalFileID ((intptr_t)388)
+#define llFTDonkeyAnimIntroFileID ((intptr_t)389)
+#define llFTDonkeyAnimUnknownFileID ((intptr_t)390)
+#define llFTDonkeyAnimPose1PFileID ((intptr_t)391)
+#define llFTGDonkeyAnimPose1PFileID ((intptr_t)392)
+#define llFTSamusAnimWin3FileID ((intptr_t)393)
+#define llFTSamusAnimWin1FileID ((intptr_t)394)
+#define llFTSamusAnimSelectedFileID ((intptr_t)395)
+#define llFTSamusAnimClapsFileID ((intptr_t)396)
+#define llFTSamusAnimDollPickUpFileID ((intptr_t)397)
+#define llFTSamusAnimDollFallFileID ((intptr_t)398)
+#define llFTSamusAnimDollRevivalFileID ((intptr_t)399)
+#define llFTSamusAnimIntroFileID ((intptr_t)400)
+#define llFTSamusAnimPoseEnemyFileID ((intptr_t)401)
+#define llFTSamusAnimPosePlayerFileID ((intptr_t)402)
+#define llFTSamusAnimUnknownFileID ((intptr_t)403)
+#define llFTLinkAnimSelectedFileID ((intptr_t)404)
+#define llFTLinkAnimWin1FileID ((intptr_t)405)
+#define llFTLinkAnimWin2FileID ((intptr_t)406)
+#define llFTLinkAnimClapsFileID ((intptr_t)407)
+#define llFTLinkAnimDollPickUpFileID ((intptr_t)408)
+#define llFTLinkAnimDollFallFileID ((intptr_t)409)
+#define llFTLinkAnimDollRevivalFileID ((intptr_t)410)
+#define llFTLinkAnimClaps2FileID ((intptr_t)411)
+#define llFTLinkAnimIntroFileID ((intptr_t)412)
+#define llFTLinkAnimPoseAllyFileID ((intptr_t)413)
+#define llFTLinkAnimPosePlayerFileID ((intptr_t)414)
+#define llFTLinkAnimPoseOpponentFileID ((intptr_t)415)
+#define llFTKirbyAnimWin1FileID ((intptr_t)416)
+#define llFTKirbyAnimWin2FileID ((intptr_t)417)
+#define llFTKirbyAnimSelectedFileID ((intptr_t)418)
+#define llFTKirbyAnimClapsFileID ((intptr_t)419)
+#define llFTKirbyAnimDollPickUpFileID ((intptr_t)420)
+#define llFTKirbyAnimDollFallFileID ((intptr_t)421)
+#define llFTKirbyAnimDollRevivalFileID ((intptr_t)422)
+#define llFTKirbyAnimUnknownFileID ((intptr_t)423)
+#define llFTKirbyAnimIntroFileID ((intptr_t)424)
+#define llFTKirbyAnimIntro2FileID ((intptr_t)425)
+#define llFTKirbyAnimIntroPoseFileID ((intptr_t)426)
+#define llFTKirbyAnimPoseFileID ((intptr_t)427)
+#define llFTKirbyAnimPose2FileID ((intptr_t)428)
+#define llFTCaptainAnimSelectedFileID ((intptr_t)429)
+#define llFTCaptainAnimVictory1FileID ((intptr_t)430)
+#define llFTCaptainAnimVictory2FileID ((intptr_t)431)
+#define llFTCaptainAnimClapsFileID ((intptr_t)432)
+#define llFTCaptainAnimDollFallFileID ((intptr_t)433)
+#define llFTCaptainAnimDollRevivalFileID ((intptr_t)434)
+#define llFTCaptainAnimUnknownFileID ((intptr_t)435)
+#define llFTNessAnimWin1FileID ((intptr_t)436)
+#define llFTNessAnimSelectedFileID ((intptr_t)437)
+#define llFTNessAnimWin2FileID ((intptr_t)438)
+#define llFTNessAnimClapsFileID ((intptr_t)439)
+#define llFTNessAnimDollFallFileID ((intptr_t)440)
+#define llFTNessAnimDollRevivalFileID ((intptr_t)441)
+#define llFTNessAnimPosePlayerFileID ((intptr_t)442)
+#define llFTYoshiAnimWin1FileID ((intptr_t)443)
+#define llFTYoshiAnimSelectedFileID ((intptr_t)444)
+#define llFTYoshiAnimWin2FileID ((intptr_t)445)
+#define llFTYoshiAnimUnknown1FileID ((intptr_t)446)
+#define llFTYoshiAnimDollPickUpFileID ((intptr_t)447)
+#define llFTYoshiAnimDollFallFileID ((intptr_t)448)
+#define llFTYoshiAnimDollRevivalFileID ((intptr_t)449)
+#define llFTYoshiAnimUnknown2FileID ((intptr_t)450)
+#define llFTYoshiAnimUnknown3FileID ((intptr_t)451)
+#define llFTYoshiAnimUnknown4FileID ((intptr_t)452)
+#define llFTYoshiAnimUnknown5FileID ((intptr_t)453)
+#define llFTYoshiAnimUnknown6FileID ((intptr_t)454)
+#define llFTYoshiAnimIntroPoseFileID ((intptr_t)455)
+#define llFTYoshiAnimUnknown7FileID ((intptr_t)456)
+#define llFTYoshiAnimTeamPosesFileID ((intptr_t)457)
+#define llFTYoshiAnimUnknown8FileID ((intptr_t)458)
+#define llFTYoshiAnimUnknown9FileID ((intptr_t)459)
+#define llFTYoshiAnimUnknown10FileID ((intptr_t)460)
+#define llFTBossAnimPose1PFileID ((intptr_t)461)
+#define llFTLuigiAnimSelectedFileID ((intptr_t)462)
+#define llFTLuigiAnimWin1FileID ((intptr_t)463)
+#define llFTLuigiAnimWin2FileID ((intptr_t)464)
+#define llFTLuigiAnimDollFallFileID ((intptr_t)465)
+#define llFTLuigiAnimDollRevivalFileID ((intptr_t)466)
+#define llFTLuigiAnimPosePlayerFileID ((intptr_t)467)
+#define llFTLuigiAnimPoseEnemyFileID ((intptr_t)468)
+#define llFTLuigiAnimUnknownFileID ((intptr_t)469)
+#define llFTPurinAnimSelectedFileID ((intptr_t)470)
+#define llFTPurinAnimWin1FileID ((intptr_t)471)
+#define llFTPurinAnimWin2FileID ((intptr_t)472)
+#define llFTPurinAnimDollFallFileID ((intptr_t)473)
+#define llFTPurinAnimDollRevivalFileID ((intptr_t)474)
+#define llFTPurinAnimUnknownFileID ((intptr_t)475)
+#define llFTPikachuAnimSelectedFileID ((intptr_t)476)
+#define llFTPikachuAnimWin1FileID ((intptr_t)477)
+#define llFTPikachuAnimWin2FileID ((intptr_t)478)
+#define llFTPikachuAnimClapsFileID ((intptr_t)479)
+#define llFTPikachuAnimDollPickUpFileID ((intptr_t)480)
+#define llFTPikachuAnimDollFallFileID ((intptr_t)481)
+#define llFTPikachuAnimDollRevivalFileID ((intptr_t)482)
+#define llFTPikachuAnimUnknown1FileID ((intptr_t)483)
+#define llFTPikachuAnimUnknown2FileID ((intptr_t)484)
+#define llFTPikachuAnimPoseAllyFileID ((intptr_t)485)
+#define llFTPikachuAnimPosePlayerFileID ((intptr_t)486)
+#define llFTPikachuAnimPoseEnemyFileID ((intptr_t)487)
+#define llFTMMarioAnimPose1PFileID ((intptr_t)488)
+#define llFTNMarioAnimPose1PFileID ((intptr_t)489)
+#define llFTNFoxAnimPose1PFileID ((intptr_t)490)
+#define llFTNDonkeyAnimPose1PFileID ((intptr_t)491)
+#define llFTNSamusAnimPose1PFileID ((intptr_t)492)
+#define llFTNLinkAnimPose1PFileID ((intptr_t)493)
+#define llFTNYoshiAnimPose1PFileID ((intptr_t)494)
+#define llFTNCaptainAnimPose1PFileID ((intptr_t)495)
+#define llFTNKirbyAnimPose1PFileID ((intptr_t)496)
+#define llFTNPikachuAnimPose1PFileID ((intptr_t)497)
+#define llFTNNessAnimPose1PFileID ((intptr_t)498)
+#define llFTMarioAnimWalk1FileID ((intptr_t)500)
+#define llFTMarioAnimWalk2FileID ((intptr_t)501)
+#define llFTMarioAnimWalk3FileID ((intptr_t)502)
+#define llFTMarioAnimWalkEndFileID ((intptr_t)503)
+#define llFTMarioAnimDashFileID ((intptr_t)504)
+#define llFTMarioAnimRunFileID ((intptr_t)505)
+#define llFTMarioAnimRunBrakeFileID ((intptr_t)506)
+#define llFTMarioAnimTurnFileID ((intptr_t)507)
+#define llFTMarioAnimTurnRunFileID ((intptr_t)508)
+#define llFTMarioAnimJumpFFileID ((intptr_t)509)
+#define llFTMarioAnimJumpBFileID ((intptr_t)510)
+#define llFTMarioAnimJumpAerialFFileID ((intptr_t)511)
+#define llFTMarioAnimJumpAerialBFileID ((intptr_t)512)
+#define llFTMarioAnimFallFileID ((intptr_t)513)
+#define llFTMarioAnimFallAerialFileID ((intptr_t)514)
+#define llFTMarioAnimCrouchFileID ((intptr_t)515)
+#define llFTMarioAnimCrouchIdleFileID ((intptr_t)516)
+#define llFTMarioAnimCrouchEndFileID ((intptr_t)517)
+#define llFTMarioAnimLandingAirXFileID ((intptr_t)518)
+#define llFTMarioAnimShieldDropFileID ((intptr_t)519)
+#define llFTMarioAnimTeeterFileID ((intptr_t)520)
+#define llFTMarioAnimTeeterstartFileID ((intptr_t)521)
+#define llFTMarioAnimSleepFileID ((intptr_t)522)
+#define llFTMarioAnimDamaged1FileID ((intptr_t)523)
+#define llFTMarioAnimDamaged2FileID ((intptr_t)524)
+#define llFTMarioAnimFalconDivePulledFileID ((intptr_t)525)
+#define llFTMarioAnimDamageX1FileID ((intptr_t)526)
+#define llFTMarioAnimDamageX2FileID ((intptr_t)527)
+#define llFTMarioAnimDamageX3FileID ((intptr_t)528)
+#define llFTMarioAnimDamaged3FileID ((intptr_t)529)
+#define llFTMarioAnimDamaged4FileID ((intptr_t)530)
+#define llFTMarioAnimDamaged5FileID ((intptr_t)531)
+#define llFTMarioAnimDamaged6FileID ((intptr_t)532)
+#define llFTMarioAnimDamageAirFileID ((intptr_t)533)
+#define llFTMarioAnimDamaged7FileID ((intptr_t)534)
+#define llFTMarioAnimDamageFlyX1FileID ((intptr_t)535)
+#define llFTMarioAnimDamageFlyX2FileID ((intptr_t)536)
+#define llFTMarioAnimDamage2FileID ((intptr_t)537)
+#define llFTMarioAnimShieldBreakFileID ((intptr_t)538)
+#define llFTMarioAnimDamageFlyTopFileID ((intptr_t)539)
+#define llFTMarioAnimDamagedFileID ((intptr_t)540)
+#define llFTMarioAnimFallSpecialFileID ((intptr_t)541)
+#define llFTMarioAnimCeilingBonkFileID ((intptr_t)542)
+#define llFTMarioAnimStunLandUFileID ((intptr_t)544)
+#define llFTMarioAnimStunStartUFileID ((intptr_t)546)
+#define llFTMarioAnimTechFFileID ((intptr_t)547)
+#define llFTMarioAnimTechBFileID ((intptr_t)548)
+#define llFTMarioAnimDownForwardDFileID ((intptr_t)549)
+#define llFTMarioAnimDownForwardUFileID ((intptr_t)550)
+#define llFTMarioAnimDownBackDFileID ((intptr_t)551)
+#define llFTMarioAnimDownBackUFileID ((intptr_t)552)
+#define llFTMarioAnimDownAttackDFileID ((intptr_t)553)
+#define llFTMarioAnimDownAttackUFileID ((intptr_t)554)
+#define llFTMarioAnimTechFileID ((intptr_t)555)
+#define llFTMarioAnimClangRecoilFileID ((intptr_t)556)
+#define llFTMarioAnimShieldOnFileID ((intptr_t)557)
+#define llFTMarioAnimShieldOffFileID ((intptr_t)558)
+#define llFTMarioAnimRollFFileID ((intptr_t)559)
+#define llFTMarioAnimRollBFileID ((intptr_t)560)
+#define llFTMarioAnimCatchFileID ((intptr_t)561)
+#define llFTMarioAnimCatchPullFileID ((intptr_t)562)
+#define llFTMarioAnimThrowFFileID ((intptr_t)563)
+#define llFTMarioAnimThrowBFileID ((intptr_t)564)
+#define llFTMarioAnimEggLayPulledFileID ((intptr_t)565)
+#define llFTMarioAnimThrownDKPulledFileID ((intptr_t)566)
+#define llFTMarioAnimThrownMarioBrosFileID ((intptr_t)567)
+#define llFTMarioAnimThrownDKFileID ((intptr_t)568)
+#define llFTMarioAnimThrown2FileID ((intptr_t)569)
+#define llFTMarioAnimThrown1FileID ((intptr_t)570)
+#define llFTMarioAnimTauntFileID ((intptr_t)571)
+#define llFTMarioAnimCliffCatchFileID ((intptr_t)572)
+#define llFTMarioAnimCliffWaitFileID ((intptr_t)573)
+#define llFTMarioAnimCliffQuickFileID ((intptr_t)574)
+#define llFTMarioAnimCliffClimbQuick1FileID ((intptr_t)575)
+#define llFTMarioAnimCliffClimbQuick2FileID ((intptr_t)576)
+#define llFTMarioAnimCliffSlowFileID ((intptr_t)577)
+#define llFTMarioAnimCliffClimbSlow1FileID ((intptr_t)578)
+#define llFTMarioAnimCliffClimbSlow2FileID ((intptr_t)579)
+#define llFTMarioAnimCliffAttackQuick1FileID ((intptr_t)580)
+#define llFTMarioAnimCliffAttackQuick2FileID ((intptr_t)581)
+#define llFTMarioAnimCliffAttackSlow1FileID ((intptr_t)582)
+#define llFTMarioAnimCliffAttackSlow2FileID ((intptr_t)583)
+#define llFTMarioAnimCliffEscapeQuick1FileID ((intptr_t)584)
+#define llFTMarioAnimCliffEscapeQuick2FileID ((intptr_t)585)
+#define llFTMarioAnimCliffEscapeSlow1FileID ((intptr_t)586)
+#define llFTMarioAnimCliffEscapeSlow2FileID ((intptr_t)587)
+#define llFTMarioAnimLightItemPickupFileID ((intptr_t)588)
+#define llFTMarioAnimItemThrowSmashBFileID ((intptr_t)589)
+#define llFTMarioAnimItemThrowSmashUFileID ((intptr_t)590)
+#define llFTMarioAnimItemThrowSmashDFileID ((intptr_t)591)
+#define llFTMarioAnimItemThrowDashFileID ((intptr_t)592)
+#define llFTMarioAnimItemDropFileID ((intptr_t)593)
+#define llFTMarioAnimItemThrowAirSmashBFileID ((intptr_t)594)
+#define llFTMarioAnimItemThrowAirSmashUFileID ((intptr_t)595)
+#define llFTMarioAnimItemThrowAirSmashFFileID ((intptr_t)596)
+#define llFTMarioAnimHeavyItemPickupFileID ((intptr_t)597)
+#define llFTMarioAnimHeavyItemThrowSmashBFileID ((intptr_t)598)
+#define llFTMarioAnimStarRodNeutralFileID ((intptr_t)599)
+#define llFTMarioAnimStarRodTiltFileID ((intptr_t)600)
+#define llFTMarioAnimStarRodSmashFileID ((intptr_t)601)
+#define llFTMarioAnimStarRodDashFileID ((intptr_t)602)
+#define llFTMarioAnimHammerIdleFileID ((intptr_t)603)
+#define llFTMarioAnimHammerLandingFileID ((intptr_t)604)
+#define llFTMarioAnimFireFlowerShootFileID ((intptr_t)605)
+#define llFTMarioAnimJab1FileID ((intptr_t)606)
+#define llFTMarioAnimJab2FileID ((intptr_t)607)
+#define llFTMarioAnimJab3FileID ((intptr_t)608)
+#define llFTMarioAnimDashAttackFileID ((intptr_t)609)
+#define llFTMarioAnimFTiltHighFileID ((intptr_t)610)
+#define llFTMarioAnimFTiltFileID ((intptr_t)611)
+#define llFTMarioAnimFTiltLowFileID ((intptr_t)612)
+#define llFTMarioAnimUTiltFileID ((intptr_t)613)
+#define llFTMarioAnimDTiltFileID ((intptr_t)614)
+#define llFTMarioAnimFSmashHighFileID ((intptr_t)615)
+#define llFTMarioAnimFSmashMidHighFileID ((intptr_t)616)
+#define llFTMarioAnimFSmashFileID ((intptr_t)617)
+#define llFTMarioAnimFSmashMidLowFileID ((intptr_t)618)
+#define llFTMarioAnimFSmashLowFileID ((intptr_t)619)
+#define llFTMarioAnimUSmashFileID ((intptr_t)620)
+#define llFTMarioAnimDSmashFileID ((intptr_t)621)
+#define llFTMarioAnimAttackAirNFileID ((intptr_t)622)
+#define llFTMarioAnimAttackAirFFileID ((intptr_t)623)
+#define llFTMarioAnimAttackAirBFileID ((intptr_t)624)
+#define llFTMarioAnimAttackAirUFileID ((intptr_t)625)
+#define llFTMarioAnimAttackAirDFileID ((intptr_t)626)
+#define llFTMarioAnimLandingAirFFileID ((intptr_t)627)
+#define llFTMarioAnimLandingAirBFileID ((intptr_t)628)
+#define llFTMarioAnimLandingAirUFileID ((intptr_t)629)
+#define llFTMarioAnimEnterPipeFileID ((intptr_t)630)
+#define llFTMarioAnimExitPipeFileID ((intptr_t)631)
+#define llFTMarioAnimExitPipeWalkFileID ((intptr_t)632)
+#define llFTMarioAnimAppear1FileID ((intptr_t)633)
+#define llFTMarioAnimAppear2FileID ((intptr_t)634)
+#define llFTMarioAnimFireballGroundFileID ((intptr_t)635)
+#define llFTMarioAnimFireballAirFileID ((intptr_t)636)
+#define llFTMarioAnimSuperJumpPunchAirFileID ((intptr_t)637)
+#define llFTMarioAnimMarioTornadoGroundFileID ((intptr_t)638)
+#define llFTMarioAnimMarioTornadoAirFileID ((intptr_t)639)
+#define llFTMarioAnimDamageFileID ((intptr_t)640)
+#define llFTMarioAnimFireFlowerShootAirFileID ((intptr_t)641)
+#define llFTFoxAnimEggLayFileID ((intptr_t)642)
+#define llFTFoxAnimWalk1FileID ((intptr_t)643)
+#define llFTFoxAnimWalk2FileID ((intptr_t)644)
+#define llFTFoxAnimWalk3FileID ((intptr_t)645)
+#define llFTFoxAnimWalkEndFileID ((intptr_t)646)
+#define llFTFoxAnimDashFileID ((intptr_t)647)
+#define llFTFoxAnimRunFileID ((intptr_t)648)
+#define llFTFoxAnimRunBrakeFileID ((intptr_t)649)
+#define llFTFoxAnimTurnFileID ((intptr_t)650)
+#define llFTFoxAnimTurnRunFileID ((intptr_t)651)
+#define llFTFoxAnimJumpFFileID ((intptr_t)652)
+#define llFTFoxAnimJumpBFileID ((intptr_t)653)
+#define llFTFoxAnimJumpAerialFFileID ((intptr_t)654)
+#define llFTFoxAnimJumpAerialBFileID ((intptr_t)655)
+#define llFTFoxAnimFallFileID ((intptr_t)656)
+#define llFTFoxAnimFallAerialFileID ((intptr_t)657)
+#define llFTFoxAnimCrouchFileID ((intptr_t)658)
+#define llFTFoxAnimCrouchIdleFileID ((intptr_t)659)
+#define llFTFoxAnimCrouchEndFileID ((intptr_t)660)
+#define llFTFoxAnimLandingAirXFileID ((intptr_t)661)
+#define llFTFoxAnimShieldDropFileID ((intptr_t)662)
+#define llFTFoxAnimTeeterFileID ((intptr_t)663)
+#define llFTFoxAnimTeeterstartFileID ((intptr_t)664)
+#define llFTFoxAnimSleepFileID ((intptr_t)665)
+#define llFTFoxAnimDamaged1FileID ((intptr_t)666)
+#define llFTFoxAnimDamaged2FileID ((intptr_t)667)
+#define llFTFoxAnimFalconDivePulledFileID ((intptr_t)668)
+#define llFTFoxAnimDamageX1FileID ((intptr_t)669)
+#define llFTFoxAnimDamageX2FileID ((intptr_t)670)
+#define llFTFoxAnimDamageX3FileID ((intptr_t)671)
+#define llFTFoxAnimDamaged3FileID ((intptr_t)672)
+#define llFTFoxAnimDamaged4FileID ((intptr_t)673)
+#define llFTFoxAnimDamaged5FileID ((intptr_t)674)
+#define llFTFoxAnimDamaged6FileID ((intptr_t)675)
+#define llFTFoxAnimDamageAirFileID ((intptr_t)676)
+#define llFTFoxAnimDamaged7FileID ((intptr_t)677)
+#define llFTFoxAnimDamageFlyX1FileID ((intptr_t)678)
+#define llFTFoxAnimDamageFlyX2FileID ((intptr_t)679)
+#define llFTFoxAnimDamage2FileID ((intptr_t)680)
+#define llFTFoxAnimShieldBreakFileID ((intptr_t)681)
+#define llFTFoxAnimDamageFlyTopFileID ((intptr_t)682)
+#define llFTFoxAnimDamagedFileID ((intptr_t)683)
+#define llFTFoxAnimFallSpecialFileID ((intptr_t)684)
+#define llFTFoxAnimCeilingBonkFileID ((intptr_t)685)
+#define llFTFoxAnimStunLandDFileID ((intptr_t)686)
+#define llFTFoxAnimStunLandUFileID ((intptr_t)687)
+#define llFTFoxAnimStunStartDFileID ((intptr_t)688)
+#define llFTFoxAnimStunStartUFileID ((intptr_t)689)
+#define llFTFoxAnimTechFFileID ((intptr_t)690)
+#define llFTFoxAnimTechBFileID ((intptr_t)691)
+#define llFTFoxAnimDownForwardDFileID ((intptr_t)692)
+#define llFTFoxAnimDownForwardUFileID ((intptr_t)693)
+#define llFTFoxAnimDownBackDFileID ((intptr_t)694)
+#define llFTFoxAnimDownBackUFileID ((intptr_t)695)
+#define llFTFoxAnimDownAttackDFileID ((intptr_t)696)
+#define llFTFoxAnimDownAttackUFileID ((intptr_t)697)
+#define llFTFoxAnimTechFileID ((intptr_t)698)
+#define llFTFoxAnimClangRecoilFileID ((intptr_t)699)
+#define llFTFoxAnimShieldOnFileID ((intptr_t)700)
+#define llFTFoxAnimShieldOffFileID ((intptr_t)701)
+#define llFTFoxAnimRollFFileID ((intptr_t)702)
+#define llFTFoxAnimRollBFileID ((intptr_t)703)
+#define llFTFoxAnimCatchFileID ((intptr_t)704)
+#define llFTFoxAnimCatchPullFileID ((intptr_t)705)
+#define llFTFoxAnimThrowFFileID ((intptr_t)706)
+#define llFTFoxAnimThrowBFileID ((intptr_t)707)
+#define llFTFoxAnimEggLayPulledFileID ((intptr_t)708)
+#define llFTFoxAnimThrownDKPulledFileID ((intptr_t)709)
+#define llFTFoxAnimThrownMarioBrosFileID ((intptr_t)710)
+#define llFTFoxAnimThrownDKFileID ((intptr_t)711)
+#define llFTFoxAnimThrown2FileID ((intptr_t)712)
+#define llFTFoxAnimThrown1FileID ((intptr_t)713)
+#define llFTFoxAnimThrown3FileID ((intptr_t)714)
+#define llFTFoxAnimThrownFoxBFileID ((intptr_t)715)
+#define llFTFoxAnimTauntFileID ((intptr_t)716)
+#define llFTFoxAnimCliffCatchFileID ((intptr_t)717)
+#define llFTFoxAnimCliffWaitFileID ((intptr_t)718)
+#define llFTFoxAnimCliffQuickFileID ((intptr_t)719)
+#define llFTFoxAnimCliffClimbQuick1FileID ((intptr_t)720)
+#define llFTFoxAnimCliffClimbQuick2FileID ((intptr_t)721)
+#define llFTFoxAnimCliffSlowFileID ((intptr_t)722)
+#define llFTFoxAnimCliffClimbSlow1FileID ((intptr_t)723)
+#define llFTFoxAnimCliffClimbSlow2FileID ((intptr_t)724)
+#define llFTFoxAnimCliffAttackQuick1FileID ((intptr_t)725)
+#define llFTFoxAnimCliffAttackQuick2FileID ((intptr_t)726)
+#define llFTFoxAnimCliffAttackSlow1FileID ((intptr_t)727)
+#define llFTFoxAnimCliffAttackSlow2FileID ((intptr_t)728)
+#define llFTFoxAnimCliffEscapeQuick1FileID ((intptr_t)729)
+#define llFTFoxAnimCliffEscapeQuick2FileID ((intptr_t)730)
+#define llFTFoxAnimCliffEscapeSlow1FileID ((intptr_t)731)
+#define llFTFoxAnimCliffEscapeSlow2FileID ((intptr_t)732)
+#define llFTFoxAnimLightItemPickupFileID ((intptr_t)733)
+#define llFTFoxAnimItemThrowSmashBFileID ((intptr_t)734)
+#define llFTFoxAnimItemThrowSmashUFileID ((intptr_t)735)
+#define llFTFoxAnimItemThrowSmashDFileID ((intptr_t)736)
+#define llFTFoxAnimItemThrowDashFileID ((intptr_t)737)
+#define llFTFoxAnimItemDropFileID ((intptr_t)738)
+#define llFTFoxAnimItemThrowAirSmashBFileID ((intptr_t)739)
+#define llFTFoxAnimItemThrowAirSmashUFileID ((intptr_t)740)
+#define llFTFoxAnimItemThrowAirSmashFFileID ((intptr_t)741)
+#define llFTFoxAnimHeavyItemPickupFileID ((intptr_t)742)
+#define llFTFoxAnimHeavyItemThrowSmashBFileID ((intptr_t)743)
+#define llFTFoxAnimStarRodNeutralFileID ((intptr_t)744)
+#define llFTFoxAnimStarRodTiltFileID ((intptr_t)745)
+#define llFTFoxAnimStarRodSmashFileID ((intptr_t)746)
+#define llFTFoxAnimStarRodDashFileID ((intptr_t)747)
+#define llFTFoxAnimHammerIdleFileID ((intptr_t)748)
+#define llFTFoxAnimHammerLandingFileID ((intptr_t)749)
+#define llFTFoxAnimFireFlowerShootFileID ((intptr_t)750)
+#define llFTFoxAnimJab1FileID ((intptr_t)751)
+#define llFTFoxAnimJab2FileID ((intptr_t)752)
+#define llFTFoxAnimJabLoopStartFileID ((intptr_t)753)
+#define llFTFoxAnimJabLoopFileID ((intptr_t)754)
+#define llFTFoxAnimJabLoopEndFileID ((intptr_t)755)
+#define llFTFoxAnimDashAttackFileID ((intptr_t)756)
+#define llFTFoxAnimFTiltHighFileID ((intptr_t)757)
+#define llFTFoxAnimFTiltMidHighFileID ((intptr_t)758)
+#define llFTFoxAnimFTiltFileID ((intptr_t)759)
+#define llFTFoxAnimFTiltMidLowFileID ((intptr_t)760)
+#define llFTFoxAnimFTiltLowFileID ((intptr_t)761)
+#define llFTFoxAnimUTiltFileID ((intptr_t)762)
+#define llFTFoxAnimDTiltFileID ((intptr_t)763)
+#define llFTFoxAnimFSmashFileID ((intptr_t)764)
+#define llFTFoxAnimUSmashFileID ((intptr_t)765)
+#define llFTFoxAnimDSmashFileID ((intptr_t)766)
+#define llFTFoxAnimAttackAirNFileID ((intptr_t)767)
+#define llFTFoxAnimAttackAirFFileID ((intptr_t)768)
+#define llFTFoxAnimAttackAirBFileID ((intptr_t)769)
+#define llFTFoxAnimAttackAirUFileID ((intptr_t)770)
+#define llFTFoxAnimAttackAirDFileID ((intptr_t)771)
+#define llFTFoxAnimLandingAirFFileID ((intptr_t)772)
+#define llFTFoxAnimLandingAirBFileID ((intptr_t)773)
+#define llFTFoxAnimEnterPipeFileID ((intptr_t)774)
+#define llFTFoxAnimExitPipeFileID ((intptr_t)775)
+#define llFTFoxAnimExitPipeWalkFileID ((intptr_t)776)
+#define llFTFoxAnimAppearFileID ((intptr_t)777)
+#define llFTFoxAnimArwingFileID ((intptr_t)778)
+#define llFTFoxAnimLaserFileID ((intptr_t)779)
+#define llFTFoxAnimLaserAerialFileID ((intptr_t)780)
+#define llFTFoxAnimFireFoxStartGroundFileID ((intptr_t)781)
+#define llFTFoxAnimReadyingFireFoxGroundFileID ((intptr_t)782)
+#define llFTFoxAnimFireFoxGroundFileID ((intptr_t)783)
+#define llFTFoxAnimFireFoxEndGroundFileID ((intptr_t)784)
+#define llFTFoxAnimFireFoxStartAerialFileID ((intptr_t)785)
+#define llFTFoxAnimReadyingFireFoxAirFileID ((intptr_t)786)
+#define llFTFoxAnimFireFoxAirFileID ((intptr_t)787)
+#define llFTFoxAnimFireFoxEndAirFileID ((intptr_t)788)
+#define llFTFoxAnimLandingWhileFireFoxAirFileID ((intptr_t)789)
+#define llFTFoxAnimShineStartFileID ((intptr_t)790)
+#define llFTFoxAnimSwitchDirectionShineFileID ((intptr_t)791)
+#define llFTFoxAnimReflectingFileID ((intptr_t)792)
+#define llFTFoxAnimShineFileID ((intptr_t)793)
+#define llFTFoxAnimShireStartAirFileID ((intptr_t)794)
+#define llFTFoxAnimSwitchDirectionShineAirFileID ((intptr_t)795)
+#define llFTFoxAnimUnknownFileID ((intptr_t)796)
+#define llFTFoxAnimShineAirEndFileID ((intptr_t)797)
+#define llFTFoxAnimDamageFileID ((intptr_t)798)
+#define llFTFoxAnimFireFlowerShootAirFileID ((intptr_t)799)
+#define llFTDonkeyAnimEggLayFileID ((intptr_t)800)
+#define llFTDonkeyAnimWalk1FileID ((intptr_t)801)
+#define llFTDonkeyAnimWalk2FileID ((intptr_t)802)
+#define llFTDonkeyAnimWalk3FileID ((intptr_t)803)
+#define llFTDonkeyAnimWalkEndFileID ((intptr_t)804)
+#define llFTDonkeyAnimDashFileID ((intptr_t)805)
+#define llFTDonkeyAnimRunFileID ((intptr_t)806)
+#define llFTDonkeyAnimRunBrakeFileID ((intptr_t)807)
+#define llFTDonkeyAnimTurnFileID ((intptr_t)808)
+#define llFTDonkeyAnimTurnRunFileID ((intptr_t)809)
+#define llFTDonkeyAnimJumpFFileID ((intptr_t)810)
+#define llFTDonkeyAnimJumpBFileID ((intptr_t)811)
+#define llFTDonkeyAnimJumpAerialFFileID ((intptr_t)812)
+#define llFTDonkeyAnimJumpAerialBFileID ((intptr_t)813)
+#define llFTDonkeyAnimFallFileID ((intptr_t)814)
+#define llFTDonkeyAnimFallAerialFileID ((intptr_t)815)
+#define llFTDonkeyAnimCrouchFileID ((intptr_t)816)
+#define llFTDonkeyAnimCrouchIdleFileID ((intptr_t)817)
+#define llFTDonkeyAnimCrouchEndFileID ((intptr_t)818)
+#define llFTDonkeyAnimLandingAirXFileID ((intptr_t)819)
+#define llFTDonkeyAnimShieldDropFileID ((intptr_t)820)
+#define llFTDonkeyAnimTeeterFileID ((intptr_t)821)
+#define llFTDonkeyAnimTeeterstartFileID ((intptr_t)822)
+#define llFTDonkeyAnimSleepFileID ((intptr_t)823)
+#define llFTDonkeyAnimDamaged1FileID ((intptr_t)824)
+#define llFTDonkeyAnimDamaged2FileID ((intptr_t)825)
+#define llFTDonkeyAnimFalconDivePulledFileID ((intptr_t)826)
+#define llFTDonkeyAnimDamageX1FileID ((intptr_t)827)
+#define llFTDonkeyAnimDamageX2FileID ((intptr_t)828)
+#define llFTDonkeyAnimDamageX3FileID ((intptr_t)829)
+#define llFTDonkeyAnimDamaged3FileID ((intptr_t)830)
+#define llFTDonkeyAnimDamaged4FileID ((intptr_t)831)
+#define llFTDonkeyAnimDamaged5FileID ((intptr_t)832)
+#define llFTDonkeyAnimDamaged6FileID ((intptr_t)833)
+#define llFTDonkeyAnimDamageAirFileID ((intptr_t)834)
+#define llFTDonkeyAnimDamaged7FileID ((intptr_t)835)
+#define llFTDonkeyAnimDamageFlyX1FileID ((intptr_t)836)
+#define llFTDonkeyAnimDamageFlyX2FileID ((intptr_t)837)
+#define llFTDonkeyAnimDamage2FileID ((intptr_t)838)
+#define llFTDonkeyAnimShieldBreakFileID ((intptr_t)839)
+#define llFTDonkeyAnimDamageFlyTopFileID ((intptr_t)840)
+#define llFTDonkeyAnimDamagedFileID ((intptr_t)841)
+#define llFTDonkeyAnimFallSpecialFileID ((intptr_t)842)
+#define llFTDonkeyAnimCeilingBonkFileID ((intptr_t)843)
+#define llFTDonkeyAnimStunLandDFileID ((intptr_t)844)
+#define llFTDonkeyAnimStunLandUFileID ((intptr_t)845)
+#define llFTDonkeyAnimStunStartDFileID ((intptr_t)846)
+#define llFTDonkeyAnimStunStartUFileID ((intptr_t)847)
+#define llFTDonkeyAnimTechFFileID ((intptr_t)848)
+#define llFTDonkeyAnimTechBFileID ((intptr_t)849)
+#define llFTDonkeyAnimDownForwardDFileID ((intptr_t)850)
+#define llFTDonkeyAnimDownForwardUFileID ((intptr_t)851)
+#define llFTDonkeyAnimDownBackDFileID ((intptr_t)852)
+#define llFTDonkeyAnimDownBackUFileID ((intptr_t)853)
+#define llFTDonkeyAnimDownAttackDFileID ((intptr_t)854)
+#define llFTDonkeyAnimDownAttackUFileID ((intptr_t)855)
+#define llFTDonkeyAnimTechFileID ((intptr_t)856)
+#define llFTDonkeyAnimClangRecoilFileID ((intptr_t)857)
+#define llFTDonkeyAnimShieldOnFileID ((intptr_t)858)
+#define llFTDonkeyAnimShieldOffFileID ((intptr_t)859)
+#define llFTDonkeyAnimRollFFileID ((intptr_t)860)
+#define llFTDonkeyAnimRollBFileID ((intptr_t)861)
+#define llFTDonkeyAnimCatchFileID ((intptr_t)862)
+#define llFTDonkeyAnimCatchPullFileID ((intptr_t)863)
+#define llFTDonkeyAnimThrowFFileID ((intptr_t)864)
+#define llFTDonkeyAnimThrowBFileID ((intptr_t)865)
+#define llFTDonkeyAnimEggLayPulledFileID ((intptr_t)866)
+#define llFTDonkeyAnimThrownDKPulledFileID ((intptr_t)867)
+#define llFTDonkeyAnimThrownFoxFStartFileID ((intptr_t)868)
+#define llFTDonkeyAnimThrownMarioBrosFileID ((intptr_t)869)
+#define llFTDonkeyAnimThrownDKFileID ((intptr_t)870)
+#define llFTDonkeyAnimThrown2FileID ((intptr_t)871)
+#define llFTDonkeyAnimThrown1FileID ((intptr_t)872)
+#define llFTDonkeyAnimTauntFileID ((intptr_t)873)
+#define llFTDonkeyAnimCliffCatchFileID ((intptr_t)874)
+#define llFTDonkeyAnimCliffWaitFileID ((intptr_t)875)
+#define llFTDonkeyAnimCliffSlowFileID ((intptr_t)876)
+#define llFTDonkeyAnimCliffClimbSlow1FileID ((intptr_t)877)
+#define llFTDonkeyAnimCliffClimbSlow2FileID ((intptr_t)878)
+#define llFTDonkeyAnimCliffQuickFileID ((intptr_t)879)
+#define llFTDonkeyAnimCliffClimbQuick1FileID ((intptr_t)880)
+#define llFTDonkeyAnimCliffClimbQuick2FileID ((intptr_t)881)
+#define llFTDonkeyAnimCliffAttackQuick1FileID ((intptr_t)882)
+#define llFTDonkeyAnimCliffAttackQuick2FileID ((intptr_t)883)
+#define llFTDonkeyAnimCliffAttackSlow1FileID ((intptr_t)884)
+#define llFTDonkeyAnimCliffAttackSlow2FileID ((intptr_t)885)
+#define llFTDonkeyAnimCliffEscapeQuick1FileID ((intptr_t)886)
+#define llFTDonkeyAnimCliffEscapeQuick2FileID ((intptr_t)887)
+#define llFTDonkeyAnimCliffEscapeSlow1FileID ((intptr_t)888)
+#define llFTDonkeyAnimCliffEscapeSlow2FileID ((intptr_t)889)
+#define llFTDonkeyAnimLightItemPickupFileID ((intptr_t)890)
+#define llFTDonkeyAnimItemThrowSmashBFileID ((intptr_t)891)
+#define llFTDonkeyAnimItemThrowSmashUFileID ((intptr_t)892)
+#define llFTDonkeyAnimItemThrowSmashDFileID ((intptr_t)893)
+#define llFTDonkeyAnimItemThrowDashFileID ((intptr_t)894)
+#define llFTDonkeyAnimItemDropFileID ((intptr_t)895)
+#define llFTDonkeyAnimItemThrowAirSmashBFileID ((intptr_t)896)
+#define llFTDonkeyAnimItemThrowAirSmashUFileID ((intptr_t)897)
+#define llFTDonkeyAnimItemThrowAirSmashFFileID ((intptr_t)898)
+#define llFTDonkeyAnimHeavyItemPickupFileID ((intptr_t)899)
+#define llFTDonkeyAnimStarRodNeutralFileID ((intptr_t)900)
+#define llFTDonkeyAnimStarRodTiltFileID ((intptr_t)901)
+#define llFTDonkeyAnimStarRodSmashFileID ((intptr_t)902)
+#define llFTDonkeyAnimStarRodDashFileID ((intptr_t)903)
+#define llFTDonkeyAnimHammerIdleFileID ((intptr_t)904)
+#define llFTDonkeyAnimHammerLandingFileID ((intptr_t)905)
+#define llFTDonkeyAnimFireFlowerShootFileID ((intptr_t)906)
+#define llFTDonkeyAnimJab1FileID ((intptr_t)907)
+#define llFTDonkeyAnimJab2FileID ((intptr_t)908)
+#define llFTDonkeyAnimDashAttackFileID ((intptr_t)909)
+#define llFTDonkeyAnimFTiltHighFileID ((intptr_t)910)
+#define llFTDonkeyAnimFTiltFileID ((intptr_t)911)
+#define llFTDonkeyAnimFTiltLowFileID ((intptr_t)912)
+#define llFTDonkeyAnimUTiltFileID ((intptr_t)913)
+#define llFTDonkeyAnimDTiltFileID ((intptr_t)914)
+#define llFTDonkeyAnimFSmashHighFileID ((intptr_t)915)
+#define llFTDonkeyAnimFSmashMidHighFileID ((intptr_t)916)
+#define llFTDonkeyAnimFSmashFileID ((intptr_t)917)
+#define llFTDonkeyAnimFSmashMidLowFileID ((intptr_t)918)
+#define llFTDonkeyAnimFSmashLowFileID ((intptr_t)919)
+#define llFTDonkeyAnimUSmashFileID ((intptr_t)920)
+#define llFTDonkeyAnimDSmashFileID ((intptr_t)921)
+#define llFTDonkeyAnimAttackAirNFileID ((intptr_t)922)
+#define llFTDonkeyAnimAttackAirFFileID ((intptr_t)923)
+#define llFTDonkeyAnimAttackAirBFileID ((intptr_t)924)
+#define llFTDonkeyAnimAttackAirUFileID ((intptr_t)925)
+#define llFTDonkeyAnimAttackAirDFileID ((intptr_t)926)
+#define llFTDonkeyAnimLandingAirFFileID ((intptr_t)927)
+#define llFTDonkeyAnimLandingAirBFileID ((intptr_t)928)
+#define llFTDonkeyAnimEnterPipeFileID ((intptr_t)929)
+#define llFTDonkeyAnimExitPipeFileID ((intptr_t)930)
+#define llFTDonkeyAnimExitPipeWalkFileID ((intptr_t)931)
+#define llFTDonkeyAnimAppear1FileID ((intptr_t)932)
+#define llFTDonkeyAnimAppear2FileID ((intptr_t)933)
+#define llFTDonkeyAnimGiantPunchGroundLoopStartFileID ((intptr_t)934)
+#define llFTDonkeyAnimGiantPunchGroundLoopFileID ((intptr_t)935)
+#define llFTDonkeyAnimGiantPunchGroundFullyChargedPunchFileID ((intptr_t)936)
+#define llFTDonkeyAnimGiantPunchAirLoopStartFileID ((intptr_t)937)
+#define llFTDonkeyAnimGiantPunchAirLoopFileID ((intptr_t)938)
+#define llFTDonkeyAnimGiantPunchAirFullyChargedPunchFileID ((intptr_t)939)
+#define llFTDonkeyAnimSpinningKongGroundFileID ((intptr_t)940)
+#define llFTDonkeyAnimSpinningKongAirFileID ((intptr_t)941)
+#define llFTDonkeyAnimHandSlapStartFileID ((intptr_t)942)
+#define llFTDonkeyAnimHandSlapLoopFileID ((intptr_t)943)
+#define llFTDonkeyAnimHandSlapEndFileID ((intptr_t)944)
+#define llFTDonkeyAnimCargoAirThrowFileID ((intptr_t)945)
+#define llFTDonkeyAnimCargoLandingFileID ((intptr_t)946)
+#define llFTDonkeyAnimCargoVerySlowWalkFileID ((intptr_t)947)
+#define llFTDonkeyAnimCargoSlowWalkFileID ((intptr_t)948)
+#define llFTDonkeyAnimCargoWalkFileID ((intptr_t)949)
+#define llFTDonkeyAnimCargoTurnFileID ((intptr_t)950)
+#define llFTDonkeyAnimDamageFileID ((intptr_t)951)
+#define llFTDonkeyAnimFireFlowerShootAirFileID ((intptr_t)952)
+#define llFTSamusAnimEggLayFileID ((intptr_t)953)
+#define llFTSamusAnimWalk1FileID ((intptr_t)954)
+#define llFTSamusAnimWalk2FileID ((intptr_t)955)
+#define llFTSamusAnimWalk3FileID ((intptr_t)956)
+#define llFTSamusAnimWalkEndFileID ((intptr_t)957)
+#define llFTSamusAnimDashFileID ((intptr_t)958)
+#define llFTSamusAnimRunFileID ((intptr_t)959)
+#define llFTSamusAnimRunBrakeFileID ((intptr_t)960)
+#define llFTSamusAnimTurnFileID ((intptr_t)961)
+#define llFTSamusAnimTurnRunFileID ((intptr_t)962)
+#define llFTSamusAnimJumpFFileID ((intptr_t)963)
+#define llFTSamusAnimJumpBFileID ((intptr_t)964)
+#define llFTSamusAnimJumpAerialFFileID ((intptr_t)965)
+#define llFTSamusAnimJumpAerialBFileID ((intptr_t)966)
+#define llFTSamusAnimFallFileID ((intptr_t)967)
+#define llFTSamusAnimFallAerialFileID ((intptr_t)968)
+#define llFTSamusAnimCrouchFileID ((intptr_t)969)
+#define llFTSamusAnimCrouchIdleFileID ((intptr_t)970)
+#define llFTSamusAnimCrouchEndFileID ((intptr_t)971)
+#define llFTSamusAnimLandingAirXFileID ((intptr_t)972)
+#define llFTSamusAnimShieldDropFileID ((intptr_t)973)
+#define llFTSamusAnimTeeterFileID ((intptr_t)974)
+#define llFTSamusAnimTeeterstartFileID ((intptr_t)975)
+#define llFTSamusAnimSleepFileID ((intptr_t)976)
+#define llFTSamusAnimDamaged1FileID ((intptr_t)977)
+#define llFTSamusAnimDamaged2FileID ((intptr_t)978)
+#define llFTSamusAnimFalconDivePulledFileID ((intptr_t)979)
+#define llFTSamusAnimDamageX1FileID ((intptr_t)980)
+#define llFTSamusAnimDamageX2FileID ((intptr_t)981)
+#define llFTSamusAnimDamageX3FileID ((intptr_t)982)
+#define llFTSamusAnimDamaged3FileID ((intptr_t)983)
+#define llFTSamusAnimDamaged4FileID ((intptr_t)984)
+#define llFTSamusAnimDamaged5FileID ((intptr_t)985)
+#define llFTSamusAnimDamaged6FileID ((intptr_t)986)
+#define llFTSamusAnimDamageAirFileID ((intptr_t)987)
+#define llFTSamusAnimDamaged7FileID ((intptr_t)988)
+#define llFTSamusAnimDamageFlyX1FileID ((intptr_t)989)
+#define llFTSamusAnimDamageFlyX2FileID ((intptr_t)990)
+#define llFTSamusAnimDamage2FileID ((intptr_t)991)
+#define llFTSamusAnimShieldBreakFileID ((intptr_t)992)
+#define llFTSamusAnimDamageFlyTopFileID ((intptr_t)993)
+#define llFTSamusAnimDamagedFileID ((intptr_t)994)
+#define llFTSamusAnimFallSpecialFileID ((intptr_t)995)
+#define llFTSamusAnimCeilingBonkFileID ((intptr_t)996)
+#define llFTSamusAnimStunLandDFileID ((intptr_t)997)
+#define llFTSamusAnimStunLandUFileID ((intptr_t)998)
+#define llFTSamusAnimStunStartDFileID ((intptr_t)999)
+#define llFTSamusAnimStunStartUFileID ((intptr_t)1000)
+#define llFTSamusAnimTechFFileID ((intptr_t)1001)
+#define llFTSamusAnimTechBFileID ((intptr_t)1002)
+#define llFTSamusAnimDownForwardDFileID ((intptr_t)1003)
+#define llFTSamusAnimDownForwardUFileID ((intptr_t)1004)
+#define llFTSamusAnimDownBackDFileID ((intptr_t)1005)
+#define llFTSamusAnimDownBackUFileID ((intptr_t)1006)
+#define llFTSamusAnimDownAttackDFileID ((intptr_t)1007)
+#define llFTSamusAnimDownAttackUFileID ((intptr_t)1008)
+#define llFTSamusAnimTechFileID ((intptr_t)1009)
+#define llFTSamusAnimClangRecoilFileID ((intptr_t)1010)
+#define llFTSamusAnimShieldOnFileID ((intptr_t)1011)
+#define llFTSamusAnimShieldOffFileID ((intptr_t)1012)
+#define llFTSamusAnimRollFFileID ((intptr_t)1013)
+#define llFTSamusAnimRollBFileID ((intptr_t)1014)
+#define llFTSamusAnimCatchFileID ((intptr_t)1015)
+#define llFTSamusAnimCatchPullFileID ((intptr_t)1016)
+#define llFTSamusAnimThrowFFileID ((intptr_t)1017)
+#define llFTSamusAnimThrowBFileID ((intptr_t)1018)
+#define llFTSamusAnimEggLayPulledFileID ((intptr_t)1019)
+#define llFTSamusAnimThrownDKPulledFileID ((intptr_t)1020)
+#define llFTSamusAnimThrownMarioBrosFileID ((intptr_t)1021)
+#define llFTSamusAnimThrownFoxFStartFileID ((intptr_t)1022)
+#define llFTSamusAnimThrownDKFileID ((intptr_t)1023)
+#define llFTSamusAnimThrown1FileID ((intptr_t)1024)
+#define llFTSamusAnimThrown3FileID ((intptr_t)1025)
+#define llFTSamusAnimThrown2FileID ((intptr_t)1026)
+#define llFTSamusAnimThrownFoxBFileID ((intptr_t)1027)
+#define llFTSamusAnimTauntFileID ((intptr_t)1028)
+#define llFTSamusAnimCliffCatchFileID ((intptr_t)1029)
+#define llFTSamusAnimCliffWaitFileID ((intptr_t)1030)
+#define llFTSamusAnimCliffQuickFileID ((intptr_t)1031)
+#define llFTSamusAnimCliffClimbQuick1FileID ((intptr_t)1032)
+#define llFTSamusAnimCliffClimbQuick2FileID ((intptr_t)1033)
+#define llFTSamusAnimCliffSlowFileID ((intptr_t)1034)
+#define llFTSamusAnimCliffClimbSlow1FileID ((intptr_t)1035)
+#define llFTSamusAnimCliffClimbSlow2FileID ((intptr_t)1036)
+#define llFTSamusAnimCliffAttackQuick1FileID ((intptr_t)1037)
+#define llFTSamusAnimCliffAttackQuick2FileID ((intptr_t)1038)
+#define llFTSamusAnimCliffAttackSlow1FileID ((intptr_t)1039)
+#define llFTSamusAnimCliffAttackSlow2FileID ((intptr_t)1040)
+#define llFTSamusAnimCliffEscapeQuick1FileID ((intptr_t)1041)
+#define llFTSamusAnimCliffEscapeQuick2FileID ((intptr_t)1042)
+#define llFTSamusAnimCliffEscapeSlow1FileID ((intptr_t)1043)
+#define llFTSamusAnimCliffEscapeSlow2FileID ((intptr_t)1044)
+#define llFTSamusAnimLightItemPickupFileID ((intptr_t)1045)
+#define llFTSamusAnimItemThrowSmashBFileID ((intptr_t)1046)
+#define llFTSamusAnimItemThrowSmashUFileID ((intptr_t)1047)
+#define llFTSamusAnimItemThrowSmashDFileID ((intptr_t)1048)
+#define llFTSamusAnimItemThrowDashFileID ((intptr_t)1049)
+#define llFTSamusAnimItemDropFileID ((intptr_t)1050)
+#define llFTSamusAnimItemThrowAirSmashBFileID ((intptr_t)1051)
+#define llFTSamusAnimItemThrowAirSmashUFileID ((intptr_t)1052)
+#define llFTSamusAnimItemThrowAirSmashFFileID ((intptr_t)1053)
+#define llFTSamusAnimHeavyItemPickupFileID ((intptr_t)1054)
+#define llFTSamusAnimHeavyItemThrowSmashBFileID ((intptr_t)1055)
+#define llFTSamusAnimStarRodNeutralFileID ((intptr_t)1056)
+#define llFTSamusAnimStarRodTiltFileID ((intptr_t)1057)
+#define llFTSamusAnimStarRodSmashFileID ((intptr_t)1058)
+#define llFTSamusAnimStarRodDashFileID ((intptr_t)1059)
+#define llFTSamusAnimHammerIdleFileID ((intptr_t)1060)
+#define llFTSamusAnimHammerLandingFileID ((intptr_t)1061)
+#define llFTSamusAnimFireFlowerShootFileID ((intptr_t)1062)
+#define llFTSamusAnimJab1FileID ((intptr_t)1063)
+#define llFTSamusAnimJab2FileID ((intptr_t)1064)
+#define llFTSamusAnimDashAttackFileID ((intptr_t)1065)
+#define llFTSamusAnimFTiltHighFileID ((intptr_t)1066)
+#define llFTSamusAnimFTiltMidHighFileID ((intptr_t)1067)
+#define llFTSamusAnimFTiltFileID ((intptr_t)1068)
+#define llFTSamusAnimFTiltMidLowFileID ((intptr_t)1069)
+#define llFTSamusAnimFTiltLowFileID ((intptr_t)1070)
+#define llFTSamusAnimUTiltFileID ((intptr_t)1071)
+#define llFTSamusAnimDTiltFileID ((intptr_t)1072)
+#define llFTSamusAnimFSmashHighFileID ((intptr_t)1073)
+#define llFTSamusAnimFSmashMidHighFileID ((intptr_t)1074)
+#define llFTSamusAnimFSmashFileID ((intptr_t)1075)
+#define llFTSamusAnimFSmashMidLowFileID ((intptr_t)1076)
+#define llFTSamusAnimFSmashLowFileID ((intptr_t)1077)
+#define llFTSamusAnimUSmashFileID ((intptr_t)1078)
+#define llFTSamusAnimDSmashFileID ((intptr_t)1079)
+#define llFTSamusAnimAttackAirNFileID ((intptr_t)1080)
+#define llFTSamusAnimAttackAirFFileID ((intptr_t)1081)
+#define llFTSamusAnimAttackAirBFileID ((intptr_t)1082)
+#define llFTSamusAnimAttackAirUFileID ((intptr_t)1083)
+#define llFTSamusAnimAttackAirDFileID ((intptr_t)1084)
+#define llFTSamusAnimLandingAirBFileID ((intptr_t)1085)
+#define llFTSamusAnimLandingAirUFileID ((intptr_t)1086)
+#define llFTSamusAnimEnterPipeFileID ((intptr_t)1087)
+#define llFTSamusAnimExitPipeFileID ((intptr_t)1088)
+#define llFTSamusAnimExitPipeWalkFileID ((intptr_t)1089)
+#define llFTSamusAnimAppear1FileID ((intptr_t)1090)
+#define llFTSamusAnimAppear2FileID ((intptr_t)1091)
+#define llFTSamusAnimStartingChargeShotFileID ((intptr_t)1092)
+#define llFTSamusAnimChargingNeutralSpecialFileID ((intptr_t)1093)
+#define llFTSamusAnimShootingFileID ((intptr_t)1094)
+#define llFTSamusAnimStartingChargeShotAirFileID ((intptr_t)1095)
+#define llFTSamusAnimShootingAirFileID ((intptr_t)1096)
+#define llFTSamusAnimScrewAttackGroundFileID ((intptr_t)1097)
+#define llFTSamusAnimScrewAttackAirFileID ((intptr_t)1098)
+#define llFTSamusAnimBombFileID ((intptr_t)1099)
+#define llFTSamusAnimBombAirFileID ((intptr_t)1100)
+#define llFTSamusAnimDamageFileID ((intptr_t)1101)
+#define llFTSamusAnimFireFlowerShootAirFileID ((intptr_t)1102)
+#define llFTLuigiAnimEggLayFileID ((intptr_t)1103)
+#define llFTLuigiAnimDashFileID ((intptr_t)1104)
+#define llFTLuigiAnimRunBrakeFileID ((intptr_t)1105)
+#define llFTLuigiAnimTurnRunFileID ((intptr_t)1106)
+#define llFTLuigiAnimTauntFileID ((intptr_t)1107)
+#define llFTLuigiAnimDashAttackFileID ((intptr_t)1108)
+#define llFTLuigiAnimDTiltFileID ((intptr_t)1109)
+#define llFTLuigiAnimFSmashHighFileID ((intptr_t)1110)
+#define llFTLuigiAnimFSmashMidHighFileID ((intptr_t)1111)
+#define llFTLuigiAnimFSmashFileID ((intptr_t)1112)
+#define llFTLuigiAnimFSmashMidLowFileID ((intptr_t)1113)
+#define llFTLuigiAnimFSmashLowFileID ((intptr_t)1114)
+#define llFTLinkAnimEggLayFileID ((intptr_t)1115)
+#define llFTLinkAnimWalk1FileID ((intptr_t)1116)
+#define llFTLinkAnimWalk2FileID ((intptr_t)1117)
+#define llFTLinkAnimWalk3FileID ((intptr_t)1118)
+#define llFTLinkAnimWalkEndFileID ((intptr_t)1119)
+#define llFTLinkAnimDashFileID ((intptr_t)1120)
+#define llFTLinkAnimRunFileID ((intptr_t)1121)
+#define llFTLinkAnimRunBrakeFileID ((intptr_t)1122)
+#define llFTLinkAnimTurnFileID ((intptr_t)1123)
+#define llFTLinkAnimTurnRunFileID ((intptr_t)1124)
+#define llFTLinkAnimJumpFFileID ((intptr_t)1125)
+#define llFTLinkAnimJumpBFileID ((intptr_t)1126)
+#define llFTLinkAnimJumpAerialFFileID ((intptr_t)1127)
+#define llFTLinkAnimJumpAerialBFileID ((intptr_t)1128)
+#define llFTLinkAnimFallFileID ((intptr_t)1129)
+#define llFTLinkAnimFallAerialFileID ((intptr_t)1130)
+#define llFTLinkAnimCrouchFileID ((intptr_t)1131)
+#define llFTLinkAnimCrouchIdleFileID ((intptr_t)1132)
+#define llFTLinkAnimCrouchEndFileID ((intptr_t)1133)
+#define llFTLinkAnimLandingAirXFileID ((intptr_t)1134)
+#define llFTLinkAnimShieldDropFileID ((intptr_t)1135)
+#define llFTLinkAnimTeeterFileID ((intptr_t)1136)
+#define llFTLinkAnimTeeterstartFileID ((intptr_t)1137)
+#define llFTLinkAnimSleepFileID ((intptr_t)1138)
+#define llFTLinkAnimDamaged1FileID ((intptr_t)1139)
+#define llFTLinkAnimDamaged2FileID ((intptr_t)1140)
+#define llFTLinkAnimFalconDivePulledFileID ((intptr_t)1141)
+#define llFTLinkAnimDamageX1FileID ((intptr_t)1142)
+#define llFTLinkAnimDamageX2FileID ((intptr_t)1143)
+#define llFTLinkAnimDamageX3FileID ((intptr_t)1144)
+#define llFTLinkAnimDamaged3FileID ((intptr_t)1145)
+#define llFTLinkAnimDamaged4FileID ((intptr_t)1146)
+#define llFTLinkAnimDamaged5FileID ((intptr_t)1147)
+#define llFTLinkAnimDamaged6FileID ((intptr_t)1148)
+#define llFTLinkAnimDamageAirFileID ((intptr_t)1149)
+#define llFTLinkAnimDamaged7FileID ((intptr_t)1150)
+#define llFTLinkAnimDamageFlyX1FileID ((intptr_t)1151)
+#define llFTLinkAnimDamageFlyX2FileID ((intptr_t)1152)
+#define llFTLinkAnimDamage2FileID ((intptr_t)1153)
+#define llFTLinkAnimShieldBreakFileID ((intptr_t)1154)
+#define llFTLinkAnimDamageFlyTopFileID ((intptr_t)1155)
+#define llFTLinkAnimDamagedFileID ((intptr_t)1156)
+#define llFTLinkAnimFallSpecialFileID ((intptr_t)1157)
+#define llFTLinkAnimCeilingBonkFileID ((intptr_t)1158)
+#define llFTLinkAnimStunLandDFileID ((intptr_t)1159)
+#define llFTLinkAnimStunLandUFileID ((intptr_t)1160)
+#define llFTLinkAnimStunStartDFileID ((intptr_t)1161)
+#define llFTLinkAnimStunStartUFileID ((intptr_t)1162)
+#define llFTLinkAnimTechFFileID ((intptr_t)1163)
+#define llFTLinkAnimTechBFileID ((intptr_t)1164)
+#define llFTLinkAnimDownForwardDFileID ((intptr_t)1165)
+#define llFTLinkAnimDownForwardUFileID ((intptr_t)1166)
+#define llFTLinkAnimDownBackDFileID ((intptr_t)1167)
+#define llFTLinkAnimDownBackUFileID ((intptr_t)1168)
+#define llFTLinkAnimDownAttackDFileID ((intptr_t)1169)
+#define llFTLinkAnimDownAttackUFileID ((intptr_t)1170)
+#define llFTLinkAnimTechFileID ((intptr_t)1171)
+#define llFTLinkAnimClangRecoilFileID ((intptr_t)1172)
+#define llFTLinkAnimShieldOnFileID ((intptr_t)1173)
+#define llFTLinkAnimShieldOffFileID ((intptr_t)1174)
+#define llFTLinkAnimRollFFileID ((intptr_t)1175)
+#define llFTLinkAnimRollBFileID ((intptr_t)1176)
+#define llFTLinkAnimCatchFileID ((intptr_t)1177)
+#define llFTLinkAnimCatchPullFileID ((intptr_t)1178)
+#define llFTLinkAnimThrowFFileID ((intptr_t)1179)
+#define llFTLinkAnimThrowBFileID ((intptr_t)1180)
+#define llFTLinkAnimEggLayPulledFileID ((intptr_t)1181)
+#define llFTLinkAnimThrownDKPulledFileID ((intptr_t)1182)
+#define llFTLinkAnimThrownDKFileID ((intptr_t)1183)
+#define llFTLinkAnimThrownMarioBrosFileID ((intptr_t)1184)
+#define llFTLinkAnimThrownFoxFStartFileID ((intptr_t)1185)
+#define llFTLinkAnimThrown2FileID ((intptr_t)1186)
+#define llFTLinkAnimThrown1FileID ((intptr_t)1187)
+#define llFTLinkAnimTauntFileID ((intptr_t)1188)
+#define llFTLinkAnimCliffCatchFileID ((intptr_t)1189)
+#define llFTLinkAnimCliffWaitFileID ((intptr_t)1190)
+#define llFTLinkAnimCliffQuickFileID ((intptr_t)1191)
+#define llFTLinkAnimCliffClimbQuick1FileID ((intptr_t)1192)
+#define llFTLinkAnimCliffClimbQuick2FileID ((intptr_t)1193)
+#define llFTLinkAnimCliffSlowFileID ((intptr_t)1194)
+#define llFTLinkAnimCliffClimbSlow1FileID ((intptr_t)1195)
+#define llFTLinkAnimCliffClimbSlow2FileID ((intptr_t)1196)
+#define llFTLinkAnimCliffAttackQuick1FileID ((intptr_t)1197)
+#define llFTLinkAnimCliffAttackQuick2FileID ((intptr_t)1198)
+#define llFTLinkAnimCliffAttackSlow1FileID ((intptr_t)1199)
+#define llFTLinkAnimCliffAttackSlow2FileID ((intptr_t)1200)
+#define llFTLinkAnimCliffEscapeQuick1FileID ((intptr_t)1201)
+#define llFTLinkAnimCliffEscapeQuick2FileID ((intptr_t)1202)
+#define llFTLinkAnimCliffEscapeSlow1FileID ((intptr_t)1203)
+#define llFTLinkAnimCliffEscapeSlow2FileID ((intptr_t)1204)
+#define llFTLinkAnimLightItemPickupFileID ((intptr_t)1205)
+#define llFTLinkAnimItemThrowSmashBFileID ((intptr_t)1206)
+#define llFTLinkAnimItemThrowSmashUFileID ((intptr_t)1207)
+#define llFTLinkAnimItemThrowSmashDFileID ((intptr_t)1208)
+#define llFTLinkAnimItemThrowDashFileID ((intptr_t)1209)
+#define llFTLinkAnimItemDropFileID ((intptr_t)1210)
+#define llFTLinkAnimItemThrowAirSmashBFileID ((intptr_t)1211)
+#define llFTLinkAnimItemThrowAirSmashUFileID ((intptr_t)1212)
+#define llFTLinkAnimItemThrowAirSmashFFileID ((intptr_t)1213)
+#define llFTLinkAnimHeavyItemPickupFileID ((intptr_t)1214)
+#define llFTLinkAnimHeavyItemThrowSmashBFileID ((intptr_t)1215)
+#define llFTLinkAnimStarRodNeutralFileID ((intptr_t)1216)
+#define llFTLinkAnimStarRodTiltFileID ((intptr_t)1217)
+#define llFTLinkAnimStarRodSmashFileID ((intptr_t)1218)
+#define llFTLinkAnimStarRodDashFileID ((intptr_t)1219)
+#define llFTLinkAnimHammerIdleFileID ((intptr_t)1220)
+#define llFTLinkAnimHammerLandingFileID ((intptr_t)1221)
+#define llFTLinkAnimFireFlowerShootFileID ((intptr_t)1222)
+#define llFTLinkAnimJab1FileID ((intptr_t)1223)
+#define llFTLinkAnimJab2FileID ((intptr_t)1224)
+#define llFTLinkAnimJab3FileID ((intptr_t)1225)
+#define llFTLinkAnimJabLoopStartFileID ((intptr_t)1226)
+#define llFTLinkAnimJabLoopFileID ((intptr_t)1227)
+#define llFTLinkAnimJabLoopEndFileID ((intptr_t)1228)
+#define llFTLinkAnimDashAttackFileID ((intptr_t)1229)
+#define llFTLinkAnimFTiltFileID ((intptr_t)1230)
+#define llFTLinkAnimUTiltFileID ((intptr_t)1231)
+#define llFTLinkAnimDTiltFileID ((intptr_t)1232)
+#define llFTLinkAnimFSmashFileID ((intptr_t)1233)
+#define llFTLinkAnimUSmashFileID ((intptr_t)1234)
+#define llFTLinkAnimDSmashFileID ((intptr_t)1235)
+#define llFTLinkAnimAttackAirNFileID ((intptr_t)1236)
+#define llFTLinkAnimAttackAirFFileID ((intptr_t)1237)
+#define llFTLinkAnimAttackAirBFileID ((intptr_t)1238)
+#define llFTLinkAnimAttackAirUFileID ((intptr_t)1239)
+#define llFTLinkAnimAttackAirDFileID ((intptr_t)1240)
+#define llFTLinkAnimLandingAirFFileID ((intptr_t)1241)
+#define llFTLinkAnimLandingAirDFileID ((intptr_t)1242)
+#define llFTLinkAnimEnterPipeFileID ((intptr_t)1243)
+#define llFTLinkAnimExitPipeFileID ((intptr_t)1244)
+#define llFTLinkAnimExitPipeWalkFileID ((intptr_t)1245)
+#define llFTLinkAnimAppear1FileID ((intptr_t)1246)
+#define llFTLinkAnimAppear2FileID ((intptr_t)1247)
+#define llFTLinkAnimUpSpecialGroundFileID ((intptr_t)1248)
+#define llFTLinkAnimUpSpecialEndGroundFileID ((intptr_t)1249)
+#define llFTLinkAnimUpSpecialAirFileID ((intptr_t)1250)
+#define llFTLinkAnimMissingBoomerangFileID ((intptr_t)1251)
+#define llFTLinkAnimCatchingBoomerangFileID ((intptr_t)1252)
+#define llFTLinkAnimMissingBoomerangAirFileID ((intptr_t)1253)
+#define llFTLinkAnimCatchingBoomerangAirFileID ((intptr_t)1254)
+#define llFTLinkAnimBombFileID ((intptr_t)1255)
+#define llFTLinkAnimBombAirFileID ((intptr_t)1256)
+#define llFTLinkAnimDamageFileID ((intptr_t)1257)
+#define llFTLinkAnimFireFlowerShootAirFileID ((intptr_t)1258)
+#define llFTKirbyAnimEggLayFileID ((intptr_t)1259)
+#define llFTKirbyAnimWalk1FileID ((intptr_t)1260)
+#define llFTKirbyAnimWalk2FileID ((intptr_t)1261)
+#define llFTKirbyAnimWalk3FileID ((intptr_t)1262)
+#define llFTKirbyAnimWalkEndFileID ((intptr_t)1263)
+#define llFTKirbyAnimDashFileID ((intptr_t)1264)
+#define llFTKirbyAnimRunFileID ((intptr_t)1265)
+#define llFTKirbyAnimRunBrakeFileID ((intptr_t)1266)
+#define llFTKirbyAnimTurnFileID ((intptr_t)1267)
+#define llFTKirbyAnimTurnRunFileID ((intptr_t)1268)
+#define llFTKirbyAnimJumpFFileID ((intptr_t)1269)
+#define llFTKirbyAnimJumpBFileID ((intptr_t)1270)
+#define llFTKirbyAnimJump2FileID ((intptr_t)1271)
+#define llFTKirbyAnimJump3FileID ((intptr_t)1272)
+#define llFTKirbyAnimJump4FileID ((intptr_t)1273)
+#define llFTKirbyAnimJump5FileID ((intptr_t)1274)
+#define llFTKirbyAnimJump6FileID ((intptr_t)1275)
+#define llFTKirbyAnimFallFileID ((intptr_t)1276)
+#define llFTKirbyAnimFallAerialFileID ((intptr_t)1277)
+#define llFTKirbyAnimCrouchFileID ((intptr_t)1278)
+#define llFTKirbyAnimCrouchIdleFileID ((intptr_t)1279)
+#define llFTKirbyAnimCrouchEndFileID ((intptr_t)1280)
+#define llFTKirbyAnimLandingAirXFileID ((intptr_t)1281)
+#define llFTKirbyAnimShieldDropFileID ((intptr_t)1282)
+#define llFTKirbyAnimTeeterFileID ((intptr_t)1283)
+#define llFTKirbyAnimTeeterstartFileID ((intptr_t)1284)
+#define llFTKirbyAnimSleepFileID ((intptr_t)1285)
+#define llFTKirbyAnimDamaged1FileID ((intptr_t)1286)
+#define llFTKirbyAnimDamaged2FileID ((intptr_t)1287)
+#define llFTKirbyAnimFalconDivePulledFileID ((intptr_t)1288)
+#define llFTKirbyAnimDamageX1FileID ((intptr_t)1289)
+#define llFTKirbyAnimDamageX2FileID ((intptr_t)1290)
+#define llFTKirbyAnimDamageX3FileID ((intptr_t)1291)
+#define llFTKirbyAnimDamaged3FileID ((intptr_t)1292)
+#define llFTKirbyAnimDamaged4FileID ((intptr_t)1293)
+#define llFTKirbyAnimDamaged5FileID ((intptr_t)1294)
+#define llFTKirbyAnimDamaged6FileID ((intptr_t)1295)
+#define llFTKirbyAnimDamageAirFileID ((intptr_t)1296)
+#define llFTKirbyAnimDamaged7FileID ((intptr_t)1297)
+#define llFTKirbyAnimDamageFlyX1FileID ((intptr_t)1298)
+#define llFTKirbyAnimDamageFlyX2FileID ((intptr_t)1299)
+#define llFTKirbyAnimDamage2FileID ((intptr_t)1300)
+#define llFTKirbyAnimShieldBreakFileID ((intptr_t)1301)
+#define llFTKirbyAnimDamageFlyTopFileID ((intptr_t)1302)
+#define llFTKirbyAnimDamagedFileID ((intptr_t)1303)
+#define llFTKirbyAnimFallSpecialFileID ((intptr_t)1304)
+#define llFTKirbyAnimCeilingBonkFileID ((intptr_t)1305)
+#define llFTKirbyAnimStunLandDFileID ((intptr_t)1306)
+#define llFTKirbyAnimStunLandUFileID ((intptr_t)1307)
+#define llFTKirbyAnimStunStartDFileID ((intptr_t)1308)
+#define llFTKirbyAnimStunStartUFileID ((intptr_t)1309)
+#define llFTKirbyAnimTechFFileID ((intptr_t)1310)
+#define llFTKirbyAnimTechBFileID ((intptr_t)1311)
+#define llFTKirbyAnimDownForwardDFileID ((intptr_t)1312)
+#define llFTKirbyAnimDownForwardUFileID ((intptr_t)1313)
+#define llFTKirbyAnimDownBackDFileID ((intptr_t)1314)
+#define llFTKirbyAnimDownBackUFileID ((intptr_t)1315)
+#define llFTKirbyAnimDownAttackDFileID ((intptr_t)1316)
+#define llFTKirbyAnimDownAttackUFileID ((intptr_t)1317)
+#define llFTKirbyAnimTechFileID ((intptr_t)1318)
+#define llFTKirbyAnimClangRecoilFileID ((intptr_t)1319)
+#define llFTKirbyAnimShieldOnFileID ((intptr_t)1320)
+#define llFTKirbyAnimShieldOffFileID ((intptr_t)1321)
+#define llFTKirbyAnimRollFFileID ((intptr_t)1322)
+#define llFTKirbyAnimRollBFileID ((intptr_t)1323)
+#define llFTKirbyAnimCatchFileID ((intptr_t)1324)
+#define llFTKirbyAnimCatchPullFileID ((intptr_t)1325)
+#define llFTKirbyAnimForwardThrowFileID ((intptr_t)1326)
+#define llFTKirbyAnimForwardThrowFallFileID ((intptr_t)1327)
+#define llFTKirbyAnimForwardThrowRecoilFileID ((intptr_t)1328)
+#define llFTKirbyAnimThrowBFileID ((intptr_t)1329)
+#define llFTKirbyAnimEggLayPulledFileID ((intptr_t)1330)
+#define llFTKirbyAnimThrownDKPulledFileID ((intptr_t)1331)
+#define llFTKirbyAnimThrownMarioBrosFileID ((intptr_t)1332)
+#define llFTKirbyAnimThrownDKFileID ((intptr_t)1333)
+#define llFTKirbyAnimThrown2FileID ((intptr_t)1334)
+#define llFTKirbyAnimThrown1FileID ((intptr_t)1335)
+#define llFTKirbyAnimThrownFoxBFileID ((intptr_t)1336)
+#define llFTKirbyAnimThrown3FileID ((intptr_t)1337)
+#define llFTKirbyAnimTauntFileID ((intptr_t)1338)
+#define llFTKirbyAnimCliffCatchFileID ((intptr_t)1339)
+#define llFTKirbyAnimCliffWaitFileID ((intptr_t)1340)
+#define llFTKirbyAnimCliffQuickFileID ((intptr_t)1341)
+#define llFTKirbyAnimCliffClimbQuick1FileID ((intptr_t)1342)
+#define llFTKirbyAnimCliffClimbQuick2FileID ((intptr_t)1343)
+#define llFTKirbyAnimCliffSlowFileID ((intptr_t)1344)
+#define llFTKirbyAnimCliffClimbSlow1FileID ((intptr_t)1345)
+#define llFTKirbyAnimCliffClimbSlow2FileID ((intptr_t)1346)
+#define llFTKirbyAnimCliffAttackQuick1FileID ((intptr_t)1347)
+#define llFTKirbyAnimCliffAttackQuick2FileID ((intptr_t)1348)
+#define llFTKirbyAnimCliffAttackSlow1FileID ((intptr_t)1349)
+#define llFTKirbyAnimCliffAttackSlow2FileID ((intptr_t)1350)
+#define llFTKirbyAnimCliffEscapeQuick1FileID ((intptr_t)1351)
+#define llFTKirbyAnimCliffEscapeQuick2FileID ((intptr_t)1352)
+#define llFTKirbyAnimCliffEscapeSlow1FileID ((intptr_t)1353)
+#define llFTKirbyAnimCliffEscapeSlow2FileID ((intptr_t)1354)
+#define llFTKirbyAnimLightItemPickupFileID ((intptr_t)1355)
+#define llFTKirbyAnimItemThrowSmashBFileID ((intptr_t)1356)
+#define llFTKirbyAnimItemThrowSmashUFileID ((intptr_t)1357)
+#define llFTKirbyAnimItemThrowSmashDFileID ((intptr_t)1358)
+#define llFTKirbyAnimItemThrowDashFileID ((intptr_t)1359)
+#define llFTKirbyAnimItemDropFileID ((intptr_t)1360)
+#define llFTKirbyAnimItemThrowAirSmashBFileID ((intptr_t)1361)
+#define llFTKirbyAnimItemThrowAirSmashUFileID ((intptr_t)1362)
+#define llFTKirbyAnimItemThrowAirSmashFFileID ((intptr_t)1363)
+#define llFTKirbyAnimHeavyItemPickupFileID ((intptr_t)1364)
+#define llFTKirbyAnimHeavyItemThrowSmashBFileID ((intptr_t)1365)
+#define llFTKirbyAnimStarRodNeutralFileID ((intptr_t)1366)
+#define llFTKirbyAnimStarRodTiltFileID ((intptr_t)1367)
+#define llFTKirbyAnimStarRodSmashFileID ((intptr_t)1368)
+#define llFTKirbyAnimStarRodDashFileID ((intptr_t)1369)
+#define llFTKirbyAnimHammerIdleFileID ((intptr_t)1370)
+#define llFTKirbyAnimHammerLandingFileID ((intptr_t)1371)
+#define llFTKirbyAnimFireFlowerShootFileID ((intptr_t)1372)
+#define llFTKirbyAnimJab1FileID ((intptr_t)1373)
+#define llFTKirbyAnimJab2FileID ((intptr_t)1374)
+#define llFTKirbyAnimJabLoopStartFileID ((intptr_t)1375)
+#define llFTKirbyAnimJabLoopFileID ((intptr_t)1376)
+#define llFTKirbyAnimJabLoopEndFileID ((intptr_t)1377)
+#define llFTKirbyAnimDashAttackFileID ((intptr_t)1378)
+#define llFTKirbyAnimFTiltHighFileID ((intptr_t)1379)
+#define llFTKirbyAnimFTiltFileID ((intptr_t)1380)
+#define llFTKirbyAnimFTiltLowFileID ((intptr_t)1381)
+#define llFTKirbyAnimUTiltFileID ((intptr_t)1382)
+#define llFTKirbyAnimDTiltFileID ((intptr_t)1383)
+#define llFTKirbyAnimFSmashFileID ((intptr_t)1384)
+#define llFTKirbyAnimUSmashFileID ((intptr_t)1385)
+#define llFTKirbyAnimDSmashFileID ((intptr_t)1386)
+#define llFTKirbyAnimAttackAirNFileID ((intptr_t)1387)
+#define llFTKirbyAnimAttackAirFFileID ((intptr_t)1388)
+#define llFTKirbyAnimAttackAirBFileID ((intptr_t)1389)
+#define llFTKirbyAnimAttackAirUFileID ((intptr_t)1390)
+#define llFTKirbyAnimAttackAirDFileID ((intptr_t)1391)
+#define llFTKirbyAnimLandingAirFFileID ((intptr_t)1392)
+#define llFTKirbyAnimLandingAirBFileID ((intptr_t)1393)
+#define llFTKirbyAnimEnterPipeFileID ((intptr_t)1394)
+#define llFTKirbyAnimExitPipeFileID ((intptr_t)1395)
+#define llFTKirbyAnimExitPipeWalkFileID ((intptr_t)1396)
+#define llFTKirbyAnimLuigiFireballGroundFileID ((intptr_t)1397)
+#define llFTKirbyAnimLuigiFireballAirFileID ((intptr_t)1398)
+#define llFTKirbyAnimChargePunchStartGroundFileID ((intptr_t)1399)
+#define llFTKirbyAnimChargePunchGroundFileID ((intptr_t)1400)
+#define llFTKirbyAnimChargePunchGroundFullFileID ((intptr_t)1401)
+#define llFTKirbyAnimChargeStartAirFileID ((intptr_t)1402)
+#define llFTKirbyAnimChargePunchAirFileID ((intptr_t)1403)
+#define llFTKirbyAnimChargePunchAirFullFileID ((intptr_t)1404)
+#define llFTKirbyAnimChargeShotStartFileID ((intptr_t)1405)
+#define llFTKirbyAnimChargingFileID ((intptr_t)1406)
+#define llFTKirbyAnimShootingChargeShotFileID ((intptr_t)1407)
+#define llFTKirbyAnimChargeShotAirFileID ((intptr_t)1408)
+#define llFTKirbyAnimShootingChargeShotAirFileID ((intptr_t)1409)
+#define llFTKirbyAnimLaserGroundFileID ((intptr_t)1410)
+#define llFTKirbyAnimLaserAirFileID ((intptr_t)1411)
+#define llFTKirbyAnimDKStaringGroundFileID ((intptr_t)1412)
+#define llFTKirbyAnimDKStaringAirFileID ((intptr_t)1413)
+#define llFTKirbyAnimThunderJoltGroundFileID ((intptr_t)1414)
+#define llFTKirbyAnimThunderJoltAirFileID ((intptr_t)1415)
+#define llFTKirbyAnimPKFireGroundFileID ((intptr_t)1416)
+#define llFTKirbyAnimPKFireAirFileID ((intptr_t)1417)
+#define llFTKirbyAnimFinalCutterFileID ((intptr_t)1418)
+#define llFTKirbyAnimFinalCutterLandFileID ((intptr_t)1419)
+#define llFTKirbyAnimFinalCutterImpactFileID ((intptr_t)1420)
+#define llFTKirbyAnimStoneStartGroundFileID ((intptr_t)1421)
+#define llFTKirbyAnimStoneGroundFileID ((intptr_t)1422)
+#define llFTKirbyAnimStoneCancelFileID ((intptr_t)1423)
+#define llFTKirbyAnimStoneStartAirFileID ((intptr_t)1424)
+#define llFTKirbyAnimInhaleStartGroundFileID ((intptr_t)1425)
+#define llFTKirbyAnimInhaleSwallowedFileID ((intptr_t)1426)
+#define llFTKirbyAnimInhaleSpitFileID ((intptr_t)1427)
+#define llFTKirbyAnimInhaleStuffedFileID ((intptr_t)1428)
+#define llFTKirbyAnimInhaleTurnFileID ((intptr_t)1429)
+#define llFTKirbyAnimInhaleAbsorbFileID ((intptr_t)1430)
+#define llFTKirbyAnimInhaleGroundFileID ((intptr_t)1431)
+#define llFTKirbyAnimInhaleEndFileID ((intptr_t)1432)
+#define llFTKirbyAnimBoomerangMissFileID ((intptr_t)1433)
+#define llFTKirbyAnimBoomerangCatchFileID ((intptr_t)1434)
+#define llFTKirbyAnimBoomerangAirMissFileID ((intptr_t)1435)
+#define llFTKirbyAnimBoomerangAirCatchFileID ((intptr_t)1436)
+#define llFTKirbyAnimFalconPunchGroundFileID ((intptr_t)1437)
+#define llFTKirbyAnimFalconPunchAirFileID ((intptr_t)1438)
+#define llFTKirbyAnimEggLayGroundFileID ((intptr_t)1439)
+#define llFTKirbyAnimEggThrowGroundFileID ((intptr_t)1440)
+#define llFTKirbyAnimEggThrowAirFileID ((intptr_t)1441)
+#define llFTKirbyAnimEggThrowEndAirFileID ((intptr_t)1442)
+#define llFTKirbyAnimDamageFileID ((intptr_t)1443)
+#define llFTKirbyAnimFireFlowerShootAirFileID ((intptr_t)1444)
+#define llFTPurinAnimTauntFileID ((intptr_t)1445)
+#define llFTPurinAnimJab1FileID ((intptr_t)1446)
+#define llFTPurinAnimJab2FileID ((intptr_t)1447)
+#define llFTPurinAnimAttackAirBFileID ((intptr_t)1448)
+#define llFTPurinAnimAttackAirNFileID ((intptr_t)1449)
+#define llFTPurinAnimAttackAirFFileID ((intptr_t)1450)
+#define llFTPurinAnimAttackAirUFileID ((intptr_t)1451)
+#define llFTPurinAnimAttackAirDFileID ((intptr_t)1452)
+#define llFTPurinAnimDashAttackFileID ((intptr_t)1453)
+#define llFTPurinAnimUTiltFileID ((intptr_t)1454)
+#define llFTPurinAnimUSmashFileID ((intptr_t)1455)
+#define llFTPurinAnimDTiltFileID ((intptr_t)1456)
+#define llFTPurinAnimDSmashFileID ((intptr_t)1457)
+#define llFTPurinAnimFTiltHighFileID ((intptr_t)1458)
+#define llFTPurinAnimFTiltLowFileID ((intptr_t)1459)
+#define llFTPurinAnimFTiltFileID ((intptr_t)1460)
+#define llFTPurinAnimFSmashFileID ((intptr_t)1461)
+#define llFTPurinAnimItemThrowDashFileID ((intptr_t)1462)
+#define llFTPurinAnimDashFileID ((intptr_t)1463)
+#define llFTPurinAnimRollBFileID ((intptr_t)1464)
+#define llFTPurinAnimRollFFileID ((intptr_t)1465)
+#define llFTPurinAnimFallAerialFileID ((intptr_t)1466)
+#define llFTPurinAnimFallSpecialFileID ((intptr_t)1467)
+#define llFTPurinAnimFallFileID ((intptr_t)1468)
+#define llFTPurinAnimShieldOnFileID ((intptr_t)1469)
+#define llFTPurinAnimShieldOffFileID ((intptr_t)1470)
+#define llFTPurinAnimJump2FileID ((intptr_t)1471)
+#define llFTPurinAnimJump3FileID ((intptr_t)1472)
+#define llFTPurinAnimJump4FileID ((intptr_t)1473)
+#define llFTPurinAnimJump5FileID ((intptr_t)1474)
+#define llFTPurinAnimJump6FileID ((intptr_t)1475)
+#define llFTPurinAnimJumpBFileID ((intptr_t)1476)
+#define llFTPurinAnimJumpFFileID ((intptr_t)1477)
+#define llFTPurinAnimJumpSquatFileID ((intptr_t)1478)
+#define llFTPurinAnimLandingAirBFileID ((intptr_t)1479)
+#define llFTPurinAnimPassFileID ((intptr_t)1480)
+#define llFTPurinAnimTeeterFileID ((intptr_t)1481)
+#define llFTPurinAnimTechFileID ((intptr_t)1482)
+#define llFTPurinAnimRunBrakeFileID ((intptr_t)1483)
+#define llFTPurinAnimTurnRunFileID ((intptr_t)1484)
+#define llFTPurinAnimRunFileID ((intptr_t)1485)
+#define llFTPurinAnimCeilingBonkFileID ((intptr_t)1486)
+#define llFTPurinAnimCrouchFileID ((intptr_t)1487)
+#define llFTPurinAnimBatSmashFileID ((intptr_t)1488)
+#define llFTPurinAnimBatDashFileID ((intptr_t)1489)
+#define llFTPurinAnimItemThrowBFileID ((intptr_t)1490)
+#define llFTPurinAnimTurnFileID ((intptr_t)1491)
+#define llFTPurinAnimEggLayFileID ((intptr_t)1492)
+#define llFTPurinAnimWalk3FileID ((intptr_t)1493)
+#define llFTPurinAnimWalk2FileID ((intptr_t)1494)
+#define llFTPurinAnimWalk1FileID ((intptr_t)1495)
+#define llFTPurinAnimThrownDKPulledFileID ((intptr_t)1496)
+#define llFTPurinAnimThrownDKFileID ((intptr_t)1497)
+#define llFTPurinAnimCatchPullFileID ((intptr_t)1498)
+#define llFTPurinAnimThrowFFileID ((intptr_t)1499)
+#define llFTPurinAnimThrowBFileID ((intptr_t)1500)
+#define llFTPurinAnimRestAirFileID ((intptr_t)1501)
+#define llFTPurinAnimPoundGroundFileID ((intptr_t)1502)
+#define llFTPurinAnimPoundAirFileID ((intptr_t)1503)
+#define llFTPurinAnimSingAirFileID ((intptr_t)1504)
+#define llFTPurinAnimAppear1FileID ((intptr_t)1505)
+#define llFTPurinAnimAppear2FileID ((intptr_t)1506)
+#define llFTPurinAnimExitPipeWalkFileID ((intptr_t)1507)
+#define llFTPurinAnimHeavyItemPickupFileID ((intptr_t)1508)
+#define llFTPurinAnimHeavyItemThrowBFileID ((intptr_t)1509)
+#define llFTPurinAnimFireFlowerShootFileID ((intptr_t)1510)
+#define llFTPurinAnimDamageFileID ((intptr_t)1511)
+#define llFTCaptainAnimEggLayFileID ((intptr_t)1512)
+#define llFTCaptainAnimWalk1FileID ((intptr_t)1513)
+#define llFTCaptainAnimWalk2FileID ((intptr_t)1514)
+#define llFTCaptainAnimWalk3FileID ((intptr_t)1515)
+#define llFTCaptainAnimWalkEndFileID ((intptr_t)1516)
+#define llFTCaptainAnimDashFileID ((intptr_t)1517)
+#define llFTCaptainAnimRunFileID ((intptr_t)1518)
+#define llFTCaptainAnimRunBrakeFileID ((intptr_t)1519)
+#define llFTCaptainAnimTurnFileID ((intptr_t)1520)
+#define llFTCaptainAnimTurnRunFileID ((intptr_t)1521)
+#define llFTCaptainAnimJumpFFileID ((intptr_t)1522)
+#define llFTCaptainAnimJumpBFileID ((intptr_t)1523)
+#define llFTCaptainAnimJumpAerialFFileID ((intptr_t)1524)
+#define llFTCaptainAnimJumpAerialBFileID ((intptr_t)1525)
+#define llFTCaptainAnimFallFileID ((intptr_t)1526)
+#define llFTCaptainAnimFallAerialFileID ((intptr_t)1527)
+#define llFTCaptainAnimCrouchFileID ((intptr_t)1528)
+#define llFTCaptainAnimCrouchIdleFileID ((intptr_t)1529)
+#define llFTCaptainAnimCrouchEndFileID ((intptr_t)1530)
+#define llFTCaptainAnimLandingAirXFileID ((intptr_t)1531)
+#define llFTCaptainAnimShieldDropFileID ((intptr_t)1532)
+#define llFTCaptainAnimTeeterFileID ((intptr_t)1533)
+#define llFTCaptainAnimTeeterstartFileID ((intptr_t)1534)
+#define llFTCaptainAnimSleepFileID ((intptr_t)1535)
+#define llFTCaptainAnimDamaged1FileID ((intptr_t)1536)
+#define llFTCaptainAnimDamaged2FileID ((intptr_t)1537)
+#define llFTCaptainAnimFalconDivePulledFileID ((intptr_t)1538)
+#define llFTCaptainAnimDamageX1FileID ((intptr_t)1539)
+#define llFTCaptainAnimDamageX2FileID ((intptr_t)1540)
+#define llFTCaptainAnimDamageX3FileID ((intptr_t)1541)
+#define llFTCaptainAnimDamaged3FileID ((intptr_t)1542)
+#define llFTCaptainAnimDamaged4FileID ((intptr_t)1543)
+#define llFTCaptainAnimDamaged5FileID ((intptr_t)1544)
+#define llFTCaptainAnimDamaged6FileID ((intptr_t)1545)
+#define llFTCaptainAnimDamageAirFileID ((intptr_t)1546)
+#define llFTCaptainAnimDamaged7FileID ((intptr_t)1547)
+#define llFTCaptainAnimDamageFlyX1FileID ((intptr_t)1548)
+#define llFTCaptainAnimDamageFlyX2FileID ((intptr_t)1549)
+#define llFTCaptainAnimDamage2FileID ((intptr_t)1550)
+#define llFTCaptainAnimShieldBreakFileID ((intptr_t)1551)
+#define llFTCaptainAnimDamageFlyTopFileID ((intptr_t)1552)
+#define llFTCaptainAnimDamagedFileID ((intptr_t)1553)
+#define llFTCaptainAnimFallSpecialFileID ((intptr_t)1554)
+#define llFTCaptainAnimCeilingBonkFileID ((intptr_t)1555)
+#define llFTCaptainAnimStunLandDFileID ((intptr_t)1556)
+#define llFTCaptainAnimStunLandUFileID ((intptr_t)1557)
+#define llFTCaptainAnimStunStartDFileID ((intptr_t)1558)
+#define llFTCaptainAnimStunStartUFileID ((intptr_t)1559)
+#define llFTCaptainAnimTechFFileID ((intptr_t)1560)
+#define llFTCaptainAnimTechBFileID ((intptr_t)1561)
+#define llFTCaptainAnimDownForwardDFileID ((intptr_t)1562)
+#define llFTCaptainAnimDownForwardUFileID ((intptr_t)1563)
+#define llFTCaptainAnimDownBackDFileID ((intptr_t)1564)
+#define llFTCaptainAnimDownBackUFileID ((intptr_t)1565)
+#define llFTCaptainAnimDownAttackDFileID ((intptr_t)1566)
+#define llFTCaptainAnimDownAttackUFileID ((intptr_t)1567)
+#define llFTCaptainAnimTechFileID ((intptr_t)1568)
+#define llFTCaptainAnimClangRecoilFileID ((intptr_t)1569)
+#define llFTCaptainAnimShieldOnFileID ((intptr_t)1570)
+#define llFTCaptainAnimShieldOffFileID ((intptr_t)1571)
+#define llFTCaptainAnimRollFFileID ((intptr_t)1572)
+#define llFTCaptainAnimRollBFileID ((intptr_t)1573)
+#define llFTCaptainAnimCatchFileID ((intptr_t)1574)
+#define llFTCaptainAnimCatchPullFileID ((intptr_t)1575)
+#define llFTCaptainAnimThrowFFileID ((intptr_t)1576)
+#define llFTCaptainAnimThrowBFileID ((intptr_t)1577)
+#define llFTCaptainAnimEggLayPulledFileID ((intptr_t)1578)
+#define llFTCaptainAnimThrownDKPulledFileID ((intptr_t)1579)
+#define llFTCaptainAnimThrownMarioBrosFileID ((intptr_t)1580)
+#define llFTCaptainAnimThrownDKFileID ((intptr_t)1581)
+#define llFTCaptainAnimThrown2FileID ((intptr_t)1582)
+#define llFTCaptainAnimThrown1FileID ((intptr_t)1583)
+#define llFTCaptainAnimTauntFileID ((intptr_t)1584)
+#define llFTCaptainAnimCliffCatchFileID ((intptr_t)1585)
+#define llFTCaptainAnimCliffWaitFileID ((intptr_t)1586)
+#define llFTCaptainAnimCliffQuickFileID ((intptr_t)1587)
+#define llFTCaptainAnimCliffClimbQuick1FileID ((intptr_t)1588)
+#define llFTCaptainAnimCliffClimbQuick2FileID ((intptr_t)1589)
+#define llFTCaptainAnimCliffSlowFileID ((intptr_t)1590)
+#define llFTCaptainAnimCliffClimbSlow1FileID ((intptr_t)1591)
+#define llFTCaptainAnimCliffClimbSlow2FileID ((intptr_t)1592)
+#define llFTCaptainAnimCliffAttackQuick1FileID ((intptr_t)1593)
+#define llFTCaptainAnimCliffAttackQuick2FileID ((intptr_t)1594)
+#define llFTCaptainAnimCliffAttackSlow1FileID ((intptr_t)1595)
+#define llFTCaptainAnimCliffAttackSlow2FileID ((intptr_t)1596)
+#define llFTCaptainAnimCliffEscapeQuick1FileID ((intptr_t)1597)
+#define llFTCaptainAnimCliffEscapeQuick2FileID ((intptr_t)1598)
+#define llFTCaptainAnimCliffEscapeSlow1FileID ((intptr_t)1599)
+#define llFTCaptainAnimCliffEscapeSlow2FileID ((intptr_t)1600)
+#define llFTCaptainAnimLightItemPickupFileID ((intptr_t)1601)
+#define llFTCaptainAnimItemThrowSmashBFileID ((intptr_t)1602)
+#define llFTCaptainAnimItemThrowSmashUFileID ((intptr_t)1603)
+#define llFTCaptainAnimItemThrowSmashDFileID ((intptr_t)1604)
+#define llFTCaptainAnimItemThrowDashFileID ((intptr_t)1605)
+#define llFTCaptainAnimItemDropFileID ((intptr_t)1606)
+#define llFTCaptainAnimItemThrowAirSmashBFileID ((intptr_t)1607)
+#define llFTCaptainAnimItemThrowAirSmashUFileID ((intptr_t)1608)
+#define llFTCaptainAnimItemThrowAirSmashFFileID ((intptr_t)1609)
+#define llFTCaptainAnimHeavyItemPickupFileID ((intptr_t)1610)
+#define llFTCaptainAnimHeavyItemThrowSmashBFileID ((intptr_t)1611)
+#define llFTCaptainAnimStarRodNeutralFileID ((intptr_t)1612)
+#define llFTCaptainAnimStarRodTiltFileID ((intptr_t)1613)
+#define llFTCaptainAnimStarRodSmashFileID ((intptr_t)1614)
+#define llFTCaptainAnimStarRodDashFileID ((intptr_t)1615)
+#define llFTCaptainAnimHammerIdleFileID ((intptr_t)1616)
+#define llFTCaptainAnimHammerLandingFileID ((intptr_t)1617)
+#define llFTCaptainAnimFireFlowerShootFileID ((intptr_t)1618)
+#define llFTCaptainAnimJab1FileID ((intptr_t)1619)
+#define llFTCaptainAnimJab2FileID ((intptr_t)1620)
+#define llFTCaptainAnimJab3FileID ((intptr_t)1621)
+#define llFTCaptainAnimJabLoopStartFileID ((intptr_t)1622)
+#define llFTCaptainAnimJabLoopFileID ((intptr_t)1623)
+#define llFTCaptainAnimJabLoopEndFileID ((intptr_t)1624)
+#define llFTCaptainAnimDashAttackFileID ((intptr_t)1625)
+#define llFTCaptainAnimFTiltHighFileID ((intptr_t)1626)
+#define llFTCaptainAnimFTiltMidHighFileID ((intptr_t)1627)
+#define llFTCaptainAnimFTiltFileID ((intptr_t)1628)
+#define llFTCaptainAnimFTiltMidLowFileID ((intptr_t)1629)
+#define llFTCaptainAnimFTiltLowFileID ((intptr_t)1630)
+#define llFTCaptainAnimUTiltFileID ((intptr_t)1631)
+#define llFTCaptainAnimDTiltFileID ((intptr_t)1632)
+#define llFTCaptainAnimFSmashHighFileID ((intptr_t)1633)
+#define llFTCaptainAnimFSmashFileID ((intptr_t)1634)
+#define llFTCaptainAnimFSmashLowFileID ((intptr_t)1635)
+#define llFTCaptainAnimUSmashFileID ((intptr_t)1636)
+#define llFTCaptainAnimDSmashFileID ((intptr_t)1637)
+#define llFTCaptainAnimAttackAirNFileID ((intptr_t)1638)
+#define llFTCaptainAnimAttackAirFFileID ((intptr_t)1639)
+#define llFTCaptainAnimAttackAirBFileID ((intptr_t)1640)
+#define llFTCaptainAnimAttackAirUFileID ((intptr_t)1641)
+#define llFTCaptainAnimAttackAirDFileID ((intptr_t)1642)
+#define llFTCaptainAnimLandingAirFFileID ((intptr_t)1643)
+#define llFTCaptainAnimLandingAirBFileID ((intptr_t)1644)
+#define llFTCaptainAnimEnterPipeFileID ((intptr_t)1645)
+#define llFTCaptainAnimExitPipeFileID ((intptr_t)1646)
+#define llFTCaptainAnimExitPipeWalkFileID ((intptr_t)1647)
+#define llFTCaptainAnimAppearAirFileID ((intptr_t)1648)
+#define llFTCaptainAnimAppearFileID ((intptr_t)1649)
+#define llFTCaptainAnimBlueFalcon1FileID ((intptr_t)1650)
+#define llFTCaptainAnimBlueFalcon2FileID ((intptr_t)1651)
+#define llFTCaptainAnimFalconPunchGroundFileID ((intptr_t)1652)
+#define llFTCaptainAnimFalconPunchAirFileID ((intptr_t)1653)
+#define llFTCaptainAnimDownSpecialFileID ((intptr_t)1654)
+#define llFTCaptainAnimVelocityXDownSpecialAirFileID ((intptr_t)1655)
+#define llFTCaptainAnimLandingDownSpecialFileID ((intptr_t)1656)
+#define llFTCaptainAnimDownSpecialAirFileID ((intptr_t)1657)
+#define llFTCaptainAnimFalconDiveFileID ((intptr_t)1658)
+#define llFTCaptainAnimCatchingEnemyWhileDivingFileID ((intptr_t)1659)
+#define llFTCaptainAnimFalconDiveEnd1FileID ((intptr_t)1660)
+#define llFTCaptainAnimFalconDiveEnd2FileID ((intptr_t)1661)
+#define llFTCaptainAnimDamageFileID ((intptr_t)1662)
+#define llFTCaptainAnimFireFlowerShootAirFileID ((intptr_t)1663)
+#define llFTNessAnimEggLayFileID ((intptr_t)1664)
+#define llFTNessAnimWalk1FileID ((intptr_t)1665)
+#define llFTNessAnimWalk2FileID ((intptr_t)1666)
+#define llFTNessAnimWalk3FileID ((intptr_t)1667)
+#define llFTNessAnimWalkEndFileID ((intptr_t)1668)
+#define llFTNessAnimDashFileID ((intptr_t)1669)
+#define llFTNessAnimRunFileID ((intptr_t)1670)
+#define llFTNessAnimRunBrakeFileID ((intptr_t)1671)
+#define llFTNessAnimTurnFileID ((intptr_t)1672)
+#define llFTNessAnimTurnRunFileID ((intptr_t)1673)
+#define llFTNessAnimJumpFFileID ((intptr_t)1674)
+#define llFTNessAnimJumpBFileID ((intptr_t)1675)
+#define llFTNessAnimJumpAerialFFileID ((intptr_t)1676)
+#define llFTNessAnimJumpAerialBFileID ((intptr_t)1677)
+#define llFTNessAnimFallFileID ((intptr_t)1678)
+#define llFTNessAnimFallAerialFileID ((intptr_t)1679)
+#define llFTNessAnimCrouchFileID ((intptr_t)1680)
+#define llFTNessAnimCrouchIdleFileID ((intptr_t)1681)
+#define llFTNessAnimCrouchEndFileID ((intptr_t)1682)
+#define llFTNessAnimLandingAirXFileID ((intptr_t)1683)
+#define llFTNessAnimShieldDropFileID ((intptr_t)1684)
+#define llFTNessAnimTeeterFileID ((intptr_t)1685)
+#define llFTNessAnimTeeterstartFileID ((intptr_t)1686)
+#define llFTNessAnimSleepFileID ((intptr_t)1687)
+#define llFTNessAnimDamaged1FileID ((intptr_t)1688)
+#define llFTNessAnimDamaged2FileID ((intptr_t)1689)
+#define llFTNessAnimFalconDivePulledFileID ((intptr_t)1690)
+#define llFTNessAnimDamageX1FileID ((intptr_t)1691)
+#define llFTNessAnimDamageX2FileID ((intptr_t)1692)
+#define llFTNessAnimDamageX3FileID ((intptr_t)1693)
+#define llFTNessAnimDamaged3FileID ((intptr_t)1694)
+#define llFTNessAnimDamaged4FileID ((intptr_t)1695)
+#define llFTNessAnimDamaged5FileID ((intptr_t)1696)
+#define llFTNessAnimDamaged6FileID ((intptr_t)1697)
+#define llFTNessAnimDamageAirFileID ((intptr_t)1698)
+#define llFTNessAnimDamaged7FileID ((intptr_t)1699)
+#define llFTNessAnimDamageFlyX1FileID ((intptr_t)1700)
+#define llFTNessAnimDamageFlyX2FileID ((intptr_t)1701)
+#define llFTNessAnimDamage2FileID ((intptr_t)1702)
+#define llFTNessAnimShieldBreakFileID ((intptr_t)1703)
+#define llFTNessAnimDamageFlyTopFileID ((intptr_t)1704)
+#define llFTNessAnimClashingDuringPKTAFileID ((intptr_t)1705)
+#define llFTNessAnimFallSpecialFileID ((intptr_t)1706)
+#define llFTNessAnimCeilingBonkFileID ((intptr_t)1707)
+#define llFTNessAnimStunLandDFileID ((intptr_t)1708)
+#define llFTNessAnimStunLandUFileID ((intptr_t)1709)
+#define llFTNessAnimStunStartDFileID ((intptr_t)1710)
+#define llFTNessAnimStunStartUFileID ((intptr_t)1711)
+#define llFTNessAnimTechFFileID ((intptr_t)1712)
+#define llFTNessAnimTechBFileID ((intptr_t)1713)
+#define llFTNessAnimDownForwardDFileID ((intptr_t)1714)
+#define llFTNessAnimDownForwardUFileID ((intptr_t)1715)
+#define llFTNessAnimDownBackDFileID ((intptr_t)1716)
+#define llFTNessAnimDownBackUFileID ((intptr_t)1717)
+#define llFTNessAnimDownAttackDFileID ((intptr_t)1718)
+#define llFTNessAnimDownAttackUFileID ((intptr_t)1719)
+#define llFTNessAnimTechFileID ((intptr_t)1720)
+#define llFTNessAnimClangRecoilFileID ((intptr_t)1721)
+#define llFTNessAnimShieldOnFileID ((intptr_t)1722)
+#define llFTNessAnimShieldOffFileID ((intptr_t)1723)
+#define llFTNessAnimRollFFileID ((intptr_t)1724)
+#define llFTNessAnimRollBFileID ((intptr_t)1725)
+#define llFTNessAnimCatchFileID ((intptr_t)1726)
+#define llFTNessAnimCatchPullFileID ((intptr_t)1727)
+#define llFTNessAnimThrowFFileID ((intptr_t)1728)
+#define llFTNessAnimThrowBFileID ((intptr_t)1729)
+#define llFTNessAnimEggLayPulledFileID ((intptr_t)1730)
+#define llFTNessAnimThrownDKPulledFileID ((intptr_t)1731)
+#define llFTNessAnimThrownMarioBrosFileID ((intptr_t)1732)
+#define llFTNessAnimThrownDKFileID ((intptr_t)1733)
+#define llFTNessAnimThrown2FileID ((intptr_t)1734)
+#define llFTNessAnimThrown1FileID ((intptr_t)1735)
+#define llFTNessAnimTauntFileID ((intptr_t)1736)
+#define llFTNessAnimCliffCatchFileID ((intptr_t)1737)
+#define llFTNessAnimCliffWaitFileID ((intptr_t)1738)
+#define llFTNessAnimCliffQuickFileID ((intptr_t)1739)
+#define llFTNessAnimCliffClimbQuick1FileID ((intptr_t)1740)
+#define llFTNessAnimCliffClimbQuick2FileID ((intptr_t)1741)
+#define llFTNessAnimCliffSlowFileID ((intptr_t)1742)
+#define llFTNessAnimCliffClimbSlow1FileID ((intptr_t)1743)
+#define llFTNessAnimCliffClimbSlow2FileID ((intptr_t)1744)
+#define llFTNessAnimCliffAttackQuick1FileID ((intptr_t)1745)
+#define llFTNessAnimCliffAttackQuick2FileID ((intptr_t)1746)
+#define llFTNessAnimCliffAttackSlow1FileID ((intptr_t)1747)
+#define llFTNessAnimCliffAttackSlow2FileID ((intptr_t)1748)
+#define llFTNessAnimCliffEscapeQuick1FileID ((intptr_t)1749)
+#define llFTNessAnimCliffEscapeQuick2FileID ((intptr_t)1750)
+#define llFTNessAnimCliffEscapeSlow1FileID ((intptr_t)1751)
+#define llFTNessAnimCliffEscapeSlow2FileID ((intptr_t)1752)
+#define llFTNessAnimLightItemPickupFileID ((intptr_t)1753)
+#define llFTNessAnimItemThrowSmashBFileID ((intptr_t)1754)
+#define llFTNessAnimItemThrowSmashUFileID ((intptr_t)1755)
+#define llFTNessAnimItemThrowSmashDFileID ((intptr_t)1756)
+#define llFTNessAnimItemThrowDashFileID ((intptr_t)1757)
+#define llFTNessAnimItemDropFileID ((intptr_t)1758)
+#define llFTNessAnimItemThrowAirSmashBFileID ((intptr_t)1759)
+#define llFTNessAnimItemThrowAirSmashUFileID ((intptr_t)1760)
+#define llFTNessAnimItemThrowAirSmashFFileID ((intptr_t)1761)
+#define llFTNessAnimHeavyItemPickupFileID ((intptr_t)1762)
+#define llFTNessAnimHeavyItemThrowSmashBFileID ((intptr_t)1763)
+#define llFTNessAnimStarRodNeutralFileID ((intptr_t)1764)
+#define llFTNessAnimStarRodTiltFileID ((intptr_t)1765)
+#define llFTNessAnimStarRodSmashFileID ((intptr_t)1766)
+#define llFTNessAnimStarRodDashFileID ((intptr_t)1767)
+#define llFTNessAnimHammerIdleFileID ((intptr_t)1768)
+#define llFTNessAnimHammerLandingFileID ((intptr_t)1769)
+#define llFTNessAnimFireFlowerShootFileID ((intptr_t)1770)
+#define llFTNessAnimJab1FileID ((intptr_t)1771)
+#define llFTNessAnimJab2FileID ((intptr_t)1772)
+#define llFTNessAnimJab3FileID ((intptr_t)1773)
+#define llFTNessAnimDashAttackFileID ((intptr_t)1774)
+#define llFTNessAnimFTiltHighFileID ((intptr_t)1775)
+#define llFTNessAnimFTiltFileID ((intptr_t)1776)
+#define llFTNessAnimFTiltLowFileID ((intptr_t)1777)
+#define llFTNessAnimUTiltFileID ((intptr_t)1778)
+#define llFTNessAnimDTiltFileID ((intptr_t)1779)
+#define llFTNessAnimFSmashFileID ((intptr_t)1780)
+#define llFTNessAnimUSmashFileID ((intptr_t)1781)
+#define llFTNessAnimDSmashFileID ((intptr_t)1782)
+#define llFTNessAnimAttackAirNFileID ((intptr_t)1783)
+#define llFTNessAnimAttackAirFFileID ((intptr_t)1784)
+#define llFTNessAnimAttackAirBFileID ((intptr_t)1785)
+#define llFTNessAnimAttackAirUFileID ((intptr_t)1786)
+#define llFTNessAnimAttackAirDFileID ((intptr_t)1787)
+#define llFTNessAnimLandingAirFFileID ((intptr_t)1788)
+#define llFTNessAnimLandingAirBFileID ((intptr_t)1789)
+#define llFTNessAnimDownBStartGroundFileID ((intptr_t)1790)
+#define llFTNessAnimHealingDownBFileID ((intptr_t)1791)
+#define llFTNessAnimDownSpecialEndGroundFileID ((intptr_t)1792)
+#define llFTNessAnimDownSpecialStartAirFileID ((intptr_t)1793)
+#define llFTNessAnimHealingAirDownBFileID ((intptr_t)1794)
+#define llFTNessAnimDownSpecialEndAirFileID ((intptr_t)1795)
+#define llFTNessAnimEnterPipeFileID ((intptr_t)1796)
+#define llFTNessAnimExitPipeFileID ((intptr_t)1797)
+#define llFTNessAnimExitPipeWalkFileID ((intptr_t)1798)
+#define llFTNessAnimAppearStart1FileID ((intptr_t)1799)
+#define llFTNessAnimAppearStart2FileID ((intptr_t)1800)
+#define llFTNessAnimAppear1FileID ((intptr_t)1801)
+#define llFTNessAnimAppear2FileID ((intptr_t)1802)
+#define llFTNessAnimAppearEndFileID ((intptr_t)1803)
+#define llFTNessAnimPKFireGroundFileID ((intptr_t)1804)
+#define llFTNessAnimPKFireAirFileID ((intptr_t)1805)
+#define llFTNessAnimPKThunderStartGround1FileID ((intptr_t)1806)
+#define llFTNessAnimPKThunderStartGround2FileID ((intptr_t)1807)
+#define llFTNessAnimPKThunderEndFileID ((intptr_t)1808)
+#define llFTNessAnimPKThunderStartAirFileID ((intptr_t)1809)
+#define llFTNessAnimPKThunderAirFileID ((intptr_t)1810)
+#define llFTNessAnimPKThunderEndAirFileID ((intptr_t)1811)
+#define llFTNessAnimDKTAAirFileID ((intptr_t)1812)
+#define llFTNessAnimDamageFileID ((intptr_t)1813)
+#define llFTNessAnimFireFlowerShootAirFileID ((intptr_t)1814)
+#define llFTYoshiAnimEggLayFileID ((intptr_t)1815)
+#define llFTYoshiAnimWalk1FileID ((intptr_t)1816)
+#define llFTYoshiAnimWalk2FileID ((intptr_t)1817)
+#define llFTYoshiAnimWalk3FileID ((intptr_t)1818)
+#define llFTYoshiAnimWalkEndFileID ((intptr_t)1819)
+#define llFTYoshiAnimDashFileID ((intptr_t)1820)
+#define llFTYoshiAnimRunFileID ((intptr_t)1821)
+#define llFTYoshiAnimRunBrakeFileID ((intptr_t)1822)
+#define llFTYoshiAnimTurnFileID ((intptr_t)1823)
+#define llFTYoshiAnimTurnRunFileID ((intptr_t)1824)
+#define llFTYoshiAnimJumpFFileID ((intptr_t)1825)
+#define llFTYoshiAnimJumpBFileID ((intptr_t)1826)
+#define llFTYoshiAnimJumpAerialBFileID ((intptr_t)1827)
+#define llFTYoshiAnimFallFileID ((intptr_t)1828)
+#define llFTYoshiAnimFallAerialFileID ((intptr_t)1829)
+#define llFTYoshiAnimCrouchFileID ((intptr_t)1830)
+#define llFTYoshiAnimCrouchIdleFileID ((intptr_t)1831)
+#define llFTYoshiAnimCrouchEndFileID ((intptr_t)1832)
+#define llFTYoshiAnimLandingAirXFileID ((intptr_t)1833)
+#define llFTYoshiAnimShieldDropFileID ((intptr_t)1834)
+#define llFTYoshiAnimTeeterFileID ((intptr_t)1835)
+#define llFTYoshiAnimTeeterstartFileID ((intptr_t)1836)
+#define llFTYoshiAnimSleepFileID ((intptr_t)1837)
+#define llFTYoshiAnimDamaged1FileID ((intptr_t)1838)
+#define llFTYoshiAnimDamaged2FileID ((intptr_t)1839)
+#define llFTYoshiAnimFalconDivePulledFileID ((intptr_t)1840)
+#define llFTYoshiAnimDamageX1FileID ((intptr_t)1841)
+#define llFTYoshiAnimDamageX2FileID ((intptr_t)1842)
+#define llFTYoshiAnimDamageX3FileID ((intptr_t)1843)
+#define llFTYoshiAnimDamaged3FileID ((intptr_t)1844)
+#define llFTYoshiAnimDamaged4FileID ((intptr_t)1845)
+#define llFTYoshiAnimDamaged5FileID ((intptr_t)1846)
+#define llFTYoshiAnimDamaged6FileID ((intptr_t)1847)
+#define llFTYoshiAnimDamageAirFileID ((intptr_t)1848)
+#define llFTYoshiAnimDamaged7FileID ((intptr_t)1849)
+#define llFTYoshiAnimDamageFlyX1FileID ((intptr_t)1850)
+#define llFTYoshiAnimDamageFlyX2FileID ((intptr_t)1851)
+#define llFTYoshiAnimDamage2FileID ((intptr_t)1852)
+#define llFTYoshiAnimShieldBreakFileID ((intptr_t)1853)
+#define llFTYoshiAnimDamageFlyTopFileID ((intptr_t)1854)
+#define llFTYoshiAnimDamagedFileID ((intptr_t)1855)
+#define llFTYoshiAnimFallSpecialFileID ((intptr_t)1856)
+#define llFTYoshiAnimCeilingBonkFileID ((intptr_t)1857)
+#define llFTYoshiAnimStunLandDFileID ((intptr_t)1858)
+#define llFTYoshiAnimStunLandUFileID ((intptr_t)1859)
+#define llFTYoshiAnimStunStartDFileID ((intptr_t)1860)
+#define llFTYoshiAnimStunStartUFileID ((intptr_t)1861)
+#define llFTYoshiAnimTechFFileID ((intptr_t)1862)
+#define llFTYoshiAnimTechBFileID ((intptr_t)1863)
+#define llFTYoshiAnimDownForwardDFileID ((intptr_t)1864)
+#define llFTYoshiAnimDownForwardUFileID ((intptr_t)1865)
+#define llFTYoshiAnimDownBackDFileID ((intptr_t)1866)
+#define llFTYoshiAnimDownBackUFileID ((intptr_t)1867)
+#define llFTYoshiAnimDownAttackDFileID ((intptr_t)1868)
+#define llFTYoshiAnimDownAttackUFileID ((intptr_t)1869)
+#define llFTYoshiAnimTechFileID ((intptr_t)1870)
+#define llFTYoshiAnimClangRecoilFileID ((intptr_t)1871)
+#define llFTYoshiAnimShieldOnFileID ((intptr_t)1872)
+#define llFTYoshiAnimShieldOffFileID ((intptr_t)1873)
+#define llFTYoshiAnimRollFFileID ((intptr_t)1874)
+#define llFTYoshiAnimRollBFileID ((intptr_t)1875)
+#define llFTYoshiAnimCatchFileID ((intptr_t)1876)
+#define llFTYoshiAnimCatchPullFileID ((intptr_t)1877)
+#define llFTYoshiAnimThrowFFileID ((intptr_t)1878)
+#define llFTYoshiAnimThrowBFileID ((intptr_t)1879)
+#define llFTYoshiAnimEggLayPulledFileID ((intptr_t)1880)
+#define llFTYoshiAnimThrownDKPulledFileID ((intptr_t)1881)
+#define llFTYoshiAnimThrownMarioBrosFileID ((intptr_t)1882)
+#define llFTYoshiAnimThrownDKFileID ((intptr_t)1883)
+#define llFTYoshiAnimThrown2FileID ((intptr_t)1884)
+#define llFTYoshiAnimThrown1FileID ((intptr_t)1885)
+#define llFTYoshiAnimTauntFileID ((intptr_t)1886)
+#define llFTYoshiAnimCliffCatchFileID ((intptr_t)1887)
+#define llFTYoshiAnimCliffWaitFileID ((intptr_t)1888)
+#define llFTYoshiAnimCliffQuickFileID ((intptr_t)1889)
+#define llFTYoshiAnimCliffClimbQuick1FileID ((intptr_t)1890)
+#define llFTYoshiAnimCliffClimbQuick2FileID ((intptr_t)1891)
+#define llFTYoshiAnimCliffSlowFileID ((intptr_t)1892)
+#define llFTYoshiAnimCliffClimbSlow1FileID ((intptr_t)1893)
+#define llFTYoshiAnimCliffClimbSlow2FileID ((intptr_t)1894)
+#define llFTYoshiAnimCliffAttackQuick1FileID ((intptr_t)1895)
+#define llFTYoshiAnimCliffAttackQuick2FileID ((intptr_t)1896)
+#define llFTYoshiAnimCliffAttackSlow1FileID ((intptr_t)1897)
+#define llFTYoshiAnimCliffAttackSlow2FileID ((intptr_t)1898)
+#define llFTYoshiAnimCliffEscapeQuick1FileID ((intptr_t)1899)
+#define llFTYoshiAnimCliffEscapeQuick2FileID ((intptr_t)1900)
+#define llFTYoshiAnimCliffEscapeSlow1FileID ((intptr_t)1901)
+#define llFTYoshiAnimCliffEscapeSlow2FileID ((intptr_t)1902)
+#define llFTYoshiAnimLightItemPickupFileID ((intptr_t)1903)
+#define llFTYoshiAnimItemThrowSmashBFileID ((intptr_t)1904)
+#define llFTYoshiAnimItemThrowSmashUFileID ((intptr_t)1905)
+#define llFTYoshiAnimItemThrowSmashDFileID ((intptr_t)1906)
+#define llFTYoshiAnimItemThrowDashFileID ((intptr_t)1907)
+#define llFTYoshiAnimItemDropFileID ((intptr_t)1908)
+#define llFTYoshiAnimItemThrowAirSmashBFileID ((intptr_t)1909)
+#define llFTYoshiAnimItemThrowAirSmashUFileID ((intptr_t)1910)
+#define llFTYoshiAnimItemThrowAirSmashFFileID ((intptr_t)1911)
+#define llFTYoshiAnimHeavyItemPickupFileID ((intptr_t)1912)
+#define llFTYoshiAnimHeavyItemThrowSmashBFileID ((intptr_t)1913)
+#define llFTYoshiAnimStarRodNeutralFileID ((intptr_t)1914)
+#define llFTYoshiAnimStarRodTiltFileID ((intptr_t)1915)
+#define llFTYoshiAnimStarRodSmashFileID ((intptr_t)1916)
+#define llFTYoshiAnimStarRodDashFileID ((intptr_t)1917)
+#define llFTYoshiAnimHammerIdleFileID ((intptr_t)1918)
+#define llFTYoshiAnimHammerLandingFileID ((intptr_t)1919)
+#define llFTYoshiAnimFireFlowerShootFileID ((intptr_t)1920)
+#define llFTYoshiAnimJab1FileID ((intptr_t)1921)
+#define llFTYoshiAnimJab2FileID ((intptr_t)1922)
+#define llFTYoshiAnimDashAttackFileID ((intptr_t)1923)
+#define llFTYoshiAnimFTiltHighFileID ((intptr_t)1924)
+#define llFTYoshiAnimFTiltFileID ((intptr_t)1925)
+#define llFTYoshiAnimFTiltLowFileID ((intptr_t)1926)
+#define llFTYoshiAnimUTiltFileID ((intptr_t)1927)
+#define llFTYoshiAnimDTiltFileID ((intptr_t)1928)
+#define llFTYoshiAnimFSmashHighFileID ((intptr_t)1929)
+#define llFTYoshiAnimFSmashFileID ((intptr_t)1930)
+#define llFTYoshiAnimFSmashLowFileID ((intptr_t)1931)
+#define llFTYoshiAnimUSmashFileID ((intptr_t)1932)
+#define llFTYoshiAnimDSmashFileID ((intptr_t)1933)
+#define llFTYoshiAnimAttackAirNFileID ((intptr_t)1934)
+#define llFTYoshiAnimAttackAirFFileID ((intptr_t)1935)
+#define llFTYoshiAnimAttackAirBFileID ((intptr_t)1936)
+#define llFTYoshiAnimAttackAirUFileID ((intptr_t)1937)
+#define llFTYoshiAnimAttackAirDFileID ((intptr_t)1938)
+#define llFTYoshiAnimLandingAirFFileID ((intptr_t)1939)
+#define llFTYoshiAnimLandingAirBFileID ((intptr_t)1940)
+#define llFTYoshiAnimEnterPipeFileID ((intptr_t)1941)
+#define llFTYoshiAnimExitPipeFileID ((intptr_t)1942)
+#define llFTYoshiAnimExitPipeWalkFileID ((intptr_t)1943)
+#define llFTYoshiAnimEggThrowGroundFileID ((intptr_t)1944)
+#define llFTYoshiAnimEggThrowAirFileID ((intptr_t)1945)
+#define llFTYoshiAnimGroundPoundGroundStartFileID ((intptr_t)1946)
+#define llFTYoshiAnimGroundPoundLandingFileID ((intptr_t)1947)
+#define llFTYoshiAnimGroundPoundAirFileID ((intptr_t)1948)
+#define llFTYoshiAnimEggLayGrabbedSomeoneStillGoingOutFileID ((intptr_t)1949)
+#define llFTYoshiAnimEggLayGrabbedSomeoneComingInAndSwallowingFileID ((intptr_t)1950)
+#define llFTYoshiAnimEggLayAirGrabOutFileID ((intptr_t)1951)
+#define llFTYoshiAnimEggLayAirGrabInFileID ((intptr_t)1952)
+#define llFTYoshiAnimAppear1FileID ((intptr_t)1953)
+#define llFTYoshiAnimAppear2FileID ((intptr_t)1954)
+#define llFTYoshiAnimDamageFileID ((intptr_t)1955)
+#define llFTYoshiAnimFireFlowerShootAirFileID ((intptr_t)1956)
+#define llFTPikachuAnimIdleFileID ((intptr_t)1957)
+#define llFTPikachuAnimWalk1FileID ((intptr_t)1958)
+#define llFTPikachuAnimWalk2FileID ((intptr_t)1959)
+#define llFTPikachuAnimWalk3FileID ((intptr_t)1960)
+#define llFTPikachuAnimWalkEndFileID ((intptr_t)1961)
+#define llFTPikachuAnimDashFileID ((intptr_t)1962)
+#define llFTPikachuAnimRunFileID ((intptr_t)1963)
+#define llFTPikachuAnimRunBrakeFileID ((intptr_t)1964)
+#define llFTPikachuAnimTurnFileID ((intptr_t)1965)
+#define llFTPikachuAnimTurnRunFileID ((intptr_t)1966)
+#define llFTPikachuAnimJumpFFileID ((intptr_t)1967)
+#define llFTPikachuAnimJumpBFileID ((intptr_t)1968)
+#define llFTPikachuAnimJumpAerialFFileID ((intptr_t)1969)
+#define llFTPikachuAnimJumpAerialBFileID ((intptr_t)1970)
+#define llFTPikachuAnimFallFileID ((intptr_t)1971)
+#define llFTPikachuAnimFallAerialFileID ((intptr_t)1972)
+#define llFTPikachuAnimCrouchFileID ((intptr_t)1973)
+#define llFTPikachuAnimCrouchIdleFileID ((intptr_t)1974)
+#define llFTPikachuAnimCrouchEndFileID ((intptr_t)1975)
+#define llFTPikachuAnimLandingAirXFileID ((intptr_t)1976)
+#define llFTPikachuAnimShieldDropFileID ((intptr_t)1977)
+#define llFTPikachuAnimTeeterFileID ((intptr_t)1978)
+#define llFTPikachuAnimTeeterstartFileID ((intptr_t)1979)
+#define llFTPikachuAnimSleepFileID ((intptr_t)1980)
+#define llFTPikachuAnimDamaged1FileID ((intptr_t)1981)
+#define llFTPikachuAnimDamaged2FileID ((intptr_t)1982)
+#define llFTPikachuAnimFalconDivePulledFileID ((intptr_t)1983)
+#define llFTPikachuAnimDamageX1FileID ((intptr_t)1984)
+#define llFTPikachuAnimDamageX2FileID ((intptr_t)1985)
+#define llFTPikachuAnimDamageX3FileID ((intptr_t)1986)
+#define llFTPikachuAnimDamaged3FileID ((intptr_t)1987)
+#define llFTPikachuAnimDamaged4FileID ((intptr_t)1988)
+#define llFTPikachuAnimDamaged5FileID ((intptr_t)1989)
+#define llFTPikachuAnimFallSpecialFileID ((intptr_t)1990)
+#define llFTPikachuAnimStunLandDFileID ((intptr_t)1991)
+#define llFTPikachuAnimStunLandUFileID ((intptr_t)1992)
+#define llFTPikachuAnimCatchFileID ((intptr_t)1993)
+#define llFTPikachuAnimCatchPullFileID ((intptr_t)1994)
+#define llFTPikachuAnimThrowFFileID ((intptr_t)1995)
+#define llFTPikachuAnimThrowBFileID ((intptr_t)1996)
+#define llFTPikachuAnimTauntFileID ((intptr_t)1997)
+#define llFTPikachuAnimLightItemPickupFileID ((intptr_t)1998)
+#define llFTPikachuAnimItemThrowSmashBFileID ((intptr_t)1999)
+#define llFTPikachuAnimItemThrowSmashUFileID ((intptr_t)2000)
+#define llFTPikachuAnimItemThrowSmashDFileID ((intptr_t)2001)
+#define llFTPikachuAnimItemDropFileID ((intptr_t)2002)
+#define llFTPikachuAnimItemThrowDashFileID ((intptr_t)2003)
+#define llFTPikachuAnimItemThrowAirSmashBFileID ((intptr_t)2004)
+#define llFTPikachuAnimItemThrowAirSmashUFileID ((intptr_t)2005)
+#define llFTPikachuAnimItemThrowAirSmashFFileID ((intptr_t)2006)
+#define llFTPikachuAnimHeavyItemPickupFileID ((intptr_t)2007)
+#define llFTPikachuAnimHeavyItemThrowSmashBFileID ((intptr_t)2008)
+#define llFTPikachuAnimStarRodNeutralFileID ((intptr_t)2009)
+#define llFTPikachuAnimStarRodTiltFileID ((intptr_t)2010)
+#define llFTPikachuAnimStarRodSmashFileID ((intptr_t)2011)
+#define llFTPikachuAnimStarRodDashFileID ((intptr_t)2012)
+#define llFTPikachuAnimHammerIdleFileID ((intptr_t)2013)
+#define llFTPikachuAnimHammerLandingFileID ((intptr_t)2014)
+#define llFTPikachuAnimFireFlowerShootFileID ((intptr_t)2015)
+#define llFTPikachuAnimJab1FileID ((intptr_t)2016)
+#define llFTPikachuAnimDashAttackFileID ((intptr_t)2017)
+#define llFTPikachuAnimFTiltHighFileID ((intptr_t)2018)
+#define llFTPikachuAnimFTiltFileID ((intptr_t)2019)
+#define llFTPikachuAnimFTiltLowFileID ((intptr_t)2020)
+#define llFTPikachuAnimUTiltFileID ((intptr_t)2021)
+#define llFTPikachuAnimDTiltFileID ((intptr_t)2022)
+#define llFTPikachuAnimFSmashFileID ((intptr_t)2023)
+#define llFTPikachuAnimUSmashFileID ((intptr_t)2024)
+#define llFTPikachuAnimDSmashFileID ((intptr_t)2025)
+#define llFTPikachuAnimAttackAirNFileID ((intptr_t)2026)
+#define llFTPikachuAnimAttackAirFFileID ((intptr_t)2027)
+#define llFTPikachuAnimAttackAirBFileID ((intptr_t)2028)
+#define llFTPikachuAnimAttackAirUFileID ((intptr_t)2029)
+#define llFTPikachuAnimAttackAirDFileID ((intptr_t)2030)
+#define llFTPikachuAnimLandingAirFFileID ((intptr_t)2031)
+#define llFTPikachuAnimLandingAirDFileID ((intptr_t)2032)
+#define llFTPikachuAnimShieldOnFileID ((intptr_t)2033)
+#define llFTPikachuAnimShieldOffFileID ((intptr_t)2034)
+#define llFTPikachuAnimRollFFileID ((intptr_t)2035)
+#define llFTPikachuAnimRollBFileID ((intptr_t)2036)
+#define llFTPikachuAnimCliffCatchFileID ((intptr_t)2037)
+#define llFTPikachuAnimCliffWaitFileID ((intptr_t)2038)
+#define llFTPikachuAnimCliffQuickFileID ((intptr_t)2039)
+#define llFTPikachuAnimCliffClimbQuick1FileID ((intptr_t)2040)
+#define llFTPikachuAnimCliffClimbQuick2FileID ((intptr_t)2041)
+#define llFTPikachuAnimCliffSlowFileID ((intptr_t)2042)
+#define llFTPikachuAnimCliffClimbSlow1FileID ((intptr_t)2043)
+#define llFTPikachuAnimCliffClimbSlow2FileID ((intptr_t)2044)
+#define llFTPikachuAnimCliffAttackQuick1FileID ((intptr_t)2045)
+#define llFTPikachuAnimCliffAttackQuick2FileID ((intptr_t)2046)
+#define llFTPikachuAnimCliffAttackSlow1FileID ((intptr_t)2047)
+#define llFTPikachuAnimCliffAttackSlow2FileID ((intptr_t)2048)
+#define llFTPikachuAnimCliffEscapeQuick1FileID ((intptr_t)2049)
+#define llFTPikachuAnimCliffEscapeQuick2FileID ((intptr_t)2050)
+#define llFTPikachuAnimCliffEscapeSlow1FileID ((intptr_t)2051)
+#define llFTPikachuAnimCliffEscapeSlow2FileID ((intptr_t)2052)
+#define llFTPikachuAnimEggLayPulledFileID ((intptr_t)2053)
+#define llFTPikachuAnimDamaged6FileID ((intptr_t)2054)
+#define llFTPikachuAnimDamageAirFileID ((intptr_t)2055)
+#define llFTPikachuAnimDamaged7FileID ((intptr_t)2056)
+#define llFTPikachuAnimDamageFlyX1FileID ((intptr_t)2057)
+#define llFTPikachuAnimDamageFlyX2FileID ((intptr_t)2058)
+#define llFTPikachuAnimDamage2FileID ((intptr_t)2059)
+#define llFTPikachuAnimDamagedFileID ((intptr_t)2060)
+#define llFTPikachuAnimStunStartDFileID ((intptr_t)2061)
+#define llFTPikachuAnimStunStartUFileID ((intptr_t)2062)
+#define llFTPikachuAnimTechFileID ((intptr_t)2063)
+#define llFTPikachuAnimDamageFlyTopFileID ((intptr_t)2064)
+#define llFTPikachuAnimDownForwardDFileID ((intptr_t)2065)
+#define llFTPikachuAnimDownForwardUFileID ((intptr_t)2066)
+#define llFTPikachuAnimDownBackDFileID ((intptr_t)2067)
+#define llFTPikachuAnimDownBackUFileID ((intptr_t)2068)
+#define llFTPikachuAnimDownAttackDFileID ((intptr_t)2069)
+#define llFTPikachuAnimDownAttackUFileID ((intptr_t)2070)
+#define llFTPikachuAnimCeilingBonkFileID ((intptr_t)2071)
+#define llFTPikachuAnimShieldBreakFileID ((intptr_t)2072)
+#define llFTPikachuAnimClangRecoilFileID ((intptr_t)2073)
+#define llFTPikachuAnimTechFFileID ((intptr_t)2074)
+#define llFTPikachuAnimTechBFileID ((intptr_t)2075)
+#define llFTPikachuAnimThrownDKPulledFileID ((intptr_t)2076)
+#define llFTPikachuAnimThrownDKFileID ((intptr_t)2077)
+#define llFTPikachuAnimThrownMarioBrosFileID ((intptr_t)2078)
+#define llFTPikachuAnimThrown1FileID ((intptr_t)2079)
+#define llFTPikachuAnimThrown2FileID ((intptr_t)2080)
+#define llFTPikachuAnimAppear1FileID ((intptr_t)2081)
+#define llFTPikachuAnimAppear2FileID ((intptr_t)2082)
+#define llFTPikachuAnimEnterPipeFileID ((intptr_t)2083)
+#define llFTPikachuAnimExitPipeFileID ((intptr_t)2084)
+#define llFTPikachuAnimExitPipeWalkFileID ((intptr_t)2085)
+#define llFTPikachuAnimNeutralSpecialGroundFileID ((intptr_t)2086)
+#define llFTPikachuAnimNeutralSpecialAirFileID ((intptr_t)2087)
+#define llFTPikachuAnimUpSpecialEndFileID ((intptr_t)2088)
+#define llFTPikachuAnimUpSpecialAirEndFileID ((intptr_t)2089)
+#define llFTPikachuAnimDownSpecialStartFileID ((intptr_t)2090)
+#define llFTPikachuAnimGettingThunderedFileID ((intptr_t)2091)
+#define llFTPikachuAnimDownSpecialEndFileID ((intptr_t)2092)
+#define llFTPikachuAnimDownSpecialStartAirFileID ((intptr_t)2093)
+#define llFTPikachuAnimDownSpecialThunderedAirFileID ((intptr_t)2094)
+#define llFTPikachuAnimDownSpecialEndAirFileID ((intptr_t)2095)
+#define llFTPikachuAnimDamageFileID ((intptr_t)2096)
+#define llFTPikachuAnimFireFlowerShootAirFileID ((intptr_t)2097)
+#define llFTBossAnimDefaultFileID ((intptr_t)2098)
+#define llFTBossAnimSlapFileID ((intptr_t)2099)
+#define llFTBossAnimShooFileID ((intptr_t)2100)
+#define llFTBossAnimLaunchFileID ((intptr_t)2101)
+#define llFTBossAnimFlyFileID ((intptr_t)2102)
+#define llFTBossAnimLandingFileID ((intptr_t)2103)
+#define llFTBossAnimWalkStartFileID ((intptr_t)2104)
+#define llFTBossAnimWalkFileID ((intptr_t)2105)
+#define llFTBossAnimUnknown1FileID ((intptr_t)2106)
+#define llFTBossAnimFlickFileID ((intptr_t)2107)
+#define llFTBossAnimChargeStart1FileID ((intptr_t)2108)
+#define llFTBossAnimChargeStart2FileID ((intptr_t)2109)
+#define llFTBossAnimLanding2FileID ((intptr_t)2110)
+#define llFTBossAnimPunch1FileID ((intptr_t)2111)
+#define llFTBossAnimPointStartFileID ((intptr_t)2112)
+#define llFTBossAnimPokeFileID ((intptr_t)2113)
+#define llFTBossAnimPointFileID ((intptr_t)2114)
+#define llFTBossAnimDrillFileID ((intptr_t)2115)
+#define llFTBossAnimPunch2FileID ((intptr_t)2116)
+#define llFTBossAnimGunDrawFileID ((intptr_t)2117)
+#define llFTBossAnimGunShootFileID ((intptr_t)2118)
+#define llFTBossAnimGunAimFileID ((intptr_t)2119)
+#define llFTBossAnimUnknown2FileID ((intptr_t)2120)
+#define llFTBossAnimUnknown3FileID ((intptr_t)2121)
+#define llFTBossAnimUnknown4FileID ((intptr_t)2122)
+#define llFTBossAnimUnknown5FileID ((intptr_t)2123)
+#define llFTBossAnimSlamStartFileID ((intptr_t)2124)
+#define llFTBossAnimPunch3FileID ((intptr_t)2125)
+#define llFTBossAnimPunchEndFileID ((intptr_t)2126)
+#define llFTBossAnimSlamFileID ((intptr_t)2127)
+#define llFTBossAnimDyingStartFileID ((intptr_t)2128)
+#define llFTBossAnimDyingFileID ((intptr_t)2129)
+#define llFTBossAnimUnknown6FileID ((intptr_t)2130)
+#define llFTBossAnimAppearFileID ((intptr_t)2131)
 
 /* ll* symbols referenced by src/ but absent from the symbols table. */
-#define llFTBossAnimAppearFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimChargeStart1FileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimChargeStart2FileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimDefaultFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimDrillFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimDyingFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimDyingStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimFlickFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimFlyFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimGunAimFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimGunDrawFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimGunShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimLanding2FileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimLaunchFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimPointFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimPointStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimPokeFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimPunch1FileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimPunch2FileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimPunch3FileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimPunchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimShooFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimSlamFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimSlamStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimSlapFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimUnknown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimUnknown6FileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTBossAnimWalkStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimAppearAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimAppearFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimBlueFalcon1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimBlueFalcon2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCatchingEnemyWhileDivingFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimClapsFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDamagedFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDownSpecialAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimDownSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFSmashHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFSmashLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFTiltMidHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFTiltMidLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFalconDiveEnd1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFalconDiveEnd2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFalconDiveFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFalconPunchAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFalconPunchGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimHeavyItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJab3FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJabLoopEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJabLoopFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJabLoopStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJumpAerialBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJumpAerialFFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimLandingAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimLandingAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimLandingDownSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimStunLandDFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimStunStartDFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimUnknownFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimVelocityXDownSpecialAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimVictory1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimVictory2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTCaptainAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimAppear1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimAppear2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCargoAirThrowFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCargoLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCargoSlowWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCargoTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCargoVerySlowWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCargoWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimClapsFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDamagedFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDollPickUpFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFSmashHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFSmashLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFSmashMidHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFSmashMidLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimGiantPunchAirFullyChargedPunchFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimGiantPunchAirLoopFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimGiantPunchAirLoopStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimGiantPunchGroundFullyChargedPunchFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimGiantPunchGroundLoopFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimGiantPunchGroundLoopStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimHandSlapEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimHandSlapLoopFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimHandSlapStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimIntroFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimJumpAerialBFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimJumpAerialFFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimLandingAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimLandingAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimSpinningKongAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimSpinningKongGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimStunLandDFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimStunStartDFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimThrownFoxFStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimUnknownFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimWin2FileID ((intptr_t)0) /* STUBBED */
-#define llFTDonkeyAnimWin3FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimAppearFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimArwingFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimClapsFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDamagedFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDollFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDollPickUpFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFTiltMidHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFTiltMidLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFireFoxAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFireFoxEndAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFireFoxEndGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFireFoxGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFireFoxStartAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimFireFoxStartGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimHeavyItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimJabLoopEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimJabLoopFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimJabLoopStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimJumpAerialBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimJumpAerialFFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimLandingAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimLandingAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimLandingWhileFireFoxAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimLaserAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimLaserFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimPose1FrameFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimPoseBlaster2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimPosePostBlasterFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimReadyingFireFoxAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimReadyingFireFoxGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimReflectingFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimShineAirEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimShineFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimShineStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimShireStartAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimStunLandDFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimStunStartDFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimSwitchDirectionShineAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimSwitchDirectionShineFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimThrown3FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimThrownFoxBFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimUnknownFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTFoxAnimWin2FileID ((intptr_t)0) /* STUBBED */
-#define llFTGDonkeyAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimBoomerangAirCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimBoomerangAirMissFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimBoomerangCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimBoomerangMissFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimChargePunchAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimChargePunchAirFullFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimChargePunchGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimChargePunchGroundFullFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimChargePunchStartGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimChargeShotAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimChargeShotStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimChargeStartAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimChargingFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimClapsFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDKStaringAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDKStaringGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDamagedFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDollPickUpFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimEggLayGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimEggThrowAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimEggThrowEndAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimEggThrowGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFalconPunchAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFalconPunchGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFinalCutterFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFinalCutterImpactFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFinalCutterLandFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimForwardThrowFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimForwardThrowFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimForwardThrowRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimHeavyItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimInhaleAbsorbFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimInhaleEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimInhaleGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimInhaleSpitFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimInhaleStartGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimInhaleStuffedFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimInhaleSwallowedFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimInhaleTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimIntro2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimIntroFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimIntroPoseFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJabLoopEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJabLoopFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJabLoopStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJump2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJump3FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJump4FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJump5FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJump6FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimLandingAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimLandingAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimLaserAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimLaserGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimLuigiFireballAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimLuigiFireballGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimPKFireAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimPKFireGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimPose2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimPoseFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimShootingChargeShotAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimShootingChargeShotFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStoneCancelFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStoneGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStoneStartAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStoneStartGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStunLandDFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStunStartDFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThrown3FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThrownFoxBFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThunderJoltAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimThunderJoltGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimUnknownFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTKirbyAnimWin2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimAppear1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimAppear2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimBombAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimBombFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCatchingBoomerangAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCatchingBoomerangFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimClaps2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimClapsFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDamagedFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDollPickUpFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimHeavyItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimIntroFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJab3FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJabLoopEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJabLoopFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJabLoopStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJumpAerialBFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJumpAerialFFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimLandingAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimLandingAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimMissingBoomerangAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimMissingBoomerangFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimPoseAllyFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimPoseOpponentFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimPosePlayerFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimStunLandDFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimStunStartDFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimThrownFoxFStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimUpSpecialAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimUpSpecialEndGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimUpSpecialGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLinkAnimWin2FileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimFSmashHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimFSmashLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimFSmashMidHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimFSmashMidLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimPoseEnemyFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimPosePlayerFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimUnknownFileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTLuigiAnimWin2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMMarioAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimAppear1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimAppear2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimClapsFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDamagedFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDollFallsFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDollPickUpFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFSmashHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFSmashLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFSmashMidHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFSmashMidLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFireballAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimFireballGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimHeavyItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimIntro2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimIntroFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimIntroVsKirbyFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimJab3FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimJumpAerialBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimJumpAerialFFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimLandingAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimLandingAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimLandingAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimMarioTornadoAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimMarioTornadoGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimPose2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimPoseFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimSuperJumpPunchAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimWin2FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimWin3FileID ((intptr_t)0) /* STUBBED */
-#define llFTMarioAnimWinBetaFileID ((intptr_t)0) /* STUBBED */
-#define llFTNCaptainAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNDonkeyAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNFoxAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNKirbyAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNLinkAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNMarioAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNNessAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNPikachuAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNSamusAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNYoshiAnimPose1PFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAppear1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAppear2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAppearEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAppearStart1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAppearStart2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimClapsFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimClashingDuringPKTAFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDKTAAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownBStartGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownSpecialEndAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownSpecialEndGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimDownSpecialStartAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimHealingAirDownBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimHealingDownBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimHeavyItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimJab3FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimJumpAerialBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimJumpAerialFFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimLandingAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimLandingAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimPKFireAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimPKFireGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimPKThunderAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimPKThunderEndAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimPKThunderEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimPKThunderStartAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimPKThunderStartGround1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimPKThunderStartGround2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimPosePlayerFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimStunLandDFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimStunStartDFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTNessAnimWin2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimAppear1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimAppear2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimClapsFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDamagedFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDollPickUpFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownSpecialEndAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownSpecialEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownSpecialStartAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownSpecialStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimDownSpecialThunderedAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimGettingThunderedFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimHeavyItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimJumpAerialBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimJumpAerialFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimLandingAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimLandingAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimNeutralSpecialAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimNeutralSpecialGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimPoseAllyFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimPoseEnemyFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimPosePlayerFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimStunLandDFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimStunStartDFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimUnknown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimUnknown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimUpSpecialAirEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimUpSpecialEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPikachuAnimWin2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimAppear1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimAppear2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimBatDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimBatSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimHeavyItemThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimItemThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJump2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJump3FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJump4FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJump5FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJump6FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimJumpSquatFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimLandingAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimPassFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimPoundAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimPoundGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimRestAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimSingAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimUnknownFileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTPurinAnimWin2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimAppear1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimAppear2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimBombAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimBombFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimChargingNeutralSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimClapsFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDamagedFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDollPickUpFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFSmashHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFSmashLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFSmashMidHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFSmashMidLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFTiltMidHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFTiltMidLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimHeavyItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimIntroFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimJumpAerialBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimJumpAerialFFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimLandingAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimLandingAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimPoseEnemyFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimPosePlayerFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimScrewAttackAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimScrewAttackGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimShootingAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimShootingFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStartingChargeShotAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStartingChargeShotFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStunLandDFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStunStartDFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrown3FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrownFoxBFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrownFoxFStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimUnknownFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTSamusAnimWin3FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimAppear1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimAppear2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimAttackAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimAttackAirDFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimAttackAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimAttackAirNFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimAttackAirUFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCatchPullFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCeilingBonkFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimClangRecoilFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffAttackQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffAttackQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffAttackSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffAttackSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffCatchFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffClimbQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffClimbQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffClimbSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffClimbSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffEscapeQuick1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffEscapeQuick2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffEscapeSlow1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffEscapeSlow2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffQuickFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffSlowFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCliffWaitFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCrouchEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCrouchFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimCrouchIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamage2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamageAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamageFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamageFlyTopFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamageFlyX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamageFlyX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamageX1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamageX2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamageX3FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamaged1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamaged2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamaged3FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamaged4FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamaged5FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamaged6FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamaged7FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDamagedFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDashAttackFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDollFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDollPickUpFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDollRevivalFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDownAttackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDownAttackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDownBackDFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDownBackUFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDownForwardDFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimDownForwardUFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimEggLayAirGrabInFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimEggLayAirGrabOutFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimEggLayFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimEggLayGrabbedSomeoneComingInAndSwallowingFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimEggLayGrabbedSomeoneStillGoingOutFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimEggLayPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimEggThrowAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimEggThrowGroundFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimEnterPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimExitPipeFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimExitPipeWalkFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFSmashHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFSmashLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFTiltHighFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFTiltLowFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFalconDivePulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFallAerialFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFallFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFallSpecialFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFireFlowerShootAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimFireFlowerShootFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimGroundPoundAirFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimGroundPoundGroundStartFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimGroundPoundLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimHammerIdleFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimHammerLandingFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimHeavyItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimHeavyItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimIntroPoseFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimItemDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimItemThrowAirSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimItemThrowAirSmashFFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimItemThrowAirSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimItemThrowDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimItemThrowSmashBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimItemThrowSmashDFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimItemThrowSmashUFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimJab1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimJab2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimJumpAerialBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimJumpBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimJumpFFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimLandingAirBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimLandingAirFFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimLandingAirXFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimLightItemPickupFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimRollBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimRollFFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimRunBrakeFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimSelectedFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimShieldBreakFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimShieldDropFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimShieldOffFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimShieldOnFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimSleepFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimStarRodDashFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimStarRodNeutralFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimStarRodSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimStarRodTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimStunLandDFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimStunLandUFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimStunStartDFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimStunStartUFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimTauntFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimTeamPosesFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimTechBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimTechFFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimTechFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimTeeterFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimTeeterstartFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimThrowBFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimThrowFFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimThrown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimThrown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimThrownDKFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimThrownDKPulledFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimThrownMarioBrosFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimTurnFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimTurnRunFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUSmashFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUTiltFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown10FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown3FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown4FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown5FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown6FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown7FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown8FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimUnknown9FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimWalk1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimWalk2FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimWalk3FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimWalkEndFileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimWin1FileID ((intptr_t)0) /* STUBBED */
-#define llFTYoshiAnimWin2FileID ((intptr_t)0) /* STUBBED */
 #define llMNTitleUnknownAnimJoint ((intptr_t)0) /* STUBBED */
 #define llMNTitleUnknownDObjDesc ((intptr_t)0) /* STUBBED */
 
