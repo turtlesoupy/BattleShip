@@ -83,3 +83,25 @@ Any metal-cpp `->release()` on a pointer obtained from a getter (not `new*` /
 `mTextures[...].texture` slot mixes owned (`newTexture`) and, before this fix,
 borrowed (drawable) references — uniform release loops over such slots require
 uniform ownership.
+
+## Addendum (same day): starvation silently killed screenshot capture
+
+The nil-drawable hardening above surfaced a second bug: the backbuffer
+capture (`portMetalStageCapturePNG` fulfillment in `EndFrame`) blitted from
+`mCurrentDrawable->texture()` and was gated on the drawable. Under sustained
+starvation (occluded/offscreen windows during parallel eval capture) presents
+are skipped for the rest of the run — and every capture was silently dropped,
+yielding runs that exit cleanly with few or no screenshots (the eval harness
+saw 5/10 truncated cells in one heavy round; two encoded as short clips that
+passed the old success check).
+
+Fix (`libultraship e5bbab47`): blit from the screen framebuffer's retained
+texture (`mTextures[mFramebuffers[0].mTextureId].texture`) — identical to the
+drawable texture on normal frames, still valid and still rendered-into on
+starved frames. The nil warn is also rate-limited (1 per 300 frames).
+Harness-side guard (pipeline `49c47c8`): `capture_clip` fails loudly when any
+expected frame is missing and the driver retries.
+
+Open question: WHY starvation persists for a whole run (instant nil, normal
+wall-clock) — likely fully-occluded/offscreen windows getting no compositor
+service. Presentation still freezes in that state; only capture is immune now.
