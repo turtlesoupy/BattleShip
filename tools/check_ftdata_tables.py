@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Check that ftdata.c's PORT motion tables still agree with upstream's.
+"""Check that the PORT motion tables still agree with upstream's.
+
+Covers decomp/src/ft/ftdata.c and decomp/src/sc/scsubsys/scsubsysdata*.c.
+The PORT branches are machine-derived by tools/derive_ftmotion_port_tables.py;
+run that after an upstream merge, then this to prove the regeneration.
 
 decomp/src/ft/ftdata.c carries every FTMotionDesc array twice:
 
@@ -143,36 +147,51 @@ def main():
               file=sys.stderr)
         return 2
 
-    source = (DECOMP / "src/ft/ftdata.c").read_text(encoding="utf-8")
-    checked = failures = 0
+    targets = [DECOMP / "src/ft/ftdata.c"]
+    targets += sorted((DECOMP / "src/sc/scsubsys").glob("scsubsysdata*.c"))
 
-    for name, body in array_bodies(source):
-        port = split_entries(preprocess(body, True, region_us))
-        vanilla = split_entries(preprocess(body, False, region_us))
-        if port is None or vanilla is None:
-            print(f"{name}: could not parse one of the branches")
-            failures += 1
-            continue
-        if len(port) != len(vanilla):
-            print(f"{name}: entry count differs — "
-                  f"PORT={len(port)} upstream={len(vanilla)}")
-            failures += 1
-            continue
-        for index, (p, v) in enumerate(zip(port, vanilla)):
-            checked += 1
-            fields = (
-                ("file id", resolve(p[0], ids), resolve(v[0], ids)),
-                ("offset", resolve(p[1], offsets), resolve(v[1], offsets)),
-                ("flags", resolve(p[2], flags), resolve(v[2], flags)),
-            )
-            for label, got, want in fields:
-                if got is None or want is None or got != want:
-                    print(f"{name}[{index}] {label}: PORT={p} -> {got} "
-                          f"upstream={v} -> {want}")
+    def norm(expr):
+        """Textual fallback for fields with no numeric value (RAM symbols like
+        D_ovl1_*): the PORT side differs from upstream only by `&` removal and
+        an (intptr_t) cast, so compare with both stripped."""
+        return re.sub(r"\s+|\(intptr_t\)|&", "", expr)
+
+    checked = failures = arrays = 0
+    for path in targets:
+        source = path.read_text(encoding="utf-8")
+        for name, body in array_bodies(source):
+            arrays += 1
+            port = split_entries(preprocess(body, True, region_us))
+            vanilla = split_entries(preprocess(body, False, region_us))
+            if port is None or vanilla is None:
+                print(f"{name}: could not parse one of the branches")
+                failures += 1
+                continue
+            if len(port) != len(vanilla):
+                print(f"{name}: entry count differs — "
+                      f"PORT={len(port)} upstream={len(vanilla)}")
+                failures += 1
+                continue
+            for index, (p, v) in enumerate(zip(port, vanilla)):
+                checked += 1
+                fields = (
+                    ("file id", p[0], v[0], ids),
+                    ("offset", p[1], v[1], offsets),
+                    ("flags", p[2], v[2], flags),
+                )
+                for label, ptext, vtext, table in fields:
+                    got, want = resolve(ptext, table), resolve(vtext, table)
+                    if got is None and want is None:
+                        if norm(ptext) == norm(vtext):
+                            continue
+                    elif got == want and got is not None:
+                        continue
+                    print(f"{name}[{index}] {label}: PORT={ptext!r} -> {got} "
+                          f"upstream={vtext!r} -> {want}")
                     failures += 1
 
     print(f"{args.version}: checked {checked} motion-desc entries "
-          f"across {len(list(array_bodies(source)))} arrays; "
+          f"across {arrays} arrays in {len(targets)} files; "
           f"{failures} disagreement(s)")
     return 1 if failures else 0
 
