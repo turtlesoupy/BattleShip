@@ -75,6 +75,22 @@ def select_version(version):
     HEADER_OUT = ROOT / "include" / cfg["header"]
 
 SYMBOL_RE = re.compile(r"\bll[A-Z_][A-Za-z0-9_]*\b")
+# Comments are not code. Upstream's relocData sources describe their contents
+# in prose ("5 Arwing pilot anim scripts (llGRSectorMapArwing{1..5}AnimJoint)"),
+# and scanning that raw would mint a STUBBED define for a symbol nothing
+# references. Strip comments and string/char literals before matching.
+COMMENT_RE = re.compile(
+    r"//[^\n]*"                 # line comment
+    r"|/\*.*?\*/"                # block comment
+    r"|\"(?:\\.|[^\"\\\n])*\""      # string literal
+    r"|'(?:\\.|[^'\\\n])*'",           # char literal
+    re.S,
+)
+
+
+def strip_noncode(text: str) -> str:
+    """Blank out comments and literals, preserving newlines for line numbers."""
+    return COMMENT_RE.sub(lambda m: "\n" * m.group(0).count("\n"), text)
 ASSIGN_RE = re.compile(r"^\s*(ll[A-Za-z_][A-Za-z0-9_]*)\s*=\s*([^;]+?)\s*;\s*$")
 
 
@@ -92,7 +108,7 @@ def collect_src_symbols() -> set[str]:
             text = path.read_text(encoding="utf-8", errors="ignore")
         except Exception:
             continue
-        for match in SYMBOL_RE.findall(text):
+        for match in SYMBOL_RE.findall(strip_noncode(text)):
             symbols.add(match)
     return symbols
 
