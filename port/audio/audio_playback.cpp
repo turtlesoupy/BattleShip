@@ -251,5 +251,17 @@ extern "C" void portAudioSubmitFrame(const void *buf, int sampleCount)
 
     wavAppend(pcm, byteLen);
 
+    // SSB64_MUTE: submit silence instead of the mixed frame. Frames must
+    // still flow (the pacing logic above reads the buffered level), so we
+    // swap the payload rather than skipping the submit. Used by the eval
+    // harness, which boots up to 10 instances at once.
+    static const bool sMuted = getenv("SSB64_MUTE") != nullptr;
+    if (sMuted) {
+        static int16_t sMuteBuf[MAX_SAMPLES_STEREO] = {0};
+        if (sampleCount * 2 <= (int32_t)MAX_SAMPLES_STEREO) {
+            pcm = sMuteBuf;
+        }
+    }
+
     AudioPlayerPlayFrame(reinterpret_cast<const uint8_t*>(pcm), byteLen);
 }
