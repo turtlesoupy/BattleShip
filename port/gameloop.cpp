@@ -769,7 +769,7 @@ void PortPushFrame(void)
 	 * deferral is a no-op behavior change — same one DL per frame, same
 	 * order relative to vblank rotation. */
 	gbi_trace_set_vi_frame(sFrameCount + 1);
-#if !defined(_WIN32) && !defined(__APPLE__) && !defined(__ANDROID__)
+#if !defined(_WIN32) && !defined(__ANDROID__)
 	/* SSB64_DUMP_DRAWS=<vi frame>: snapshot the draw target after every
 	 * DrawTriangles call while rendering that frame (GL backend only).
 	 * Output: draw_dump/draw_NNNN.png relative to CWD. */
