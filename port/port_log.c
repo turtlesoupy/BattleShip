@@ -28,7 +28,25 @@ int port_log_get_fd(void)
 
 void port_log(const char *fmt, ...)
 {
-#ifdef __EMSCRIPTEN__
+#ifndef __EMSCRIPTEN__
+	/* Native: mirror to stderr on demand. Two live processes share one
+	 * pref-path log file (headless capture runs beside an interactive
+	 * window) and silently clobber each other's lines; the mirror gives
+	 * each process its own stream. */
+	{
+		static int sMirror = -1;
+		if (sMirror < 0) {
+			const char *e = getenv("SSB64_LOG_CONSOLE");
+			sMirror = (e != NULL && e[0] == '1') ? 1 : 0;
+		}
+		if (sMirror) {
+			va_list ap2;
+			va_start(ap2, fmt);
+			vfprintf(stderr, fmt, ap2);
+			va_end(ap2);
+		}
+	}
+#else
 	/* WASM: optionally mirror to stderr, which the shell routes to
 	 * console.warn. OFF by default, and that default matters: several
 	 * port breadcrumbs are ungated and fire per-GObj (gobj_alloc,
