@@ -49,6 +49,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.SUBMODULE_TOKEN }}
+          persist-credentials: false
           submodules: recursive
           # fetch-depth: 0 grabs full history + all tags in one operation.
           # The built-in updater derives the version from `git describe
@@ -202,6 +204,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.SUBMODULE_TOKEN }}
+          persist-credentials: false
           submodules: recursive
           # fetch-depth: 0 grabs full history + all tags in one operation.
           # The built-in updater derives the version from `git describe
@@ -293,6 +297,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.SUBMODULE_TOKEN }}
+          persist-credentials: false
           submodules: recursive
           # Same as the other jobs — fetch-tags-aware history for the
           # BATTLESHIP_VERSION string the CMake derives from `git describe`.
@@ -405,6 +411,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.SUBMODULE_TOKEN }}
+          persist-credentials: false
           submodules: recursive
           # fetch-depth: 0 grabs full history + all tags in one operation.
           # The built-in updater derives the version from `git describe
