@@ -106,8 +106,8 @@
 // kind (index = fkind, '' = the mario-default bundle). rosterBaseFk: which
 // fighter a character actually PLAYS as — resolution order:
 //   URL ?base=slug:target,slug:target  (ad-hoc experiments)
-//   > character.json "base"            (the pipeline's assignment)
-//   > the tile the character sits on   (legacy behavior)
+//   > /roster.json "base"               (explicit metadata or balanced server assignment)
+//   > the tile the character sits on    (legacy fallback)
 // The tile only decides WHERE the character appears on the select screen;
 // the base decides skeleton, moveset and which mesh variant is staged.
 window.ROSTER_VARIANT = ['', 'fox', 'donkey', 'samus', 'luigi', 'link',

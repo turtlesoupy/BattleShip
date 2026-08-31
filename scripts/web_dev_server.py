@@ -17,6 +17,62 @@ ROOT = os.path.abspath(sys.argv[2] if len(sys.argv) > 2 else
                        os.path.join(os.path.dirname(__file__), "..", "web-dist"))
 CAPS = os.path.join(os.path.dirname(ROOT), "web-captures")
 
+# Default assignment pool. Donkey Kong and Yoshi remain valid explicit bases
+# (and their bundles may exist for experiments), but are deliberately omitted
+# until those retarget profiles are production-ready.
+DEFAULT_ROSTER_BASES = ("", "fox", "samus", "luigi", "link", "captain",
+                        "kirby", "pikachu", "purin", "ness")
+BASE_ALIASES = {"mario": "", "donkeykong": "donkey", "dk": "donkey",
+                "jigglypuff": "purin", "falcon": "captain",
+                "captainfalcon": "captain"}
+
+
+def normalize_base(name):
+    if not isinstance(name, str):
+        return None
+    key = name.lower().replace(" ", "")
+    return BASE_ALIASES.get(key, key)
+
+
+def assign_roster_bases(chars):
+    """Resolve undeclared bases with deterministic least-used balancing.
+
+    A character may declare ``preferred_bases`` in character.json. Preference
+    order breaks usage-count ties; unavailable variants are ignored. An
+    explicit ``base`` continues to override assignment, including experimental
+    targets intentionally absent from DEFAULT_ROSTER_BASES.
+    """
+    usage = {base: 0 for base in DEFAULT_ROSTER_BASES}
+    for char in chars:
+        explicit = normalize_base(char.get("base"))
+        if explicit is not None:
+            char["base"] = explicit
+            if explicit in usage:
+                usage[explicit] += 1
+            char.pop("_preferred_bases", None)
+            continue
+
+        preferred = char.pop("_preferred_bases", None)
+        if not isinstance(preferred, list) or not preferred:
+            preferred = list(DEFAULT_ROSTER_BASES)
+        candidates = []
+        for requested in preferred:
+            base = normalize_base(requested)
+            if base not in DEFAULT_ROSTER_BASES or base in candidates:
+                continue
+            if base == "" or base in char.get("variants", ()):
+                candidates.append(base)
+        if not candidates:
+            candidates = [base for base in DEFAULT_ROSTER_BASES
+                          if base == "" or base in char.get("variants", ())]
+        # Every character has a base Mario bundle, so this should only be
+        # empty for malformed input. Keep None as a visible failure signal.
+        if candidates:
+            char["base"] = min(candidates,
+                               key=lambda base: (usage[base], candidates.index(base)))
+            usage[char["base"]] += 1
+    return chars
+
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **kw):
@@ -49,7 +105,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 slug = f[:-4]
                 variants = sorted(g[len(slug) + 1:-4] for g in files
                                   if g.startswith(slug + "-") and g.endswith(".osb"))
-                display, short, base = slug, slug.upper()[:7], None
+                display, short, base, preferred = slug, slug.upper()[:7], None, None
                 cj = os.path.join(os.path.dirname(ROOT), "..", "pipeline",
                                   "play", "ui", slug, "character.json")
                 try:
@@ -58,14 +114,17 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     short = cd.get("short") or "".join(
                         ch for ch in display.upper() if ch.isalpha())[:7]
                     # which vanilla fighter this character plays as
-                    # (skeleton/moveset); absent = the tile they sit on
+                    # (skeleton/moveset); absent = balanced assignment below
                     base = cd.get("base")
+                    preferred = cd.get("preferred_bases")
                 except Exception:
                     pass
                 chars.append({"slug": slug, "display": display, "short": short,
-                              "base": base, "variants": variants,
+                              "base": base, "_preferred_bases": preferred,
+                              "variants": variants,
                               "ui": f"{slug}.osbui" in files,
                               "voice": f"{slug}.wav" in files})
+            assign_roster_bases(chars)
             body = json.dumps(chars).encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
