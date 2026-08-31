@@ -65,38 +65,6 @@
   }
   #boot-go:hover { background: #357146; }
   #boot-note { grid-column: 1 / -1; color: #6d727c; font-size: 11px; }
-  #search-btn {
-    position: fixed; right: 12px; top: 10px; z-index: 10;
-    padding: 5px 14px; border-radius: 14px; cursor: pointer; user-select: none;
-    background: rgba(0,0,0,0.6); color: #ccc; border: 1px solid #444;
-    font: 12px/1.5 ui-monospace, monospace;
-  }
-  #search-btn:hover { color: #fff; border-color: #777; }
-  #search-overlay {
-    position: fixed; inset: 0; z-index: 20; display: none;
-    background: rgba(0,0,0,0.55); backdrop-filter: blur(2px);
-  }
-  #search-overlay.open { display: block; }
-  #search-box {
-    position: absolute; left: 50%; top: 18%; transform: translateX(-50%);
-    width: min(440px, 90vw); border-radius: 12px; overflow: hidden;
-    background: rgba(14,15,18,0.97); border: 1px solid #3a3d44;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-    font: 14px/1.5 ui-monospace, monospace;
-  }
-  #search-input {
-    width: 100%; box-sizing: border-box; padding: 13px 16px;
-    background: transparent; color: #eee; border: 0; outline: none;
-    border-bottom: 1px solid #2b2e33; font: inherit; font-size: 16px;
-  }
-  #search-list { max-height: 46vh; overflow-y: auto; }
-  .search-item {
-    padding: 9px 16px; color: #cfd3da; cursor: pointer;
-    display: flex; justify-content: space-between; gap: 12px;
-  }
-  .search-item small { color: #6d727c; }
-  .search-item.sel, .search-item:hover { background: #24303d; color: #fff; }
-  #search-empty { padding: 12px 16px; color: #6d727c; }
 </style>
 </head>
 <body>
@@ -133,14 +101,6 @@
   <div id="boot-note">reloads the page with the picked matchup; only converted character&times;fighter combos are listed. "also inject" puts extra characters on their slots for multi-injection demos (pick them on the select screen).</div>
 </div>
 </div>
-<div id="search-btn">&#128269; search</div>
-
-<div id="search-overlay">
-  <div id="search-box">
-    <input id="search-input" type="text" placeholder="find a fighter&hellip;" autocomplete="off">
-    <div id="search-list"></div>
-  </div>
-</div>
 <script>
 // Shared roster helpers. ROSTER_VARIANT: skeleton-variant name per fighter
 // kind (index = fkind, '' = the mario-default bundle). rosterBaseFk: which
@@ -172,118 +132,6 @@ window.rosterStageable = (c, tileFk) => {
   const fk = window.rosterBaseFk(c, tileFk);
   return fk === 0 || (c.variants || []).includes(window.ROSTER_VARIANT[fk]);
 };
-</script>
-<script>
-// Roster search: typeahead over /roster.json (plus the vanilla twelve).
-// When the game is already running with the roster loaded, highlighting a
-// character insta-switches the select screen to their page via the wasm
-// bridge; otherwise picking one reloads straight onto their page,
-// pre-selected as 1P with a vanilla CPU opponent.
-(() => {
-  const overlay = document.getElementById('search-overlay');
-  const input = document.getElementById('search-input');
-  const list = document.getElementById('search-list');
-  const VANILLA = ["Mario","Fox","Donkey Kong","Samus","Luigi","Link",
-                   "Yoshi","Captain Falcon","Kirby","Pikachu","Jigglypuff","Ness"];
-  let roster = null, view = [], sel = 0;
-
-  function pageOf(c) { return c.vanilla ? 0 : 1 + Math.floor(c.tile / 12); }
-  function fkOf(c) { return c.vanilla ? c.fk : c.tile % 12; }
-
-  function liveBridge() {
-    // in-page navigation: game running + roster staged in this session
-    try {
-      return (typeof Module !== 'undefined' && Module._port_roster_request_page &&
-              new URLSearchParams(location.search).has('roster'))
-             ? Module._port_roster_request_page : null;
-    } catch (e) { return null; }
-  }
-
-  function goto(i, commit) {
-    const c = view[i];
-    if (!c) return;
-    const bridge = liveBridge();
-    if (bridge) {
-      bridge(pageOf(c));       // insta-switch the CSS to their page
-      if (commit) overlay.classList.remove('open');
-      return;
-    }
-    if (!commit) return;       // no live game: only navigate on commit
-    const p = new URLSearchParams();
-    p.set('roster', '1');
-    p.set('SSB64_START_SCENE', '16');
-    p.set('SSB64_ROSTER_PAGE', String(pageOf(c)));
-    if (!c.vanilla) p.set('SSB64_PLAYER_CHARS', c.slug);
-    p.set('SSB64_BOOT_BATTLE', `${fkOf(c)},2,4,1`);
-    p.set('cb', Date.now());
-    location.href = location.pathname + '?' + p.toString();
-  }
-
-  function render() {
-    const q = input.value.trim().toLowerCase();
-    view = (roster || []).filter(c =>
-      !q || c.display.toLowerCase().includes(q) || (c.slug || '').includes(q));
-    if (sel >= view.length) sel = 0;
-    list.innerHTML = '';
-    if (!view.length) {
-      const d = document.createElement('div');
-      d.id = 'search-empty';
-      d.textContent = roster === null ? 'loading roster…' : 'no matches';
-      list.appendChild(d);
-      return;
-    }
-    view.forEach((c, i) => {
-      const d = document.createElement('div');
-      d.className = 'search-item' + (i === sel ? ' sel' : '');
-      const where = c.vanilla ? 'vanilla' : `page ${pageOf(c)}`;
-      d.innerHTML = `<span>${c.display}</span><small>${where}</small>`;
-      d.addEventListener('click', () => goto(i, true));
-      list.appendChild(d);
-    });
-    goto(sel, false);   // insta-switch preview while browsing (live mode only)
-  }
-
-  function open() {
-    overlay.classList.add('open');
-    input.value = ''; sel = 0;
-    render();
-    input.focus();
-    if (roster === null) {
-      fetch('/roster.json', { cache: 'no-cache' }).then(r => r.json()).then(cs => {
-        // tile assignment mirrors the shell's roster staging: sequential,
-        // skipping characters whose resolved base variant is missing
-        roster = VANILLA.map((n, fk) => ({
-          display: n, slug: n.toLowerCase().replace(/[^a-z0-9]/g, ''),
-          vanilla: true, fk
-        }));
-        let tile = 0;
-        for (const c of cs) {
-          if (!window.rosterStageable(c, tile % 12)) continue;
-          roster.push({ ...c, tile });
-          tile++;
-        }
-        render();
-      }).catch(() => { roster = []; render(); });
-    }
-  }
-
-  document.getElementById('search-btn').addEventListener('click', open);
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
-  input.addEventListener('input', () => { sel = 0; render(); });
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { overlay.classList.remove('open'); e.stopPropagation(); }
-    else if (e.key === 'ArrowDown') { sel = Math.min(sel + 1, view.length - 1); render(); e.preventDefault(); }
-    else if (e.key === 'ArrowUp') { sel = Math.max(sel - 1, 0); render(); e.preventDefault(); }
-    else if (e.key === 'Enter') { goto(sel, true); }
-    e.stopPropagation();   // keep game keybinds out of the dialog
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === '/' && !overlay.classList.contains('open') &&
-        document.activeElement.tagName !== 'INPUT') { open(); e.preventDefault(); }
-  });
-})();
 </script>
 <script>
 (() => {
