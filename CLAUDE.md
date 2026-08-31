@@ -68,9 +68,9 @@ Output lands at `.claude/worktrees/<slug>` on branch `agent/<slug>`. The script:
 - **Normal git flow for submodule changes**:
   1. Edit and commit inside `<worktree>/decomp/`, `<worktree>/libultraship/`, or `<worktree>/torch/`.
   2. Push to the fork: `git -C <worktree>/<sm> push origin <branch>`.
-     - `decomp` → `wasm` on `turtlesoupy/ssb-decomp-re`
-     - `libultraship` → `wasm` on `turtlesoupy/libultraship`
-     - `torch` → `wasm` on `turtlesoupy/Torch`
+     - `decomp` → `main` on `turtlesoupy/ssb-decomp-re`
+     - `libultraship` → `main` on `turtlesoupy/libultraship`
+     - `torch` → `main` on `turtlesoupy/Torch`
      (private mirrors — GitHub auth on this machine is `turtlesoupy`; the
      original `JRickey/*` repos are read-only `upstream` remotes now)
   3. In the outer worktree, bump the submodule pointer: `git add <sm> && git commit -m "Bump <sm>: <summary>"`.
