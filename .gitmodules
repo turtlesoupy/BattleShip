@@ -1,12 +1,12 @@
 [submodule "libultraship"]
 	path = libultraship
 	url = https://github.com/turtlesoupy/libultraship.git
-	branch = wasm
+	branch = main
 [submodule "torch"]
 	path = torch
 	url = https://github.com/turtlesoupy/Torch.git
-	branch = wasm
+	branch = main
 [submodule "decomp"]
 	path = decomp
 	url = https://github.com/turtlesoupy/ssb-decomp-re.git
-	branch = wasm
+	branch = main
