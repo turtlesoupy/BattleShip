@@ -276,6 +276,73 @@ var Module = {
           ENV.SSB64_INJECT_PLAYER = params.get('player') || '0';
         }
       }
+      // Targeted direct-match roster: each repeated inject_player value is
+      // JSON describing one CPU slot and its fighter assets. Unlike roster=1,
+      // this stages only the two opponents selected for this match. The native
+      // roster binds by player, so several custom fighters can safely share the
+      // same vanilla skeleton/fkind without replacing one another.
+      if (params.has('inject_player')) {
+        const rows = [];
+        const playerChars = ['-', '-', '-', '-'];
+        await Promise.all(params.getAll('inject_player').map(async (raw) => {
+          const entry = JSON.parse(raw);
+          const player = Number(entry.player);
+          const fkind = Number(entry.fkind);
+          const slug = String(entry.slug || '');
+          if (!Number.isInteger(player) || player < 1 || player > 3 ||
+              !Number.isInteger(fkind) || fkind < 0 || fkind > 11 ||
+              !/^[a-z0-9]+$/.test(slug) || !entry.bundleUrl) {
+            throw new Error('invalid inject_player entry');
+          }
+
+          const bundlePath = `/direct-player-${player}.osb`;
+          const bundleResponse = await fetch(entry.bundleUrl, { cache: 'no-cache' });
+          if (!bundleResponse.ok) {
+            throw new Error(`fetch ${entry.bundleUrl}: ${bundleResponse.status}`);
+          }
+          FS.writeFile(bundlePath, new Uint8Array(await bundleResponse.arrayBuffer()));
+
+          let uiPath = '';
+          if (entry.uiUrl) {
+            const response = await fetch(entry.uiUrl, { cache: 'no-cache' });
+            if (response.ok) {
+              uiPath = `/direct-player-${player}.osbui`;
+              FS.writeFile(uiPath, new Uint8Array(await response.arrayBuffer()));
+            } else {
+              console.warn(`optional fighter UI unavailable (${entry.uiUrl}: ${response.status})`);
+            }
+          }
+
+          let voicePath = '';
+          if (entry.voiceUrl) {
+            const response = await fetch(entry.voiceUrl, { cache: 'no-cache' });
+            if (response.ok) {
+              voicePath = `/direct-player-${player}.wav`;
+              FS.writeFile(voicePath, new Uint8Array(await response.arrayBuffer()));
+            } else {
+              console.warn(`optional fighter voice unavailable (${entry.voiceUrl}: ${response.status})`);
+            }
+          }
+
+          const short = String(entry.short || slug)
+            .toUpperCase()
+            .replace(/[^A-Z]/g, '')
+            .slice(0, 8);
+          rows.push({
+            player,
+            line: [slug, fkind, bundlePath, uiPath, voicePath, short, fkind].join('|'),
+          });
+          playerChars[player] = slug;
+        }));
+        rows.sort((left, right) => left.player - right.player);
+        if (rows.length && typeof ENV !== 'undefined') {
+          FS.writeFile('/direct-roster.txt', new TextEncoder().encode(
+            rows.map(({ line }) => line).join('\n') + '\n',
+          ));
+          ENV.SSB64_ROSTER_FILE = '/direct-roster.txt';
+          ENV.SSB64_PLAYER_CHARS = playerChars.join(',');
+        }
+      }
       // Cosmetic item MVP: stage one static OSB2 mesh and let the native
       // item layer substitute it for the Home-Run Bat's drawable model.
       // Item kind 8 and all of its behavior remain vanilla.
