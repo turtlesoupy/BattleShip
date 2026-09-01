@@ -28,13 +28,6 @@ if [ -n "${BUNDLE_STASH:-}" ]; then
   rmdir "$BUNDLE_STASH"
 fi
 
-# Stamp a content-derived version into the shell so a redeploy always busts
-# the browser cache for the JS glue (a stale glue + fresh wasm pair hangs).
-BUILD_VERSION=$(shasum "$BUILD_DIR/BattleShip.wasm" | cut -c1-12)
-sed "s/BUILD_VERSION/$BUILD_VERSION/g" web/index.html > "$OUT_DIR/index.html"
-# The glue fetches "BattleShip.wasm" by name — version that URL too so the
-# js/wasm pair always cache-busts together.
-sed "s|BattleShip\.wasm|BattleShip.wasm?v=$BUILD_VERSION|g" "$BUILD_DIR/BattleShip.js" > "$OUT_DIR/BattleShip.js"
 cp "$BUILD_DIR/BattleShip.wasm" "$OUT_DIR/"
 
 # Runtime files the game reads from its working directory. Mirrored into
@@ -77,6 +70,30 @@ if [ ! -f "$OUT_DIR/files/BattleShip.o2r.recipe" ]; then
   fi
 fi
 
+# Version the complete executable/runtime set, not only the wasm. This keeps a
+# fresh wasm from ever booting against a stale O2R, config, texture pack, or
+# manifest after a deploy. Bundle injections are deliberately separate: they
+# have their own access control and are not stored in the shared edge cache.
+PACKAGE_FINGERPRINT=$(
+  {
+    printf 'web/index.html '
+    shasum web/index.html | awk '{print $1}'
+    printf 'BattleShip.js '
+    shasum "$BUILD_DIR/BattleShip.js" | awk '{print $1}'
+    printf 'BattleShip.wasm '
+    shasum "$OUT_DIR/BattleShip.wasm" | awk '{print $1}'
+    find "$OUT_DIR/files" -type f | LC_ALL=C sort | while IFS= read -r file; do
+      printf '%s ' "${file#"$OUT_DIR/"}"
+      shasum "$file" | awk '{print $1}'
+    done
+  }
+)
+BUILD_VERSION=$(printf '%s' "$PACKAGE_FINGERPRINT" | shasum | cut -c1-12)
+sed "s/BUILD_VERSION/$BUILD_VERSION/g" web/index.html > "$OUT_DIR/index.html"
+# The glue fetches "BattleShip.wasm" by name — version that URL too so the
+# js/wasm pair always cache-busts together.
+sed "s|BattleShip\.wasm|BattleShip.wasm?v=$BUILD_VERSION|g" "$BUILD_DIR/BattleShip.js" > "$OUT_DIR/BattleShip.js"
+
 # Manifest: MEMFS path -> URL
 (
   cd "$OUT_DIR/files"
@@ -88,7 +105,7 @@ fi
     # an unencoded '#' starts the fragment and the server sees a truncated
     # path). The MEMFS path stays raw.
     enc=$(printf '%s' "$p" | sed -e 's/%/%25/g' -e 's/#/%23/g' -e 's/ /%20/g' -e 's/?/%3F/g')
-    printf '  { "path": "/%s", "url": "files/%s" }' "$p" "$enc"
+    printf '  { "path": "/%s", "url": "files/%s?v=%s" }' "$p" "$enc" "$BUILD_VERSION"
   done
   echo ''
   echo ']}'

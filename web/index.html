@@ -193,7 +193,7 @@ var Module = {
       // Stage the engine's required archives before any optional fighter
       // extras. A missing portrait/voice must never start main() with an
       // empty MEMFS and fall through to the desktop first-run wizard.
-      const manifest = await (await fetch('manifest.json')).json();
+      const manifest = await (await fetch('manifest.json?v=BUILD_VERSION')).json();
       let done = 0;
       await Promise.all(manifest.files.map(async (f) => {
         const resp = await fetch(f.url);
