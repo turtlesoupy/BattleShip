@@ -208,7 +208,7 @@ var Module = {
 
       if (params.has('inject_ui')) {
         const url = params.get('inject_ui');
-        const resp = await fetch(url, { cache: 'no-cache' });
+        const resp = await fetch(url);
         if (resp.ok) {
           FS.writeFile('/inject.osbui', new Uint8Array(await resp.arrayBuffer()));
           if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_UI = '/inject.osbui';
@@ -254,7 +254,7 @@ var Module = {
       }
       if (params.has('inject_voice')) {
         const url = params.get('inject_voice');
-        const resp = await fetch(url, { cache: 'no-cache' });
+        const resp = await fetch(url);
         if (resp.ok) {
           FS.writeFile('/inject-voice.wav', new Uint8Array(await resp.arrayBuffer()));
           if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_VOICE = '/inject-voice.wav';
@@ -264,7 +264,7 @@ var Module = {
       }
       if (params.has('inject')) {
         const url = params.get('inject');
-        const resp = await fetch(url, { cache: 'no-cache' });
+        const resp = await fetch(url);
         if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
         FS.writeFile('/inject.osb', new Uint8Array(await resp.arrayBuffer()));
         if (typeof ENV !== 'undefined') {
@@ -296,7 +296,7 @@ var Module = {
           }
 
           const bundlePath = `/direct-player-${player}.osb`;
-          const bundleResponse = await fetch(entry.bundleUrl, { cache: 'no-cache' });
+          const bundleResponse = await fetch(entry.bundleUrl);
           if (!bundleResponse.ok) {
             throw new Error(`fetch ${entry.bundleUrl}: ${bundleResponse.status}`);
           }
@@ -304,7 +304,7 @@ var Module = {
 
           let uiPath = '';
           if (entry.uiUrl) {
-            const response = await fetch(entry.uiUrl, { cache: 'no-cache' });
+            const response = await fetch(entry.uiUrl);
             if (response.ok) {
               uiPath = `/direct-player-${player}.osbui`;
               FS.writeFile(uiPath, new Uint8Array(await response.arrayBuffer()));
@@ -315,7 +315,7 @@ var Module = {
 
           let voicePath = '';
           if (entry.voiceUrl) {
-            const response = await fetch(entry.voiceUrl, { cache: 'no-cache' });
+            const response = await fetch(entry.voiceUrl);
             if (response.ok) {
               voicePath = `/direct-player-${player}.wav`;
               FS.writeFile(voicePath, new Uint8Array(await response.arrayBuffer()));
@@ -348,7 +348,7 @@ var Module = {
       // Item kind 8 and all of its behavior remain vanilla.
       if (params.has('inject_item_bat')) {
         const url = params.get('inject_item_bat');
-        const resp = await fetch(url, { cache: 'no-cache' });
+        const resp = await fetch(url);
         if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
         FS.writeFile('/inject-item-bat.osb', new Uint8Array(await resp.arrayBuffer()));
         if (typeof ENV !== 'undefined') {
@@ -363,17 +363,17 @@ var Module = {
         await Promise.all(params.get('inject_set').split(',').map(async (ent) => {
           const [file, fk, chr] = ent.split(':');
           if (!file || fk === undefined) return;
-          const r = await fetch('bundles/' + file, { cache: 'no-cache' });
+          const r = await fetch('bundles/' + file);
           if (!r.ok) throw new Error(`fetch bundles/${file}: ${r.status}`);
           FS.writeFile(`/inject_fk${fk}.osb`, new Uint8Array(await r.arrayBuffer()));
           set.push(`/inject_fk${fk}.osb:${fk}`);
           if (chr) {
-            const ui = await fetch(`bundles/${chr}.osbui`, { cache: 'no-cache' });
+            const ui = await fetch(`bundles/${chr}.osbui`);
             if (ui.ok) {
               FS.writeFile(`/inject_fk${fk}.osbui`, new Uint8Array(await ui.arrayBuffer()));
               uiset.push(`/inject_fk${fk}.osbui:${fk}`);
             }
-            const wav = await fetch(`bundles/${chr}.wav`, { cache: 'no-cache' });
+            const wav = await fetch(`bundles/${chr}.wav`);
             if (wav.ok) {
               FS.writeFile(`/inject_fk${fk}.wav`, new Uint8Array(await wav.arrayBuffer()));
               vset.push(`/inject_fk${fk}.wav:${fk}`);
@@ -414,15 +414,15 @@ var Module = {
             const vox = c.voice ? `/roster/${c.slug}.wav` : '';
             lines.push(`${c.slug}|${fk}|/roster/${c.slug}.osb|${ui}|${vox}|${c.short || ''}|${baseFk}`);
             jobs.push((async () => {
-              const r = await fetch('bundles/' + file, { cache: 'no-cache' });
+              const r = await fetch('bundles/' + file);
               if (!r.ok) throw new Error(`fetch bundles/${file}: ${r.status}`);
               FS.writeFile(`/roster/${c.slug}.osb`, new Uint8Array(await r.arrayBuffer()));
               if (c.ui) {
-                const u = await fetch(`bundles/${c.slug}.osbui`, { cache: 'no-cache' });
+                const u = await fetch(`bundles/${c.slug}.osbui`);
                 if (u.ok) FS.writeFile(`/roster/${c.slug}.osbui`, new Uint8Array(await u.arrayBuffer()));
               }
               if (c.voice) {
-                const w = await fetch(`bundles/${c.slug}.wav`, { cache: 'no-cache' });
+                const w = await fetch(`bundles/${c.slug}.wav`);
                 if (w.ok) FS.writeFile(`/roster/${c.slug}.wav`, new Uint8Array(await w.arrayBuffer()));
               }
             })());
