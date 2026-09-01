@@ -963,19 +963,28 @@ static int PortInitImpl(int argc, char* argv[]) {
 	port_log("SSB64: FileDropMgr OK\n");
 
 	/* First-run flow:
-	 *   1. Silent extraction: if a ROM sits at app-data / bundle / cwd we
-	 *      just extract without bothering the user.
-	 *   2. If still missing, drive an ImGui wizard modal in a pre-gameloop
-	 *      render loop until the user provides a ROM and extraction
-	 *      succeeds — or quits the window. */
+	 *   1. Browser builds require the shell to stage the packaged archive
+	 *      before main(). A browser cannot provide a native filesystem ROM
+	 *      path to the desktop extractor, so never expose that wizard there.
+	 *   2. Native builds silently extract when a ROM is discoverable, then
+	 *      show the ImGui wizard when user input is required. */
 	{
 		const std::string targetO2r =
 			Ship::Context::GetPathRelativeToAppDirectory(SSB64_O2R_NAME);
+		std::error_code ec;
+#ifdef __EMSCRIPTEN__
+		const std::string packagedO2r = PortLocateFile(SSB64_O2R_NAME);
+		if (!std::filesystem::exists(packagedO2r, ec)) {
+			port_log("SSB64: browser package is missing %s; refusing to open the native first-run wizard\n",
+			         SSB64_O2R_NAME);
+			PortShutdown();
+			return 1;
+		}
+#else
 		// silent=true: any failure during this auto-attempt should land in
 		// the wizard's status text, not a native popup that races the
 		// ImGui modal.
 		ssb64::ExtractAssetsIfNeeded(targetO2r, /*silent=*/true);
-		std::error_code ec;
 		// noexcept exists / PortLocateFile rather than the throwing LUS
 		// form — issue #58.
 		if (!std::filesystem::exists(targetO2r, ec) &&
@@ -992,6 +1001,7 @@ static int PortInitImpl(int argc, char* argv[]) {
 				return 1;
 			}
 		}
+#endif
 	}
 
 	{

@@ -465,12 +465,31 @@ var Module = {
       if (k.startsWith('SSB64_') && typeof ENV !== 'undefined') ENV[k] = v;
     }
     try {
+      // Stage the engine's required archives before any optional fighter
+      // extras. A missing portrait/voice must never start main() with an
+      // empty MEMFS and fall through to the desktop first-run wizard.
+      const manifest = await (await fetch('manifest.json')).json();
+      let done = 0;
+      await Promise.all(manifest.files.map(async (f) => {
+        const resp = await fetch(f.url);
+        if (!resp.ok) throw new Error(`fetch ${f.url}: ${resp.status}`);
+        const data = new Uint8Array(await resp.arrayBuffer());
+        // Ensure parent directories exist, then write the file.
+        const dir = f.path.substring(0, f.path.lastIndexOf('/')) || '/';
+        FS.mkdirTree(dir);
+        FS.writeFile(f.path, data);
+        setStatus(`files ${++done}/${manifest.files.length}`);
+      }));
+
       if (params.has('inject_ui')) {
         const url = params.get('inject_ui');
         const resp = await fetch(url, { cache: 'no-cache' });
-        if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
-        FS.writeFile('/inject.osbui', new Uint8Array(await resp.arrayBuffer()));
-        if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_UI = '/inject.osbui';
+        if (resp.ok) {
+          FS.writeFile('/inject.osbui', new Uint8Array(await resp.arrayBuffer()));
+          if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_UI = '/inject.osbui';
+        } else {
+          console.warn(`optional fighter UI unavailable (${url}: ${resp.status})`);
+        }
       }
       if (params.has('capture')) {
         // frame-exact capture: the engine calls Module.onGameTick(frame)
@@ -511,9 +530,12 @@ var Module = {
       if (params.has('inject_voice')) {
         const url = params.get('inject_voice');
         const resp = await fetch(url, { cache: 'no-cache' });
-        if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
-        FS.writeFile('/inject-voice.wav', new Uint8Array(await resp.arrayBuffer()));
-        if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_VOICE = '/inject-voice.wav';
+        if (resp.ok) {
+          FS.writeFile('/inject-voice.wav', new Uint8Array(await resp.arrayBuffer()));
+          if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_VOICE = '/inject-voice.wav';
+        } else {
+          console.warn(`optional fighter voice unavailable (${url}: ${resp.status})`);
+        }
       }
       if (params.has('inject')) {
         const url = params.get('inject');
@@ -620,18 +642,6 @@ var Module = {
           console.warn('roster staging failed:', e);
         }
       }
-      const manifest = await (await fetch('manifest.json')).json();
-      let done = 0;
-      await Promise.all(manifest.files.map(async (f) => {
-        const resp = await fetch(f.url);
-        if (!resp.ok) throw new Error(`fetch ${f.url}: ${resp.status}`);
-        const data = new Uint8Array(await resp.arrayBuffer());
-        // Ensure parent directories exist, then write the file.
-        const dir = f.path.substring(0, f.path.lastIndexOf('/')) || '/';
-        FS.mkdirTree(dir);
-        FS.writeFile(f.path, data);
-        setStatus(`files ${++done}/${manifest.files.length}`);
-      }));
       setStatus('starting…');
     } catch (e) {
       setStatus('asset load failed: ' + e.message);
