@@ -529,6 +529,18 @@ var Module = {
           ENV.SSB64_INJECT_PLAYER = params.get('player') || '0';
         }
       }
+      // Cosmetic item MVP: stage one static OSB2 mesh and let the native
+      // item layer substitute it for the Home-Run Bat's drawable model.
+      // Item kind 8 and all of its behavior remain vanilla.
+      if (params.has('inject_item_bat')) {
+        const url = params.get('inject_item_bat');
+        const resp = await fetch(url, { cache: 'no-cache' });
+        if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
+        FS.writeFile('/inject-item-bat.osb', new Uint8Array(await resp.arrayBuffer()));
+        if (typeof ENV !== 'undefined') {
+          ENV.SSB64_INJECT_ITEM_BAT = '/inject-item-bat.osb';
+        }
+      }
       // Roster injection (demo mode): inject_set=<osbfile>:<fkind>:<char>,...
       // Each entry pulls bundles/<osbfile> plus that character's .osbui and
       // announcer .wav when staged (missing extras are skipped silently).
