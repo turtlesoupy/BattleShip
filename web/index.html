@@ -343,6 +343,92 @@ var Module = {
           ENV.SSB64_PLAYER_CHARS = playerChars.join(',');
         }
       }
+      // Full-boot trailer roster: one independently staged character for
+      // each requested opening card. All twelve native skeleton targets are
+      // accepted here; the launch config decides which cards stay vanilla.
+      // Invalid, unavailable, or duplicate entries are skipped per card,
+      // leaving that card's original fighter, title, portrait, and voice
+      // intact while the rest of the intro still boots.
+      if (params.has('intro_character')) {
+        const claimedFkinds = new Set();
+        const entries = [];
+        for (const raw of params.getAll('intro_character')) {
+          try {
+            const entry = JSON.parse(raw);
+            const fkind = Number(entry.fkind);
+            const slug = String(entry.slug || '');
+            if (!Number.isInteger(fkind) || fkind < 0 || fkind >= 12 ||
+                claimedFkinds.has(fkind) || !/^[a-z0-9]+$/.test(slug) ||
+                !entry.bundleUrl) {
+              throw new Error('invalid or duplicate card');
+            }
+            claimedFkinds.add(fkind);
+            entries.push({ ...entry, fkind, slug });
+          } catch (error) {
+            console.warn(`intro card kept vanilla (${error.message})`);
+          }
+        }
+
+        const stagedRows = (await Promise.all(entries.map(async (entry) => {
+          const prefix = `/intro-fk${entry.fkind}`;
+          try {
+            const bundleResponse = await fetch(entry.bundleUrl);
+            if (!bundleResponse.ok) {
+              throw new Error(`fetch ${entry.bundleUrl}: ${bundleResponse.status}`);
+            }
+            FS.writeFile(`${prefix}.osb`, new Uint8Array(await bundleResponse.arrayBuffer()));
+
+            let uiPath = '';
+            if (entry.uiUrl) {
+              try {
+                const response = await fetch(entry.uiUrl);
+                if (response.ok) {
+                  uiPath = `${prefix}.osbui`;
+                  FS.writeFile(uiPath, new Uint8Array(await response.arrayBuffer()));
+                } else {
+                  console.warn(`intro UI kept vanilla (${entry.uiUrl}: ${response.status})`);
+                }
+              } catch (error) {
+                console.warn(`intro UI kept vanilla (${entry.uiUrl}: ${error.message})`);
+              }
+            }
+
+            let voicePath = '';
+            if (entry.voiceUrl) {
+              try {
+                const response = await fetch(entry.voiceUrl);
+                if (response.ok) {
+                  voicePath = `${prefix}.wav`;
+                  FS.writeFile(voicePath, new Uint8Array(await response.arrayBuffer()));
+                } else {
+                  console.warn(`intro voice kept vanilla (${entry.voiceUrl}: ${response.status})`);
+                }
+              } catch (error) {
+                console.warn(`intro voice kept vanilla (${entry.voiceUrl}: ${error.message})`);
+              }
+            }
+
+            const short = String(entry.short || entry.slug)
+              .toUpperCase()
+              .replace(/[^A-Z]/g, '')
+              .slice(0, 8);
+            return [entry.slug, entry.fkind, `${prefix}.osb`, uiPath,
+                    voicePath, short, entry.fkind].join('|');
+          } catch (error) {
+            console.warn(`intro fk${entry.fkind} kept vanilla (${error.message})`);
+            return null;
+          }
+        }))).filter(Boolean);
+
+        if (stagedRows.length && typeof ENV !== 'undefined') {
+          FS.writeFile('/intro-roster.txt', new TextEncoder().encode(
+            stagedRows.join('\n') + '\n',
+          ));
+          ENV.SSB64_ROSTER_FILE = '/intro-roster.txt';
+          ENV.SSB64_ROSTER_PAGE = '1';
+        }
+        console.log(`intro roster: staged ${stagedRows.length}/${entries.length} requested cards; missing cards stay vanilla`);
+      }
       // Cosmetic item MVP: stage one static OSB2 mesh and let the native
       // item layer substitute it for the Home-Run Bat's drawable model.
       // Item kind 8 and all of its behavior remain vanilla.
