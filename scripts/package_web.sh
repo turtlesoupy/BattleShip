@@ -142,6 +142,18 @@ sed "s/BUILD_VERSION/$BUILD_VERSION/g" web/index.html > "$OUT_DIR/index.html"
 # The glue fetches "BattleShip.wasm" by name — version that URL too so the
 # js/wasm pair always cache-busts together.
 sed "s|BattleShip\.wasm|BattleShip.wasm?v=$BUILD_VERSION|g" "$BUILD_DIR/BattleShip.js" > "$OUT_DIR/BattleShip.js"
+# Same for the Torch glue: torch-worker.js imports ./torch/torch.js by name
+# (torch.wasm is already versioned through locateFile). Every runtime URL the
+# package controls must carry ?v=, because the site's origin serves
+# unversioned engine files as always-revalidate and rejects a ?v= from any
+# other build — a stale/new glue+wasm pair can then never meet.
+if [ -f web/torch-worker.js ]; then
+  sed "s|'\./torch/torch\.js'|'./torch/torch.js?v=$BUILD_VERSION'|g" web/torch-worker.js > "$OUT_DIR/torch-worker.js"
+  if ! grep -q "torch.js?v=$BUILD_VERSION" "$OUT_DIR/torch-worker.js"; then
+    echo "error: could not stamp the build version onto the torch.js import in torch-worker.js" >&2
+    exit 1
+  fi
+fi
 
 # Manifest: MEMFS path -> URL
 (

@@ -845,6 +845,9 @@ var Module = {
           // until the cursor lands on one. A background prefetch (first page
           // first) fills a byte cache so the synchronous fallback is rare.
           Module.__stageUrls = Module.__stageUrls || {};
+          // Pages (12 tiles each) whose bundles are prefetched in the
+          // background after boot; later pages stage on demand.
+          const PREFETCH_PAGES = 2;
           const pageOne = [];
           const later = [];
           let tile = 0;
@@ -870,13 +873,20 @@ var Module = {
             lines.push(`${c.slug}|${fk}|${bundlePath}|${ui}|${vox}|${c.short || ''}|${baseFk}|${(c.display || '').replace(/[|\n\r]/g, ' ')}`);
             // The select screen paints page one's portraits (.osbui) as it
             // builds; keep those eager so the first page never blocks.
-            (page === 0 ? pageOne : later).push(...[ui, vox].filter(Boolean));
-            later.push(bundlePath);
+            // Everything else is on-demand: ensureStaged fetches a file the
+            // first time the engine opens it. Only the first
+            // PREFETCH_PAGES pages get a background prefetch — with a
+            // thousand-fighter roster, prefetching every ~1.6 MB bundle
+            // would pull the whole roster (gigabytes) through the origin and
+            // hold it in JS memory on every launch.
+            if (page === 0) pageOne.push(...[ui, vox].filter(Boolean));
+            else if (page < PREFETCH_PAGES) later.push(...[ui, vox].filter(Boolean));
+            if (page < PREFETCH_PAGES) later.push(bundlePath);
           }
           FS.writeFile('/roster.txt', lines.join('\n') + '\n');
           await Promise.all(pageOne.map((path) => stageNow(path)));
           prefetchStaged(later);
-          console.log(`roster: ${lines.length} characters registered, ${pageOne.length} files staged eagerly`);
+          console.log(`roster: ${lines.length} characters registered, ${pageOne.length} files staged eagerly, ${later.length} prefetching`);
         } catch (e) {
           console.warn('roster staging failed:', e);
         }
