@@ -935,9 +935,13 @@ elseif (EMSCRIPTEN)
         # of JS garbage at CSS idle, feeding 2-5s major GCs under OBS load.
         # Flip back to -sASSERTIONS=1 -g2 when debugging boot/runtime issues.
         -sASSERTIONS=0
-        -sUSE_OFFSET_CONVERTER=1
         -g1
     )
+    # -sUSE_OFFSET_CONVERTER was removed in emscripten 6.x (offset conversion
+    # is built in now); passing it there is a hard link error.
+    if (EMSCRIPTEN_VERSION VERSION_LESS 6.0)
+        target_link_options(${PROJECT_NAME} PRIVATE -sUSE_OFFSET_CONVERTER=1)
+    endif()
 else()
     add_dependencies(${PROJECT_NAME} libultraship TorchExternal discord-rpc)
     target_link_libraries(${PROJECT_NAME} PRIVATE libultraship discord-rpc)
