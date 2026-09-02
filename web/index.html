@@ -683,7 +683,6 @@ var Module = {
       // the bundles move to on-demand fetch; portraits stay tiny.)
       if (params.has('roster')) {
         try {
-          const VARIANT = window.ROSTER_VARIANT;
           const roster = await (await fetch('/roster.json', { cache: 'no-cache' })).json();
           FS.mkdirTree('/roster');
           const lines = [];
@@ -698,7 +697,9 @@ var Module = {
             // the staged mesh targets the BASE fighter's skeleton, which
             // may differ from the tile the character sits on
             const baseFk = window.rosterBaseFk(c, fk);
-            const file = baseFk === 0 ? `${c.slug}.osb` : `${c.slug}-${VARIANT[baseFk]}.osb`;
+            // One OSB6 per character: the engine picks the block for the
+            // fighter it spawns, so the same file serves every base.
+            const file = `${c.slug}.osb6`;
             tile++;
             const ui = c.ui ? `/roster/${c.slug}.osbui` : '';
             const vox = c.voice ? `/roster/${c.slug}.wav` : '';
