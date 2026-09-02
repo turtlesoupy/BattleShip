@@ -907,12 +907,39 @@ var Module = {
     }
   }],
   onRuntimeInitialized: function () {
-    // INVOKE_RUN=0: start the game ourselves once the FS is staged.
+    // INVOKE_RUN=0: start the game ourselves once the FS is staged. Trailer
+    // capture holds here so the parent's Start Capture click can enter main()
+    // with browser activation and SDL audio is not blocked as autoplay.
     console.warn('[shell] onRuntimeInitialized: o2r exists =',
       FS.analyzePath('/BattleShip.o2r').exists, 'f3d =', FS.analyzePath('/f3d.o2r').exists);
-    setStatus('');
-    Module.callMain(Module.arguments);
-    console.warn('[shell] callMain returned');
+    let started = false;
+    const trailerHold = new URLSearchParams(location.search).get('SSB64_TRAILER_HOLD') === '1';
+    window.openSmashStartTrailer = function () {
+      if (started) return false;
+      started = true;
+      setStatus('');
+      Module.callMain(Module.arguments);
+      console.warn('[shell] callMain returned');
+      return true;
+    };
+
+    if (trailerHold) {
+      window.addEventListener('keydown', function (event) {
+        if (!started || event.repeat || event.key.toLowerCase() !== 'r') return;
+        event.preventDefault();
+        try {
+          window.parent.postMessage({ type: 'opensmash:trailer-reveal' }, location.origin);
+        } catch (_) { /* parent unavailable: use the visible capture control */ }
+      });
+      setStatus('');
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'opensmash:trailer-ready' }, location.origin);
+        }
+      } catch (_) { /* cross-origin parent: capture control stays unavailable */ }
+    } else {
+      window.openSmashStartTrailer();
+    }
   },
   // Stall attributor sink (?SSB64_STALL_WATCH=1). The engine calls this
   // only for frames whose wall time exceeded 250ms. Records go to a ring
