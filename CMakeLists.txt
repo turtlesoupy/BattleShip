@@ -469,6 +469,9 @@ list(APPEND SSB64_SRC_PORT
 # coroutine_test.cpp has its own main(); only built standalone when
 # SSB64_BUILD_COROUTINE_TEST=ON below. Never link it into the game.
 list(FILTER SSB64_SRC_PORT EXCLUDE REGEX "port/coroutine_test\\.cpp$")
+# Torch-only source (compiled into the Torch wasm module by
+# scripts/build_torch_wasm.sh); it must not enter the game target.
+list(FILTER SSB64_SRC_PORT EXCLUDE REGEX "port/css_icons/stage_assets_derive\\.cpp$")
 # port/mods/ (HookManager + SymbolResolver) wraps funchook, which isn't
 # fetched when the mod system is disabled. Drop it so nothing references the
 # missing backend. port/hooks/ (the event dispatch system) is funchook-free

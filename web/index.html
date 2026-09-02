@@ -357,8 +357,92 @@ window.controllerPorts = (() => {
   };
 })();
 
+// ---- on-demand roster staging ------------------------------------------
+// Module.__stageUrls: MEMFS path -> URL, registered by the roster boot path.
+// Module.ensureStaged(path): called synchronously from the engine
+// (port/staged_file.c) the first time it opens a roster file. Prefer bytes
+// prefetched in the background; otherwise a synchronous XHR, because the
+// caller is inside an N64-thread fiber and cannot yield. Returns true when
+// the file is in MEMFS afterwards.
+const stageCache = new Map();
+
+function stageWrite(path, bytes) {
+  const dir = path.substring(0, path.lastIndexOf('/')) || '/';
+  FS.mkdirTree(dir);
+  FS.writeFile(path, bytes);
+}
+
+async function stageNow(path) {
+  if (FS.analyzePath(path).exists) return true;
+  const url = Module.__stageUrls?.[path];
+  if (!url) return false;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`fetch ${url}: ${r.status}`);
+  stageWrite(path, new Uint8Array(await r.arrayBuffer()));
+  return true;
+}
+
+function prefetchStaged(paths, concurrency = 3) {
+  const queue = paths.filter((p) => Module.__stageUrls?.[p]);
+  let active = 0;
+  const next = () => {
+    while (active < concurrency && queue.length) {
+      const path = queue.shift();
+      if (FS.analyzePath(path).exists || stageCache.has(path)) continue;
+      active++;
+      fetch(Module.__stageUrls[path])
+        .then(async (r) => {
+          if (!r.ok) throw new Error(`${r.status}`);
+          stageCache.set(path, new Uint8Array(await r.arrayBuffer()));
+        })
+        .catch((e) => console.warn(`prefetch ${path} failed:`, e.message))
+        .finally(() => { active--; next(); });
+    }
+  };
+  next();
+}
+
+function fetchSync(url) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url, false);
+  // Binary through a synchronous XHR: responseType may not be 'arraybuffer'
+  // on the main thread, so read a byte-per-char string instead.
+  xhr.overrideMimeType('text/plain; charset=x-user-defined');
+  xhr.send(null);
+  if (xhr.status !== 200) throw new Error(`${url}: ${xhr.status}`);
+  const text = xhr.responseText;
+  const bytes = new Uint8Array(text.length);
+  for (let i = 0; i < text.length; i++) bytes[i] = text.charCodeAt(i) & 0xff;
+  return bytes;
+}
+
+window.__stageStats = { cached: 0, sync: 0, syncMs: 0 };
+function ensureStaged(path) {
+  if (FS.analyzePath(path).exists) return true;
+  const url = Module.__stageUrls?.[path];
+  if (!url) return false;
+  let bytes = stageCache.get(path);
+  if (bytes) {
+    window.__stageStats.cached++;
+  } else {
+    const t0 = performance.now();
+    try {
+      bytes = fetchSync(url);
+    } catch (e) {
+      console.warn(`ensureStaged ${path}:`, e.message);
+      return false;
+    }
+    window.__stageStats.sync++;
+    window.__stageStats.syncMs += performance.now() - t0;
+  }
+  stageCache.delete(path);
+  stageWrite(path, bytes);
+  return true;
+}
+
 var Module = {
   canvas: document.getElementById('canvas'),
+  ensureStaged,
   arguments: [],
   readPorts: (ptr) => window.controllerPorts.readPorts(ptr),
   preRun: [async function () {
@@ -686,7 +770,15 @@ var Module = {
           const roster = await (await fetch('/roster.json', { cache: 'no-cache' })).json();
           FS.mkdirTree('/roster');
           const lines = [];
-          const jobs = [];
+          // On-demand staging: the engine opens roster files through
+          // port_fopen_staged(), which calls Module.ensureStaged(path) and
+          // fetches the file if it is not in MEMFS yet. Only the tiny
+          // roster.txt is written up front; a thousand fighters cost nothing
+          // until the cursor lands on one. A background prefetch (first page
+          // first) fills a byte cache so the synchronous fallback is rare.
+          Module.__stageUrls = Module.__stageUrls || {};
+          const pageOne = [];
+          const later = [];
           let tile = 0;
           for (const c of roster) {
             const fk = tile % 12;
@@ -697,30 +789,26 @@ var Module = {
             // the staged mesh targets the BASE fighter's skeleton, which
             // may differ from the tile the character sits on
             const baseFk = window.rosterBaseFk(c, fk);
+            const page = Math.floor(tile / 12);
+            tile++;
             // One OSB6 per character: the engine picks the block for the
             // fighter it spawns, so the same file serves every base.
-            const file = `${c.slug}.osb6`;
-            tile++;
+            const bundlePath = `/roster/${c.slug}.osb`;
+            Module.__stageUrls[bundlePath] = `bundles/${c.slug}.osb6`;
             const ui = c.ui ? `/roster/${c.slug}.osbui` : '';
             const vox = c.voice ? `/roster/${c.slug}.wav` : '';
-            lines.push(`${c.slug}|${fk}|/roster/${c.slug}.osb|${ui}|${vox}|${c.short || ''}|${baseFk}`);
-            jobs.push((async () => {
-              const r = await fetch('bundles/' + file);
-              if (!r.ok) throw new Error(`fetch bundles/${file}: ${r.status}`);
-              FS.writeFile(`/roster/${c.slug}.osb`, new Uint8Array(await r.arrayBuffer()));
-              if (c.ui) {
-                const u = await fetch(`bundles/${c.slug}.osbui`);
-                if (u.ok) FS.writeFile(`/roster/${c.slug}.osbui`, new Uint8Array(await u.arrayBuffer()));
-              }
-              if (c.voice) {
-                const w = await fetch(`bundles/${c.slug}.wav`);
-                if (w.ok) FS.writeFile(`/roster/${c.slug}.wav`, new Uint8Array(await w.arrayBuffer()));
-              }
-            })());
+            if (ui) Module.__stageUrls[ui] = `bundles/${c.slug}.osbui`;
+            if (vox) Module.__stageUrls[vox] = `bundles/${c.slug}.wav`;
+            lines.push(`${c.slug}|${fk}|${bundlePath}|${ui}|${vox}|${c.short || ''}|${baseFk}`);
+            // The select screen paints page one's portraits (.osbui) as it
+            // builds; keep those eager so the first page never blocks.
+            (page === 0 ? pageOne : later).push(...[ui, vox].filter(Boolean));
+            later.push(bundlePath);
           }
-          await Promise.all(jobs);
           FS.writeFile('/roster.txt', lines.join('\n') + '\n');
-          console.log(`roster: staged ${lines.length} characters`);
+          await Promise.all(pageOne.map((path) => stageNow(path)));
+          prefetchStaged(later);
+          console.log(`roster: ${lines.length} characters registered, ${pageOne.length} files staged eagerly`);
         } catch (e) {
           console.warn('roster staging failed:', e);
         }

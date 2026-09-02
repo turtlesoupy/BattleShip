@@ -7,6 +7,7 @@
 // generate_announcer.py emits mono 32 kHz s16, which passes through as-is.
 
 #include "voice_inject.h"
+#include "../staged_file.h"
 #include "port_log.h"
 
 #include <stdio.h>
@@ -54,7 +55,7 @@ static int load_clip(VoiceClip *clip)
     if (clip->state != 0) return clip->state > 0;
     clip->state = -1;
 
-    f = fopen(path, "rb");
+    f = port_fopen_staged(path, "rb");
     if (f == NULL)
     {
         port_log("VOICE: cannot open %s\n", path);
