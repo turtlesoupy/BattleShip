@@ -206,6 +206,19 @@ var Module = {
         setStatus(`files ${++done}/${manifest.files.length}`);
       }));
 
+      // The ROM-derived archive is not part of the package: build it in the
+      // browser from the ROM the site stored in IndexedDB (or reuse the copy
+      // built earlier for this recipe). Dev packages made with PACKAGE_O2R=1
+      // still ship it in the manifest, in which case this is a no-op.
+      if (!FS.analyzePath('/BattleShip.o2r').exists) {
+        // Started by the early script below, before BattleShip.js began
+        // downloading, so Torch had the CPU to itself for as long as possible.
+        const { writeArchive } = await import('./rom-extract.js?v=BUILD_VERSION');
+        const staged = await window.__archivePromise;
+        writeArchive(FS, staged.bytes, staged.extras);
+        console.warn('[shell] BattleShip.o2r staged from ROM:', staged.source, staged.sha1, staged.ms ? Math.round(staged.ms) + 'ms' : '');
+      }
+
       if (params.has('inject_ui')) {
         const url = params.get('inject_ui');
         const resp = await fetch(url);
@@ -591,6 +604,28 @@ window.pressKey = (code, ms = 120) => new Promise((resolve) => {
   }, ms);
 });
 </script>
-<script src="BattleShip.js?v=BUILD_VERSION"></script>
+<script>
+// Resolve the ROM → archive step BEFORE the engine script is inserted.
+// Extraction alone takes ~3.5 s, but overlapped with Chrome tier-compiling
+// the 7.5 MB engine wasm it balloons to 40 s+: the compile threads hog every
+// core and Torch's own module never leaves baseline code. Serial is far
+// cheaper. The site normally prewarms the archive during its launch
+// animation, so this usually resolves from the cache in milliseconds.
+// preRun awaits the same promise; a rejection surfaces there as a status.
+window.__archivePromise = (async () => {
+  const manifest = await (await fetch('manifest.json?v=BUILD_VERSION')).json();
+  if (manifest.files.some(f => f.path === '/BattleShip.o2r')) return null;
+  const entry = manifest.files.find(f => f.path === '/BattleShip.o2r.recipe');
+  const recipe = entry ? (await (await fetch(entry.url)).text()).trim() : 'unknown';
+  const { ensureArchive } = await import('./rom-extract.js?v=BUILD_VERSION');
+  return ensureArchive({ recipe, version: 'BUILD_VERSION',
+    setStatus: (t) => { if (typeof setStatus === 'function') setStatus(t); } });
+})();
+window.__archivePromise.catch(() => {}).then(() => {
+  const script = document.createElement('script');
+  script.src = 'BattleShip.js?v=BUILD_VERSION';
+  document.body.appendChild(script);
+});
+</script>
 </body>
 </html>

@@ -33,7 +33,15 @@ cp "$BUILD_DIR/BattleShip.wasm" "$OUT_DIR/"
 # Runtime files the game reads from its working directory. Mirrored into
 # files/ and listed in manifest.json; the shell stages them into MEMFS.
 mkdir -p "$OUT_DIR/files"
-for f in BattleShip.o2r BattleShip.o2r.recipe f3d.o2r gamecontrollerdb.txt config.yml; do
+# BattleShip.o2r is ROM-derived and is NOT packaged by default: the browser
+# builds it from the player's own ROM via torch/ + torch-worker.js (see
+# web/rom-extract.js). PACKAGE_O2R=1 restores the old behaviour for local
+# harness runs that have no site to stage a ROM.
+RUNTIME_FILES="BattleShip.o2r.recipe f3d.o2r gamecontrollerdb.txt config.yml"
+if [ "${PACKAGE_O2R:-0}" = "1" ]; then
+  RUNTIME_FILES="BattleShip.o2r $RUNTIME_FILES"
+fi
+for f in $RUNTIME_FILES; do
   if [ -f "$BUILD_DIR/$f" ]; then
     cp "$BUILD_DIR/$f" "$OUT_DIR/files/"
   else
@@ -42,6 +50,14 @@ for f in BattleShip.o2r BattleShip.o2r.recipe f3d.o2r gamecontrollerdb.txt confi
 done
 if [ -d "$BUILD_DIR/assets" ]; then
   cp -R "$BUILD_DIR/assets" "$OUT_DIR/files/assets"
+  # The port stages' wallpapers/thumbnails/emblem are ROM-derived; the browser
+  # builds the ones the engine uses (see port/css_icons/stage_assets_derive.cpp
+  # via torch-worker.js). Only the script-rendered nameplates ship.
+  if [ "${PACKAGE_O2R:-0}" != "1" ] && [ -d "$OUT_DIR/files/assets/css_icons" ]; then
+    rm -f "$OUT_DIR"/files/assets/css_icons/*_background.png \
+          "$OUT_DIR"/files/assets/css_icons/*_small.png \
+          "$OUT_DIR"/files/assets/css_icons/*_emblem.png
+  fi
 fi
 
 # Hi-res texture packs are staged into MEMFS at /mods as ZIPs (HiResPack
@@ -70,6 +86,33 @@ if [ ! -f "$OUT_DIR/files/BattleShip.o2r.recipe" ]; then
   fi
 fi
 
+# In-browser asset extraction: Torch compiled to wasm plus the recipe tree it
+# reads (config.yml + yamls/<region>). These are port metadata, not ROM data.
+# Built by: scripts/build_torch_wasm.sh
+TORCH_WASM_DIR="${TORCH_WASM_DIR:-torch/build-wasm}"
+TORCH_REGION="${TORCH_REGION:-us}"
+if [ -f "$TORCH_WASM_DIR/torch.js" ] && [ -f "$TORCH_WASM_DIR/torch.wasm" ]; then
+  mkdir -p "$OUT_DIR/torch/yamls/$TORCH_REGION"
+  cp "$TORCH_WASM_DIR/torch.js" "$TORCH_WASM_DIR/torch.wasm" "$OUT_DIR/torch/"
+  cp config.yml "$OUT_DIR/torch/config.yml"
+  cp yamls/$TORCH_REGION/*.yml "$OUT_DIR/torch/yamls/$TORCH_REGION/"
+  (
+    cd "$OUT_DIR/torch"
+    echo '{ "files": ['
+    first=1
+    { echo config.yml; find yamls -type f | LC_ALL=C sort; } | while read -r p; do
+      [ $first -eq 1 ] && first=0 || echo ','
+      printf '  "%s"' "$p"
+    done
+    echo ''
+    echo '] }'
+  ) > "$OUT_DIR/torch/recipe.json"
+  cp web/torch-worker.js web/rom-extract.js "$OUT_DIR/"
+elif [ "${PACKAGE_O2R:-0}" != "1" ]; then
+  echo "error: $TORCH_WASM_DIR/torch.{js,wasm} missing and PACKAGE_O2R!=1 — the package would have no way to get BattleShip.o2r" >&2
+  exit 1
+fi
+
 # Version the complete executable/runtime set, not only the wasm. This keeps a
 # fresh wasm from ever booting against a stale O2R, config, texture pack, or
 # manifest after a deploy. Bundle injections are deliberately separate: they
@@ -82,7 +125,13 @@ PACKAGE_FINGERPRINT=$(
     shasum "$BUILD_DIR/BattleShip.js" | awk '{print $1}'
     printf 'BattleShip.wasm '
     shasum "$OUT_DIR/BattleShip.wasm" | awk '{print $1}'
-    find "$OUT_DIR/files" -type f | LC_ALL=C sort | while IFS= read -r file; do
+    for extra in web/torch-worker.js web/rom-extract.js; do
+      if [ -f "$extra" ]; then
+        printf '%s ' "$extra"
+        shasum "$extra" | awk '{print $1}'
+      fi
+    done
+    { find "$OUT_DIR/files" -type f; [ -d "$OUT_DIR/torch" ] && find "$OUT_DIR/torch" -type f; } | LC_ALL=C sort | while IFS= read -r file; do
       printf '%s ' "${file#"$OUT_DIR/"}"
       shasum "$file" | awk '{print $1}'
     done
