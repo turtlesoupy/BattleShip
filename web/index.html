@@ -5,6 +5,8 @@
 <title>BattleShip (WASM)</title>
 <style>
   html, body { margin: 0; padding: 0; background: #000; height: 100%; overflow: hidden; }
+  html.is-embedded, html.is-embedded body, html.is-embedded body * { cursor: none !important; }
+  html.is-embedded #boot, html.is-embedded #pad { display: none; }
   #wrap { display: flex; align-items: center; justify-content: center; height: 100%; }
   /* Hold the canvas element at 4:3 and letterbox inside the viewport;
    * SDL sizes the GL buffer to match the element, so the game renders at
@@ -83,6 +85,32 @@
   #matchup.compact .card { width: min(20vw, 34vh); }
   #matchup.compact .vs { font-size: clamp(20px, 4vw, 64px); }
 </style>
+<script>
+// The merged site renders its hand cursor above this iframe. Relay pointer
+// coordinates to the parent so the hand keeps tracking across the game, and
+// hide the iframe's native cursor only when the engine is embedded.
+if (window.parent !== window) {
+  document.documentElement.classList.add('is-embedded');
+  const pointerKinds = {
+    pointermove: 'move',
+    pointerdown: 'down',
+    pointerup: 'up',
+    pointercancel: 'cancel',
+  };
+  for (const [eventType, kind] of Object.entries(pointerKinds)) {
+    window.addEventListener(eventType, (event) => {
+      window.parent.postMessage({
+        type: 'opensmash-game-pointer',
+        kind,
+        x: event.clientX,
+        y: event.clientY,
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+      }, window.location.origin);
+    }, { capture: true, passive: true });
+  }
+}
+</script>
 </head>
 <body>
 <div id="wrap"><canvas id="canvas" tabindex="0" oncontextmenu="event.preventDefault()"></canvas></div>
@@ -712,14 +740,16 @@ var Module = {
           try {
             const entry = JSON.parse(raw);
             const fkind = Number(entry.fkind);
+            const base = Number(entry.base ?? fkind);
             const slug = String(entry.slug || '');
             if (!Number.isInteger(fkind) || fkind < 0 || fkind >= 12 ||
+                !Number.isInteger(base) || base < 0 || base >= 12 ||
                 claimedFkinds.has(fkind) || !/^[a-z0-9]+$/.test(slug) ||
                 !entry.bundleUrl) {
               throw new Error('invalid or duplicate card');
             }
             claimedFkinds.add(fkind);
-            entries.push({ ...entry, fkind, slug });
+            entries.push({ ...entry, fkind, base, slug });
           } catch (error) {
             console.warn(`intro card kept vanilla (${error.message})`);
           }
@@ -786,7 +816,7 @@ var Module = {
               .replace(/[^A-Z]/g, '')
               .slice(0, 8);
             return [entry.slug, entry.fkind, `${prefix}.osb`, uiPath,
-                    voicePath, short, entry.fkind, '', portraitPath].join('|');
+                    voicePath, short, entry.base, '', portraitPath].join('|');
           } catch (error) {
             console.warn(`intro fk${entry.fkind} kept vanilla (${error.message})`);
             return null;
@@ -937,6 +967,31 @@ var Module = {
       setStatus('');
       Module.callMain(Module.arguments);
       console.warn('[shell] callMain returned');
+
+      const params = new URLSearchParams(location.search);
+      if (params.get('SSB64_TRAILER_RECORD') === '1') {
+        setStatus('recording engine frames @ 60 fps…');
+        window.startTrailerClip()
+          .then(async (blob) => {
+            setStatus('finishing 2560x1920 trailer capture…');
+            const response = await fetch('/api/dev/trailer-capture', {
+              method: 'POST',
+              headers: { 'Content-Type': blob.type || 'video/webm' },
+              body: blob,
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'capture upload failed');
+            setStatus('trailer capture saved');
+            window.parent?.postMessage({
+              type: 'opensmash:trailer-capture-saved',
+              path: result.path,
+            }, location.origin);
+          })
+          .catch((error) => {
+            setStatus(`trailer capture failed: ${error.message}`);
+            console.error(error);
+          });
+      }
       return true;
     };
 
@@ -985,6 +1040,9 @@ var Module = {
     }
     console.warn(t);
   },
+  onTutorialStart: () => {
+    window.dispatchEvent(new Event('opensmash:tutorial-start'));
+  },
   // Lets captureFrame() read back the last presented frame.
   webglContextAttributes: { preserveDrawingBuffer: true },
 };
@@ -1003,6 +1061,79 @@ window.startClip = (ms = 3000, fps = 30) => new Promise((resolve, reject) => {
   rec.start();
   setTimeout(() => rec.stop(), ms);
 });
+// Trailer source capture. The outer site's CRT is deliberately not part of
+// this stream: only completed frames from the engine canvas are recorded.
+// The dev upload endpoint performs the expensive 2560x1920 constant-60-fps
+// finish after recording so encoding cannot steal frames from the game.
+window.startTrailerClip = () => {
+  if (window.__trailerClipPromise) return window.__trailerClipPromise;
+
+  const fps = 60;
+  const stream = Module.canvas.captureStream(fps);
+  const videoTrack = stream.getVideoTracks()[0];
+  if (videoTrack) videoTrack.contentHint = 'motion';
+  // SDL2 is exported on the Emscripten Module, not window. The old lookup
+  // silently missed it and produced a video-only WebM.
+  const sdl2 = Module.SDL2 || window.SDL2;
+  const audioContext = sdl2?.audioContext;
+  const audioNode = sdl2?.audio?.scriptProcessorNode;
+  let audioDestination = null;
+  if (audioContext && audioNode) {
+    if (audioContext.state === 'suspended') void audioContext.resume();
+    audioDestination = audioContext.createMediaStreamDestination();
+    audioNode.connect(audioDestination);
+    for (const track of audioDestination.stream.getAudioTracks()) stream.addTrack(track);
+  } else {
+    for (const track of stream.getTracks()) track.stop();
+    return Promise.reject(new Error('SDL game audio output is not ready'));
+  }
+
+  const preferredMimeTypes = [
+    'video/webm;codecs=vp9,opus',
+    'video/webm;codecs=vp8,opus',
+    'video/webm',
+  ];
+  const mimeType = preferredMimeTypes.find((type) => MediaRecorder.isTypeSupported(type));
+  const recorder = new MediaRecorder(stream, {
+    ...(mimeType ? { mimeType } : {}),
+    videoBitsPerSecond: 20_000_000,
+    audioBitsPerSecond: 192_000,
+  });
+  const chunks = [];
+  let stopTimer = 0;
+  let tutorialTimer = 0;
+
+  window.__trailerClipPromise = new Promise((resolve, reject) => {
+    const stop = () => {
+      if (recorder.state !== 'inactive') recorder.stop();
+    };
+    window.stopTrailerClip = stop;
+    const onTutorialStart = () => {
+      tutorialTimer = setTimeout(stop, 1500);
+    };
+    window.addEventListener('opensmash:tutorial-start', onTutorialStart, { once: true });
+    stopTimer = setTimeout(stop, 5 * 60 * 1000);
+    recorder.ondataavailable = (event) => {
+      if (event.data.size) chunks.push(event.data);
+    };
+    recorder.onerror = (event) => reject(event.error || new Error('Trailer recording failed'));
+    recorder.onstop = () => {
+      clearTimeout(stopTimer);
+      clearTimeout(tutorialTimer);
+      window.removeEventListener('opensmash:tutorial-start', onTutorialStart);
+      if (audioDestination && audioNode) {
+        try { audioNode.disconnect(audioDestination); } catch { /* already disconnected */ }
+      }
+      for (const track of stream.getTracks()) track.stop();
+      const blob = new Blob(chunks, { type: recorder.mimeType || 'video/webm' });
+      window.stopTrailerClip = null;
+      window.__trailerClipPromise = null;
+      resolve(blob);
+    };
+    recorder.start(1000);
+  });
+  return window.__trailerClipPromise;
+};
 // pressKey(code, ms): synthetic key hold on the canvas (SDL listens on it).
 window.pressKey = (code, ms = 120) => new Promise((resolve) => {
   const t = Module.canvas;
