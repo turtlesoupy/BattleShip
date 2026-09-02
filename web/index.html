@@ -215,7 +215,7 @@ var Module = {
         // downloading, so Torch had the CPU to itself for as long as possible.
         const { writeArchive } = await import('./rom-extract.js?v=BUILD_VERSION');
         const staged = await window.__archivePromise;
-        writeArchive(FS, staged.bytes);
+        writeArchive(FS, staged.bytes, staged.extras);
         console.warn('[shell] BattleShip.o2r staged from ROM:', staged.source, staged.sha1, staged.ms ? Math.round(staged.ms) + 'ms' : '');
       }
 

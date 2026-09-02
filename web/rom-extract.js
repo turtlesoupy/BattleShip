@@ -17,7 +17,7 @@
 // two in sync):
 //   db 'opensmash-rom' v1
 //     roms      key sha1            { sha1, size, name, bytes: ArrayBuffer, storedAt }
-//     archives  key `${recipe}:${sha1}` { key, recipe, sha1, bytes: ArrayBuffer, builtAt, ms }
+//     archives  key `${recipe}:${sha1}` { key, recipe, sha1, bytes: ArrayBuffer, extras: [{path, bytes}], builtAt, ms }
 //     meta      key 'current'       { key: 'current', sha1 }
 
 const DB_NAME = 'opensmash-rom';
@@ -125,7 +125,7 @@ export async function ensureArchive({ recipe, version, setStatus }) {
   const cached = await idbGet(db, 'archives', key);
   if (cached?.bytes) {
     status('assets ready (cached)');
-    return { source: 'cache', sha1, bytes: cached.bytes };
+    return { source: 'cache', sha1, bytes: cached.bytes, extras: cached.extras || [] };
   }
 
   const stored = await idbGet(db, 'roms', sha1);
@@ -151,7 +151,7 @@ export async function ensureArchive({ recipe, version, setStatus }) {
   const ms = performance.now() - started;
   try {
     await idbPut(db, 'archives', {
-      key, recipe, sha1, bytes: result.archive, builtAt: Date.now(), ms,
+      key, recipe, sha1, bytes: result.archive, extras: result.extras || [], builtAt: Date.now(), ms,
       // Diagnostics: where the time went (worker phases) and how long after
       // document start the build began.
       timings: { ...result.timings, startedAtMs: Math.round(started), totalMs: Math.round(ms),
@@ -162,7 +162,7 @@ export async function ensureArchive({ recipe, version, setStatus }) {
   }
   console.warn('[rom-extract] built archive', { ...result.timings, totalMs: Math.round(ms) });
   status(`assets built in ${(ms / 1000).toFixed(1)}s`);
-  return { source: 'built', sha1, bytes: result.archive, ms };
+  return { source: 'built', sha1, bytes: result.archive, extras: result.extras || [], ms };
 }
 
 /**
@@ -177,8 +177,14 @@ export async function prewarmArchive({ setStatus } = {}) {
 }
 
 /**
- * Engine-shell convenience: write `bytes` (from ensureArchive) into MEMFS.
+ * Engine-shell convenience: write the archive plus any derived extras (the
+ * port stages' CSS PNGs) from an ensureArchive result into MEMFS.
  */
-export function writeArchive(FS, bytes) {
+export function writeArchive(FS, bytes, extras = []) {
   FS.writeFile(ARCHIVE_PATH, new Uint8Array(bytes));
+  for (const extra of extras) {
+    const dir = extra.path.substring(0, extra.path.lastIndexOf('/')) || '/';
+    FS.mkdirTree(dir);
+    FS.writeFile(extra.path, new Uint8Array(extra.bytes));
+  }
 }

@@ -46,6 +46,21 @@ Gotchas found while porting:
 - Output is deterministic in content: entry CRCs match the native build
   exactly; only zip timestamps differ.
 
+## Port-stage select-screen art
+
+Final Destination, Metal Cavern and Battlefield have no stage-select icon in
+the ROM (they are 1P arenas there), so the port derives a wallpaper and a
+48x36 thumbnail from each stage's own background sprite. Those PNGs are
+ROM-derived, so they are no longer packaged either: the worker calls
+`torch_derive_stage_assets` (`port/css_icons/stage_assets_derive.cpp`,
+compiled into the Torch module by `scripts/build_torch_wasm.sh`) right after
+the archive export, and the results ride along in the IndexedDB record as
+`extras` and are written to `/assets/css_icons/` by `writeArchive`. Output is
+pixel-identical to `tools/derive_stage_assets.py` and takes ~50 ms. Only the
+script-rendered nameplates (`*_name.png`, plain text) still ship in the
+package; the FD emblem PNG is dropped because `mnMapsMakeEmblem` does not
+render it yet.
+
 ## Scheduling (why the archive is built on the site, not in the engine)
 
 Torch itself is not the bottleneck; where it runs is. Measured in Chrome

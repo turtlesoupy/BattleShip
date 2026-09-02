@@ -50,6 +50,14 @@ for f in $RUNTIME_FILES; do
 done
 if [ -d "$BUILD_DIR/assets" ]; then
   cp -R "$BUILD_DIR/assets" "$OUT_DIR/files/assets"
+  # The port stages' wallpapers/thumbnails/emblem are ROM-derived; the browser
+  # builds the ones the engine uses (see port/css_icons/stage_assets_derive.cpp
+  # via torch-worker.js). Only the script-rendered nameplates ship.
+  if [ "${PACKAGE_O2R:-0}" != "1" ] && [ -d "$OUT_DIR/files/assets/css_icons" ]; then
+    rm -f "$OUT_DIR"/files/assets/css_icons/*_background.png \
+          "$OUT_DIR"/files/assets/css_icons/*_small.png \
+          "$OUT_DIR"/files/assets/css_icons/*_emblem.png
+  fi
 fi
 
 # Hi-res texture packs are staged into MEMFS at /mods as ZIPs (HiResPack
@@ -80,7 +88,7 @@ fi
 
 # In-browser asset extraction: Torch compiled to wasm plus the recipe tree it
 # reads (config.yml + yamls/<region>). These are port metadata, not ROM data.
-# Built by: (cd torch && emcmake cmake -B build-wasm -DBUILD_SSB64=ON ... && cmake --build build-wasm)
+# Built by: scripts/build_torch_wasm.sh
 TORCH_WASM_DIR="${TORCH_WASM_DIR:-torch/build-wasm}"
 TORCH_REGION="${TORCH_REGION:-us}"
 if [ -f "$TORCH_WASM_DIR/torch.js" ] && [ -f "$TORCH_WASM_DIR/torch.wasm" ]; then

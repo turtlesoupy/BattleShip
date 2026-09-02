@@ -79,6 +79,28 @@ self.onmessage = async (event) => {
     }
     t.extracted = performance.now();
     const archive = FS.readFile(outPath);
+    // Port-added stages' select-screen art is ROM-derived too; build it here
+    // rather than shipping it. Failure is non-fatal: the engine falls back to
+    // the ROM-resident sprite when a PNG is missing.
+    const extras = [];
+    try {
+      const ptr2 = Module._malloc(bytes.length);
+      Module.HEAPU8.set(bytes, ptr2);
+      try {
+        const n = Module.ccall('torch_derive_stage_assets', 'number', ['number', 'number', 'string'], [ptr2, bytes.length, OUT_DIR]);
+        if (n > 0) {
+          const dir = `${OUT_DIR}/assets/css_icons`;
+          for (const name of FS.readdir(dir)) {
+            if (!name.endsWith('.png')) continue;
+            extras.push({ path: `/assets/css_icons/${name}`, bytes: FS.readFile(`${dir}/${name}`).slice().buffer });
+          }
+        }
+      } finally {
+        Module._free(ptr2);
+      }
+    } catch (error) {
+      self.postMessage({ type: 'progress', lines, text: `stage assets skipped: ${error?.message || error}` });
+    }
     const ms = performance.now() - started;
     // Copy out of the wasm heap so the buffer can be transferred.
     const out = archive.slice().buffer;
@@ -91,7 +113,7 @@ self.onmessage = async (event) => {
       // Coarse timeline (every 250 log lines) for diagnosing slow builds.
       samples,
     };
-    self.postMessage({ type: 'done', archive: out, ms, lines, timings }, [out]);
+    self.postMessage({ type: 'done', archive: out, extras, ms, lines, timings }, [out, ...extras.map((e) => e.bytes)]);
   } catch (error) {
     self.postMessage({ type: 'error', message: error?.message || String(error) });
   }
