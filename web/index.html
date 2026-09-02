@@ -764,12 +764,29 @@ var Module = {
               }
             }
 
+            // Portrait PNG for the opening's baked character art (the Sector
+            // cockpit's Fox face); without it that art stays vanilla.
+            let portraitPath = '';
+            if (entry.portraitUrl) {
+              try {
+                const response = await fetch(entry.portraitUrl);
+                if (response.ok) {
+                  portraitPath = `${prefix}.png`;
+                  FS.writeFile(portraitPath, new Uint8Array(await response.arrayBuffer()));
+                } else {
+                  console.warn(`intro portrait kept vanilla (${entry.portraitUrl}: ${response.status})`);
+                }
+              } catch (error) {
+                console.warn(`intro portrait kept vanilla (${entry.portraitUrl}: ${error.message})`);
+              }
+            }
+
             const short = String(entry.short || entry.slug)
               .toUpperCase()
               .replace(/[^A-Z]/g, '')
               .slice(0, 8);
             return [entry.slug, entry.fkind, `${prefix}.osb`, uiPath,
-                    voicePath, short, entry.fkind].join('|');
+                    voicePath, short, entry.fkind, '', portraitPath].join('|');
           } catch (error) {
             console.warn(`intro fk${entry.fkind} kept vanilla (${error.message})`);
             return null;
