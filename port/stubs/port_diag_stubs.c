@@ -8,6 +8,8 @@
 #include <ssb_types.h>
 #include <sc/scene.h>
 #include <sc/scmanager.h>
+#include <ft/ftdef.h>
+#include <stdio.h>
 
 u8 port_diag_get_scene_curr(void)
 {
@@ -88,6 +90,7 @@ const char *port_diag_get_scene_name(u8 id)
 	case nSCKindSoundTest:        return "SoundTest";
 	case nSCKindExplain:          return "Explain";
 	case nSCKindAutoDemo:         return "AutoDemo";
+	case nSCKindVSIntro:          return "VSIntro";
 	default:                      return "?";
 	}
 }
@@ -137,4 +140,40 @@ sb32 port_scene_wants_freeze_simulation(u8 scene_id)
 	default:
 		return FALSE;
 	}
+}
+
+u8 port_diag_scene_id_vsbattle(void)
+{
+	return nSCKindVSBattle;
+}
+
+/* Matchup card for the web shell (port/gameloop.cpp fires it two ticks into
+ * a VS battle): who is in the match, as compact JSON. Reads the transfer
+ * state the CSS / SSB64_BOOT_BATTLE preset hand to scVSBattleStartScene.
+ * Returns the number of bytes written (0 = nothing to show). */
+extern const char *port_roster_player_slug(s32 player);
+s32 port_matchup_describe(char *buf, s32 cap)
+{
+	SCBattleState *bs = &gSCManagerTransferBattleState;
+	s32 n = 0, i, active = 0;
+	n += snprintf(buf + n, (size_t)(cap - n), "{\"stage\":%d,\"team\":%d,\"players\":[",
+	              (int)bs->gkind, bs->is_team_battle ? 1 : 0);
+	for (i = 0; i < GMCOMMON_PLAYERS_MAX; i++)
+	{
+		SCPlayerData *pd = &bs->players[i];
+		const char *slug;
+		if (pd->pkind != nFTPlayerKindMan && pd->pkind != nFTPlayerKindCom)
+		{
+			continue;
+		}
+		slug = port_roster_player_slug(i);
+		n += snprintf(buf + n, (size_t)(cap - n),
+		              "%s{\"p\":%d,\"kind\":%d,\"fkind\":%d,\"costume\":%d,\"team\":%d,\"slug\":\"%s\"}",
+		              active ? "," : "", (int)i, (int)pd->pkind, (int)pd->fkind,
+		              (int)pd->costume, (int)pd->team, slug);
+		active++;
+		if (n >= cap - 1) break;
+	}
+	n += snprintf(buf + n, (size_t)(cap - n), "]}");
+	return active ? n : 0;
 }

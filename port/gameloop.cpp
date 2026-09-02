@@ -71,6 +71,80 @@ extern "C" void port_vi_simulate_vblank(void);
 
 extern "C" void lbBackupApplyCheats(void);
 
+#ifdef __EMSCRIPTEN__
+/* ------------------------------------------------------------------------ */
+/*  Matchup card gate (web only)                                            */
+/*                                                                          */
+/*  Vanilla VS mode goes stage select -> battle with no "A VS B" screen     */
+/*  (that card only exists in 1P Game), which is hopeless with a roster of  */
+/*  a thousand generated fighters. Two ticks into a VS battle the port      */
+/*  hands the shell a JSON matchup (Module.onMatchup) and freezes the game  */
+/*  coroutine — no VI tick, no service-thread resume — until the shell      */
+/*  calls Module._port_matchup_release() (or a 20 s safety valve fires).   */
+/*  Nothing happens when the shell installs no handler, so eval / replay   */
+/*  harness pages keep exact tick timing.                                   */
+/* ------------------------------------------------------------------------ */
+extern "C" unsigned char port_diag_get_scene_curr(void);
+extern "C" unsigned char port_diag_scene_id_vsbattle(void);
+extern "C" int32_t port_matchup_describe(char *buf, int32_t cap);
+
+static volatile int sMatchupReleased = 0;
+extern "C" EMSCRIPTEN_KEEPALIVE void port_matchup_release(void)
+{
+	sMatchupReleased = 1;
+}
+
+/* Returns 1 while the frame must be held (skip the game tick). */
+static int port_matchup_gate(void)
+{
+	static unsigned char sLastScene = 0xff;
+	static int sSceneTicks = 0;
+	static int sFired = 0;
+	static int sHolding = 0;
+	static int sHeldFrames = 0;
+	const int kFireTick = 2;
+	const int kMaxHoldFrames = 20 * 60;
+	unsigned char scene = port_diag_get_scene_curr();
+
+	if (scene != sLastScene) {
+		sLastScene = scene;
+		sSceneTicks = 0;
+		sFired = 0;
+	} else {
+		sSceneTicks++;
+	}
+
+	if (sHolding) {
+		sHeldFrames++;
+		if (sMatchupReleased || sHeldFrames >= kMaxHoldFrames) {
+			sHolding = 0;
+			port_log("SSB64: matchup card released after %d frames%s\n", sHeldFrames,
+			         sMatchupReleased ? "" : " (safety valve)");
+			return 0;
+		}
+		return 1;
+	}
+
+	if (scene == port_diag_scene_id_vsbattle() && !sFired && sSceneTicks == kFireTick) {
+		sFired = 1;
+		if (!EM_ASM_INT({ return (Module.onMatchup) ? 1 : 0; })) {
+			return 0;
+		}
+		char buf[1024];
+		if (port_matchup_describe(buf, (int32_t)sizeof buf) <= 0) {
+			return 0;
+		}
+		sMatchupReleased = 0;
+		sHolding = 1;
+		sHeldFrames = 0;
+		port_log("SSB64: matchup card %s\n", buf);
+		EM_ASM({ try { Module.onMatchup(UTF8ToString($0)); } catch (e) { console.warn('onMatchup failed', e); Module._port_matchup_release(); } }, buf);
+		return 1;
+	}
+	return 0;
+}
+#endif
+
 /* ========================================================================= */
 /*  External game symbols (C linkage)                                        */
 /* ========================================================================= */
@@ -708,6 +782,15 @@ void PortPushFrame(void)
 			window->HandleEvents();
 		}
 	}
+#ifdef __EMSCRIPTEN__
+	/* Matchup card: hold the game (no VI tick, no coroutine resume) while
+	 * the shell shows who is fighting. The watchdog still sees frames. */
+	if (port_matchup_gate()) {
+		port_watchdog_note_frame_end();
+		return;
+	}
+#endif
+
 	/* Propagate the previous frame's queued framebuffer (if any) to VI's
 	 * "current" slot. The scheduler's CheckReadyFramebuffer fnCheck reads
 	 * osViGetCurrent/NextFramebuffer to decide whether the slot the game

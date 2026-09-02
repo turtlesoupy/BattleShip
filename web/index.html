@@ -19,11 +19,75 @@
     position: fixed; left: 12px; bottom: 10px; color: #9f9;
     font: 12px/1.4 ui-monospace, monospace; white-space: pre; pointer-events: none;
   }
+  /* ---- matchup card (engine holds the battle while this shows) ---- */
+  #matchup {
+    position: fixed; inset: 0; z-index: 20; display: none;
+    background:
+      radial-gradient(ellipse at 50% 60%, rgba(140, 20, 10, .85) 0%, rgba(40, 6, 4, .95) 45%, #000 100%),
+      #000;
+    color: #fff; font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+    user-select: none; cursor: default;
+    opacity: 0; transition: opacity .25s ease;
+  }
+  #matchup.show { display: flex; align-items: center; justify-content: center; }
+  #matchup.in { opacity: 1; }
+  #matchup .row {
+    display: flex; align-items: center; justify-content: center;
+    gap: clamp(12px, 3vw, 48px); width: 100%; padding: 0 3vw; box-sizing: border-box;
+  }
+  #matchup .card {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    width: min(28vw, 42vh); flex: 0 1 auto;
+    opacity: 0; transform: translateX(var(--from, 0)) scale(.9);
+    transition: opacity .35s ease, transform .45s cubic-bezier(.2, 1.4, .4, 1);
+  }
+  #matchup.in .card { opacity: 1; transform: none; }
+  #matchup .art {
+    width: 100%; aspect-ratio: 1; box-sizing: border-box;
+    border: 4px solid var(--pc, #ddd); border-radius: 6px;
+    background: #1a0806 center / cover no-repeat;
+    box-shadow: 0 0 0 2px #000, 0 12px 40px rgba(0, 0, 0, .7), 0 0 60px rgba(255, 90, 40, .25);
+    image-rendering: auto; display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  #matchup .art.vanilla { background: linear-gradient(160deg, #3a3a3a, #101010); }
+  #matchup .art.vanilla::before {
+    content: attr(data-initial); font-size: min(14vw, 20vh); color: rgba(255,255,255,.18);
+    line-height: 1;
+  }
+  #matchup .tag {
+    position: absolute; left: 6px; top: 6px; padding: 2px 8px; border-radius: 3px;
+    background: var(--pc, #ddd); color: #000; font-size: clamp(11px, 1.6vw, 18px);
+    letter-spacing: .06em; box-shadow: 0 1px 0 #000;
+  }
+  #matchup .name {
+    font-size: clamp(16px, 2.6vw, 38px); line-height: 1.1; text-align: center;
+    letter-spacing: .04em; text-transform: uppercase; font-style: italic;
+    color: #ffe98a;
+    text-shadow: 0 0 2px #000, 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000,
+                 0 6px 18px rgba(0,0,0,.8);
+    max-width: 100%; overflow-wrap: anywhere;
+  }
+  #matchup .vs {
+    font-size: clamp(28px, 6vw, 96px); font-style: italic; font-weight: 900; line-height: 1;
+    color: #fff; flex: 0 0 auto;
+    text-shadow: 0 0 3px #000, 3px 3px 0 #000, -3px 3px 0 #000, 3px -3px 0 #000, -3px -3px 0 #000,
+                 0 0 40px rgba(255, 120, 40, .9);
+    opacity: 0; transform: scale(2.2); transition: opacity .2s ease .25s, transform .35s cubic-bezier(.2, 1.6, .4, 1) .25s;
+  }
+  #matchup.in .vs { opacity: 1; transform: none; }
+  #matchup .hint {
+    position: absolute; bottom: 4vh; left: 0; right: 0; text-align: center;
+    font: 12px/1.4 ui-monospace, monospace; color: rgba(255,255,255,.45); letter-spacing: .1em;
+  }
+  #matchup.compact .card { width: min(20vw, 34vh); }
+  #matchup.compact .vs { font-size: clamp(20px, 4vw, 64px); }
 </style>
 </head>
 <body>
 <div id="wrap"><canvas id="canvas" tabindex="0" oncontextmenu="event.preventDefault()"></canvas></div>
 <div id="status">loading…</div>
+<div id="matchup" aria-live="polite"><div class="row"></div><div class="hint">PRESS ANY BUTTON</div></div>
 <script>
 // Shared roster helpers. ROSTER_VARIANT: skeleton-variant name per fighter
 // kind (index = fkind, '' = the mario-default bundle). rosterBaseFk: which
@@ -464,6 +528,8 @@ var Module = {
     for (const [k, v] of params) {
       if (k.startsWith('SSB64_') && typeof ENV !== 'undefined') ENV[k] = v;
     }
+    // Capture / eval runs stay tick-exact: no engine VS card before battles.
+    if (params.has('capture') && typeof ENV !== 'undefined' && !params.has('SSB64_VS_INTRO')) ENV.SSB64_VS_INTRO = '0';
     try {
       // Stage the engine's required archives before any optional fighter
       // extras. A missing portrait/voice must never start main() with an
@@ -562,6 +628,7 @@ var Module = {
           // share the inject fkind, and an unpinned attach lets P2 steal
           // ownership, leaving P1 blanked and invisible.
           ENV.SSB64_INJECT_PLAYER = params.get('player') || '0';
+          if (params.get('inject_name')) ENV.SSB64_INJECT_NAME = params.get('inject_name');
         }
       }
       // Targeted direct-match roster: each repeated inject_player value is
@@ -618,7 +685,8 @@ var Module = {
             .slice(0, 8);
           rows.push({
             player,
-            line: [slug, fkind, bundlePath, uiPath, voicePath, short, fkind].join('|'),
+            line: [slug, fkind, bundlePath, uiPath, voicePath, short, fkind,
+                   String(entry.name || '').replace(/[|\n\r]/g, ' ')].join('|'),
           });
           playerChars[player] = slug;
         }));
@@ -799,7 +867,7 @@ var Module = {
             const vox = c.voice ? `/roster/${c.slug}.wav` : '';
             if (ui) Module.__stageUrls[ui] = `bundles/${c.slug}.osbui`;
             if (vox) Module.__stageUrls[vox] = `bundles/${c.slug}.wav`;
-            lines.push(`${c.slug}|${fk}|${bundlePath}|${ui}|${vox}|${c.short || ''}|${baseFk}`);
+            lines.push(`${c.slug}|${fk}|${bundlePath}|${ui}|${vox}|${c.short || ''}|${baseFk}|${(c.display || '').replace(/[|\n\r]/g, ' ')}`);
             // The select screen paints page one's portraits (.osbui) as it
             // builds; keep those eager so the first page never blocks.
             (page === 0 ? pageOne : later).push(...[ui, vox].filter(Boolean));
@@ -890,6 +958,163 @@ window.pressKey = (code, ms = 120) => new Promise((resolve) => {
     resolve();
   }, ms);
 });
+</script>
+<script>
+// ---- matchup card ----------------------------------------------------
+// Vanilla VS mode has no "A VS B" screen (only 1P Game does), so with a
+// generated roster nobody knows who they are fighting. Two ticks into a VS
+// battle the engine calls Module.onMatchup(json) and freezes until
+// Module._port_matchup_release(); this shows the card in between: portrait,
+// name and port tag per fighter, announcer name clips in order, any button
+// skips. Skipped entirely for capture / replay harness runs (no handler ->
+// the engine never holds, so tick timing stays exact).
+(() => {
+  const params = new URLSearchParams(location.search);
+  // The engine now draws its own VS card (scvsintro.c); this DOM card is
+  // kept as an opt-in fallback (?matchup=1).
+  if (params.get('matchup') !== '1') return;
+  const VANILLA = ['Mario', 'Fox', 'Donkey Kong', 'Samus', 'Luigi', 'Link',
+                   'Yoshi', 'Captain Falcon', 'Kirby', 'Pikachu', 'Jigglypuff', 'Ness'];
+  const PORT_COLORS = ['#ff4a3d', '#4a7dff', '#ffd23d', '#4ad35a'];
+  const TEAM_COLORS = ['#ff4a3d', '#4a7dff', '#4ad35a', '#ffd23d'];
+  const MIN_SHOW_MS = 3400;
+  const el = document.getElementById('matchup');
+  const row = el.querySelector('.row');
+  let rosterPromise = null;
+  const roster = () => (rosterPromise ||= fetch('/roster.json', { cache: 'no-cache' })
+    .then((r) => (r.ok ? r.json() : []))
+    .then((list) => new Map(list.map((c) => [c.slug, c])))
+    .catch(() => new Map()));
+  // Legacy single-inject launches (?inject=bundles/<slug>.osb6&fkind=N)
+  // carry no roster binding; recover the slug from the bundle URL.
+  const legacySlug = (p) => {
+    const inject = params.get('inject');
+    if (!inject) return '';
+    if (String(p.p) !== (params.get('player') || '0')) return '';
+    if (String(p.fkind) !== (params.get('fkind') || '0')) return '';
+    const m = inject.match(/([a-z0-9]+)(?:-[a-z]+)?\.osb\d?$/);
+    return m ? m[1] : '';
+  };
+  const slugFromSet = (p) => {
+    // ?inject_set=<osb>:<fkind>:<char>,...
+    for (const entry of (params.get('inject_set') || '').split(',')) {
+      const [, fk, chr] = entry.split(':');
+      if (chr && Number(fk) === p.fkind) return chr;
+    }
+    return '';
+  };
+  const release = () => { try { Module._port_matchup_release(); } catch (e) { console.warn(e); } };
+  let active = null;
+
+  const playClips = (urls, signal) => new Promise((resolve) => {
+    let i = 0;
+    const next = () => {
+      if (signal.aborted || i >= urls.length) return resolve();
+      const a = new Audio(urls[i++]);
+      a.volume = 0.9;
+      a.addEventListener('ended', () => setTimeout(next, 260));
+      a.addEventListener('error', next);
+      signal.addEventListener('abort', () => { try { a.pause(); } catch (_) {} }, { once: true });
+      a.play().catch(next);
+    };
+    next();
+  });
+
+  Module.onMatchup = async (json) => {
+    const data = JSON.parse(json);
+    const players = (data.players || []).filter((p) => p.kind === 0 || p.kind === 1);
+    if (players.length < 2) return release();
+    if (active) active.abort();
+    const ctl = new AbortController();
+    active = ctl;
+    const chars = await roster();
+    row.innerHTML = '';
+    el.classList.toggle('compact', players.length > 2);
+    const clips = [];
+    players.forEach((p, idx) => {
+      const slug = p.slug || legacySlug(p) || slugFromSet(p);
+      const c = slug ? chars.get(slug) : null;
+      const name = c?.display || c?.name || (slug ? slug : VANILLA[p.fkind] || `Fighter ${p.fkind}`);
+      const color = data.team ? TEAM_COLORS[p.team] : (p.kind === 0 ? PORT_COLORS[p.p] : '#cfcfcf');
+      const tag = p.kind === 0 ? `${p.p + 1}P` : 'CP';
+      if (idx > 0) {
+        const vs = document.createElement('div');
+        vs.className = 'vs';
+        vs.textContent = 'VS';
+        row.appendChild(vs);
+      }
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.setProperty('--pc', color);
+      card.style.setProperty('--from', idx === 0 ? '-12vw' : (idx === players.length - 1 ? '12vw' : '0'));
+      const art = document.createElement('div');
+      art.className = 'art';
+      if (slug) {
+        // Site route; the bare engine harness has no portraits, so a 404
+        // just leaves the plain tile.
+        const img = new Image();
+        img.onload = () => { art.style.backgroundImage = `url("${img.src}")`; };
+        img.src = `/character-assets/${slug}/portrait.png`;
+      } else {
+        art.classList.add('vanilla');
+        art.dataset.initial = name[0];
+      }
+      const tagEl = document.createElement('div');
+      tagEl.className = 'tag';
+      tagEl.textContent = tag;
+      art.appendChild(tagEl);
+      const nameEl = document.createElement('div');
+      nameEl.className = 'name';
+      nameEl.textContent = name;
+      card.appendChild(art);
+      card.appendChild(nameEl);
+      row.appendChild(card);
+      if (slug && (c ? c.voice !== false : true)) clips.push(`bundles/${slug}.wav`);
+    });
+    el.classList.add('show');
+    // Timer, not rAF: a background/throttled tab starves rAF while the
+    // engine keeps running on Asyncify sleeps, and the card would never
+    // fade in.
+    void el.offsetWidth;
+    setTimeout(() => { if (active === ctl) el.classList.add('in'); }, 30);
+    const started = performance.now();
+    const skip = () => ctl.abort();
+    const keyHandler = (e) => { if (!e.repeat) skip(); };
+    window.addEventListener('keydown', keyHandler);
+    el.addEventListener('pointerdown', skip);
+    let padTimer = 0;
+    const pollPads = () => {
+      if (ctl.signal.aborted) return clearInterval(padTimer);
+      for (const g of navigator.getGamepads ? navigator.getGamepads() : []) {
+        if (g && g.buttons.some((b) => b.pressed)) return skip();
+      }
+    };
+    // Ignore pads for the first moment so the button that confirmed the
+    // stage does not also skip the card.
+    setTimeout(() => { if (!ctl.signal.aborted) padTimer = setInterval(pollPads, 50); }, 400);
+    await Promise.race([
+      playClips(clips, ctl.signal).then(() => new Promise((r) => setTimeout(r, 700))),
+      new Promise((r) => ctl.signal.addEventListener('abort', r, { once: true })),
+    ]);
+    if (!ctl.signal.aborted) {
+      const remain = MIN_SHOW_MS - (performance.now() - started);
+      if (remain > 0) {
+        await Promise.race([
+          new Promise((r) => setTimeout(r, remain)),
+          new Promise((r) => ctl.signal.addEventListener('abort', r, { once: true })),
+        ]);
+      }
+    }
+    window.removeEventListener('keydown', keyHandler);
+    el.removeEventListener('pointerdown', skip);
+    clearInterval(padTimer);
+    if (!ctl.signal.aborted) ctl.abort();
+    el.classList.remove('in');
+    release();
+    setTimeout(() => { if (active === ctl) el.classList.remove('show'); }, 260);
+    Module.canvas.focus();
+  };
+})();
 </script>
 <script>
 // Resolve the ROM → archive step BEFORE the engine script is inserted.
