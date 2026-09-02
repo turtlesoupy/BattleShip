@@ -167,9 +167,200 @@ window.dumpStalls = () => {
            slowLoads: window.__slowLoads.length };
 };
 
+// ---- controller ports ---------------------------------------------------
+// Logical N64 port -> input device. The engine samples this once per game
+// tick (Module.readPorts) and treats a port with no device as unplugged, so
+// the character select spawns exactly one cursor per real player and
+// hot-plug just works (mnPlayersVSUpdateGate). Sources, in priority order:
+//   ?ports=<json>      the site's plan, one entry per port:
+//                      {kind:'gamepad',id,index} | {kind:'keyboard'} |
+//                      {kind:'none'} (explicitly closed) | null (free)
+//   (none)             auto: gamepads by index -> ports 1..n; the keyboard
+//                      takes a port only when no gamepad has one
+// Assignments are sticky for the session: a disconnected pad leaves its
+// port unplugged (nobody's fighter changes hands mid-match) and takes it
+// back on reconnect; a brand-new pad takes the lowest FREE port (never a
+// closed one). apply(plan) swaps in a new plan from Advanced options.
+window.controllerPorts = (() => {
+  const KIND = { AUTO: 0, NONE: 1, KEYBOARD: 2, GAMEPAD: 3 };
+  const BTN = { A: 0x8000, B: 0x4000, Z: 0x2000, START: 0x1000,
+                DUP: 0x0800, DDOWN: 0x0400, DLEFT: 0x0200, DRIGHT: 0x0100,
+                L: 0x0020, R: 0x0010, CUP: 0x0008, CDOWN: 0x0004, CLEFT: 0x0002, CRIGHT: 0x0001 };
+  const STICK_MAX = 80;      // OSContPad stick range
+  const STICK_DEADZONE = 0.15;
+  const C_STICK_THRESHOLD = 0.5;
+  const params = new URLSearchParams(location.search);
+  const listeners = new Set();
+  let ports = [null, null, null, null];
+  let engaged = false;
+
+  const livePads = () => {
+    const out = [];
+    if (!navigator.getGamepads) return out;
+    for (const g of navigator.getGamepads()) if (g && g.connected) out.push(g);
+    return out;
+  };
+  const freePort = () => ports.findIndex((p) => p === null);
+  const padEntry = (g) => ({ kind: 'gamepad', id: g.id, index: g.index, lost: false, seen: true });
+  const isDevice = (p) => p && p.kind !== 'none';
+  const snapshot = () => ports.map((p) => (p ? { kind: p.kind, id: p.id, index: p.index, lost: !!p.lost } : null));
+  const notify = () => {
+    for (const fn of listeners) { try { fn(snapshot()); } catch (e) { console.warn('controllerPorts listener', e); } }
+  };
+
+  // Default rules, matching the site's planControllerPorts
+  // (shared/controller-ports.js) with every port on automatic.
+  function plan(pads) {
+    const next = [null, null, null, null];
+    let n = 0;
+    for (const g of pads.sort((a, b) => a.index - b.index)) {
+      if (n < 4) next[n++] = padEntry(g);
+    }
+    if (n === 0) next[0] = { kind: 'keyboard' };
+    return next;
+  }
+
+  function ensureSomeone() {
+    if (!ports.some(isDevice)) {
+      const slot = Math.max(0, freePort());
+      ports[slot] = { kind: 'keyboard' };
+    }
+  }
+
+  // A plan from the site: keep the live state of pads we already track.
+  function adopt(parsed) {
+    const live = livePads();
+    return [0, 1, 2, 3].map((i) => {
+      const e = parsed[i];
+      if (!e || typeof e !== 'object') return null;
+      if (e.kind === 'keyboard') return { kind: 'keyboard' };
+      if (e.kind === 'none') return { kind: 'none' };
+      if (e.kind === 'gamepad' && typeof e.id === 'string') {
+        const index = Number(e.index) || 0;
+        const known = ports.find((p) => p && p.kind === 'gamepad' && p.id === e.id && p.index === index);
+        if (known) return known;
+        const visible = live.find((g) => g.id === e.id && g.index === index);
+        // Not seen by THIS document yet: the browser only exposes a pad
+        // to a frame after a button press in it, so trust the plan and
+        // let the first gamepadconnected fix up the index.
+        return { kind: 'gamepad', id: e.id, index, lost: false, seen: !!visible };
+      }
+      return null;
+    });
+  }
+
+  function init() {
+    const raw = params.get('ports');
+    let parsed = null;
+    if (raw) {
+      try { parsed = JSON.parse(raw); } catch (e) { console.warn('controllerPorts: bad ?ports=', e); }
+    }
+    ports = Array.isArray(parsed) ? adopt(parsed) : plan(livePads());
+    ensureSomeone();
+    engaged = true;
+    console.log('controllerPorts:', snapshot());
+    notify();
+  }
+
+  window.addEventListener('gamepadconnected', (e) => {
+    const g = e.gamepad;
+    if (!g) return;
+    // A planned-but-unseen or lost pad with this id takes its port back
+    // (index may differ between the site's window and this frame).
+    const mine = ports.find((p) => p && p.kind === 'gamepad' && p.id === g.id &&
+                                   (p.lost || !p.seen || p.index === g.index));
+    if (mine) {
+      mine.index = g.index; mine.lost = false; mine.seen = true;
+      notify();
+      return;
+    }
+    const slot = freePort();
+    if (slot < 0) return;
+    ports[slot] = padEntry(g);
+    notify();
+  });
+  window.addEventListener('gamepaddisconnected', (e) => {
+    const g = e.gamepad;
+    if (!g) return;
+    const mine = ports.find((p) => p && p.kind === 'gamepad' && !p.lost && p.id === g.id && p.index === g.index);
+    if (mine) { mine.lost = true; notify(); }
+  });
+
+  // Live re-plan from the site's Advanced options while the game runs.
+  function apply(parsed) {
+    if (!Array.isArray(parsed)) return;
+    ports = adopt(parsed);
+    ensureSomeone();
+    notify();
+  }
+
+  // Standard-mapping Gamepad -> N64 pad. Mirrors libultraship's SDL
+  // defaults (A/B, LB=L, RT=R, LT=Z, Start, D-pad, right stick=C) plus
+  // X/Y=C-up (jump) and RB=R (shield) for comfort.
+  function sample(g) {
+    const pressed = (i) => { const b = g.buttons[i]; return !!b && (b.pressed || b.value > 0.5); };
+    const axis = (i) => { const v = g.axes[i]; return typeof v === 'number' ? v : 0; };
+    let button = 0;
+    if (pressed(0)) button |= BTN.A;
+    if (pressed(1)) button |= BTN.B;
+    if (pressed(2) || pressed(3)) button |= BTN.CUP;
+    if (pressed(4)) button |= BTN.L;
+    if (pressed(5) || pressed(7)) button |= BTN.R;
+    if (pressed(6)) button |= BTN.Z;
+    if (pressed(9)) button |= BTN.START;
+    if (pressed(12)) button |= BTN.DUP;
+    if (pressed(13)) button |= BTN.DDOWN;
+    if (pressed(14)) button |= BTN.DLEFT;
+    if (pressed(15)) button |= BTN.DRIGHT;
+    const rx = axis(2), ry = axis(3);
+    if (ry < -C_STICK_THRESHOLD) button |= BTN.CUP;
+    if (ry > C_STICK_THRESHOLD) button |= BTN.CDOWN;
+    if (rx < -C_STICK_THRESHOLD) button |= BTN.CLEFT;
+    if (rx > C_STICK_THRESHOLD) button |= BTN.CRIGHT;
+    let x = axis(0), y = axis(1);
+    const len = Math.hypot(x, y);
+    if (len < STICK_DEADZONE) { x = 0; y = 0; }
+    else { const s = Math.min(1, (len - STICK_DEADZONE) / (1 - STICK_DEADZONE)) / len; x *= s; y *= s; }
+    return { button, sx: Math.round(x * STICK_MAX), sy: Math.round(-y * STICK_MAX) };
+  }
+
+  // Engine entry point: fill 4 x {kind, button, stick_x, stick_y} int32s.
+  function readPorts(ptr) {
+    if (!engaged) return;
+    const H = Module.HEAP32;
+    if (!H) return;
+    const base = ptr >> 2;
+    const gps = navigator.getGamepads ? navigator.getGamepads() : [];
+    for (let i = 0; i < 4; i++) {
+      const p = ports[i];
+      let kind = KIND.NONE, button = 0, sx = 0, sy = 0;
+      if (p && p.kind === 'keyboard') {
+        kind = KIND.KEYBOARD;
+      } else if (p && p.kind === 'gamepad' && !p.lost) {
+        kind = KIND.GAMEPAD;
+        const g = gps[p.index];
+        if (g && g.connected && g.id === p.id) ({ button, sx, sy } = sample(g));
+      }
+      H[base + i * 4] = kind;
+      H[base + i * 4 + 1] = button;
+      H[base + i * 4 + 2] = sx;
+      H[base + i * 4 + 3] = sy;
+    }
+  }
+
+  init();
+  return {
+    readPorts,
+    snapshot,
+    apply,
+    subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); },
+  };
+})();
+
 var Module = {
   canvas: document.getElementById('canvas'),
   arguments: [],
+  readPorts: (ptr) => window.controllerPorts.readPorts(ptr),
   preRun: [async function () {
     // MUST be registered synchronously, before any await in this
     // function — an await suspends the async preRun and the runtime

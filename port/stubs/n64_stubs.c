@@ -650,6 +650,12 @@ s32 osContStartQuery(OSMesgQueue *mq)
 	return 0;
 }
 
+/* Browser builds route ports through the shell's controller map
+ * (port/web_input.cpp); a port with no device reports no response so the
+ * game treats it as unplugged. Native builds and an un-engaged shell keep
+ * every port connected, as before. */
+extern int port_input_port_connected(int port);
+
 void osContGetQuery(OSContStatus *data)
 {
 	s32 i;
@@ -658,7 +664,7 @@ void osContGetQuery(OSContStatus *data)
 		return;
 	}
 	for (i = 0; i < MAXCONTROLLERS; i++) {
-		data[i].errno = 0;
+		data[i].errno = port_input_port_connected(i) ? 0 : CONT_NO_RESPONSE_ERROR;
 		data[i].status = CONT_CARD_ON;
 		data[i].type = 0;
 	}
