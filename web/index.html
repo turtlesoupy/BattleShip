@@ -536,6 +536,13 @@ var Module = {
       setStatus('starting…');
     } catch (e) {
       setStatus('asset load failed: ' + e.message);
+      // Let the embedding site react (close the game, re-prompt for the ROM)
+      // instead of leaving a black frame with small status text.
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'opensmash:engine-asset-error', message: e.message }, location.origin);
+        }
+      } catch (_) { /* cross-origin parent: nothing to tell */ }
       throw e;
     } finally {
       removeRunDependency('battleship-files');
