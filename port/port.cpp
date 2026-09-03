@@ -44,6 +44,20 @@
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #include <emscripten/heap.h>
+
+/* Frame pacer yield aligned to the display (default; SSB64_RAF_PACER=0 opts out). The default
+ * pacer sleeps on setTimeout, which the browser schedules independently of
+ * vsync, so a frame that finishes just after a display refresh waits almost
+ * a full extra refresh and the cadence jitters (visible as dropped frames
+ * on iOS Safari, and audible since SDL's audio drain shares this thread).
+ * Racing rAF against a 250ms timer keeps a hidden iframe ticking slowly
+ * instead of freezing (rAF never fires while hidden). */
+EM_ASYNC_JS(void, port_wait_display_frame, (), {
+	await new Promise(function (resolve) {
+		var timer = setTimeout(resolve, 250);
+		requestAnimationFrame(function () { clearTimeout(timer); resolve(); });
+	});
+});
 #include <unistd.h>
 /* Wasm-heap usage probe for the shell's stall watch (Module._port_heap_used).
  * sbrk(0) is dlmalloc's arena top measured from address 0, so it bounds
@@ -866,6 +880,24 @@ static int PortInitImpl(int argc, char* argv[]) {
 	}
 #endif
 
+#ifdef __EMSCRIPTEN__
+	/* SSB64_RENDER_SIZE=WxH — GL backing-buffer size for the canvas. The
+	 * browser window is not RESIZABLE (gfx_sdl2.cpp), so this IS the render
+	 * resolution; CSS scales the element to fit. Overrides the packaged
+	 * BattleShip.cfg.json Window.Width/Height (1280x960). Exposed by the
+	 * site as Settings > Gameplay > Render Resolution. */
+	if (const char* rs = std::getenv("SSB64_RENDER_SIZE")) {
+		int rw = 0, rh = 0;
+		if (sscanf(rs, "%dx%d", &rw, &rh) == 2 && rw >= 320 && rh >= 240 && rw <= 4096 && rh <= 4096) {
+			sContext->GetConfig()->SetInt("Window.Width", rw);
+			sContext->GetConfig()->SetInt("Window.Height", rh);
+			port_log("SSB64: render size override %dx%d\n", rw, rh);
+		} else {
+			port_log("SSB64: ignoring malformed SSB64_RENDER_SIZE=%s\n", rs);
+		}
+	}
+#endif
+
 	/* New init order:
 	 *   1. CrashHandler / Console / ControlDeck     — resource-agnostic
 	 *   2. ResourceManager bootstrapped with f3d.o2r only — the renderer
@@ -1458,11 +1490,45 @@ int main(int argc, char* argv[]) {
 			if ((frame % 60) == 1) {
 				EM_ASM({ document.title = 'BattleShip f=' + $0; }, frame);
 			}
+			static int sRafPacer = -1;
+			if (sRafPacer < 0) {
+				/* Default on: display-aligned pacing fixed the iPhone frame/audio
+				 * stutter and measured clean on desktop. SSB64_RAF_PACER=0 restores
+				 * the setTimeout pacer (Settings > Gameplay > Frame Pacing: Timer). */
+				const char *rp = std::getenv("SSB64_RAF_PACER");
+				sRafPacer = (rp != NULL && rp[0] == '0') ? 0 : 1;
+			}
 			static auto sNextFrame = std::chrono::steady_clock::now();
 			sNextFrame += std::chrono::microseconds(16667);
 			auto now = std::chrono::steady_clock::now();
 			auto waitMs = std::chrono::duration_cast<std::chrono::milliseconds>(sNextFrame - now).count();
-			if (waitMs > 0) {
+			if (sRafPacer) {
+				/* Display-aligned pacing. Ahead of the 60Hz schedule: wait
+				 * for display frames until the deadline is within ~2ms (one
+				 * rAF on a 60Hz panel, two on 120Hz). Behind (30Hz low-power
+				 * rAF, or a slow frame): run the next game frame after a bare
+				 * yield so audio/input callbacks still get the thread, but
+				 * never more than two frames without presenting one. */
+				static int sUnpresented = 0;
+				if (waitMs < -100) {
+					sNextFrame = now; /* resync after a long stall */
+					waitMs = 0;
+				}
+				if (waitMs > 2) {
+					int guard = 0;
+					do {
+						port_wait_display_frame();
+						now = std::chrono::steady_clock::now();
+						waitMs = std::chrono::duration_cast<std::chrono::milliseconds>(sNextFrame - now).count();
+					} while (waitMs > 2 && ++guard < 4);
+					sUnpresented = 0;
+				} else if (++sUnpresented >= 2) {
+					port_wait_display_frame();
+					sUnpresented = 0;
+				} else {
+					emscripten_sleep(0);
+				}
+			} else if (waitMs > 0) {
 				emscripten_sleep((unsigned int)waitMs);
 			} else {
 				emscripten_sleep(0);
