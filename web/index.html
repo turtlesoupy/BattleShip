@@ -940,6 +940,10 @@ var Module = {
       }
       setStatus('starting…');
     } catch (e) {
+      // The site closed or re-launched this frame mid-stage: the aborted
+      // fetches reject with "Failed to fetch". That is not a ROM problem, so
+      // never tell the parent (it would drop the stored ROM and re-prompt).
+      if (window.__shellUnloading) throw e;
       setStatus('asset load failed: ' + e.message);
       // Let the embedding site react (close the game, re-prompt for the ROM)
       // instead of leaving a black frame with small status text.
@@ -1309,6 +1313,9 @@ window.pressKey = (code, ms = 120) => new Promise((resolve) => {
 // cheaper. The site normally prewarms the archive during its launch
 // animation, so this usually resolves from the cache in milliseconds.
 // preRun awaits the same promise; a rejection surfaces there as a status.
+window.__shellUnloading = false;
+addEventListener('pagehide', () => { window.__shellUnloading = true; });
+addEventListener('beforeunload', () => { window.__shellUnloading = true; });
 window.__archivePromise = (async () => {
   const manifest = await (await fetch('manifest.json?v=BUILD_VERSION')).json();
   if (manifest.files.some(f => f.path === '/BattleShip.o2r')) return null;
