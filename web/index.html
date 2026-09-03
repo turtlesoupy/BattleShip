@@ -606,7 +606,9 @@ var Module = {
       // Stage the engine's required archives before any optional fighter
       // extras. A missing portrait/voice must never start main() with an
       // empty MEMFS and fall through to the desktop first-run wizard.
-      const manifest = await (await fetch('manifest.json?v=BUILD_VERSION')).json();
+      performance.mark('shell:prerun');
+      // Fetched once by the early script below; reuse instead of refetching.
+      const manifest = await window.__engineManifest;
       let done = 0;
       await Promise.all(manifest.files.map(async (f) => {
         const resp = await fetch(f.url);
@@ -629,18 +631,43 @@ var Module = {
         const { writeArchive } = await import('./rom-extract.js?v=BUILD_VERSION');
         const staged = await window.__archivePromise;
         writeArchive(FS, staged.bytes, staged.extras);
+        performance.mark('shell:archive-staged');
         console.warn('[shell] BattleShip.o2r staged from ROM:', staged.source, staged.sha1, staged.ms ? Math.round(staged.ms) + 'ms' : '');
       }
 
-      if (params.has('inject_ui')) {
-        const url = params.get('inject_ui');
-        const resp = await fetch(url);
-        if (resp.ok) {
-          FS.writeFile('/inject.osbui', new Uint8Array(await resp.arrayBuffer()));
-          if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_UI = '/inject.osbui';
-        } else {
-          console.warn(`optional fighter UI unavailable (${url}: ${resp.status})`);
+      // The per-fighter files (mesh bundle, select-screen UI, announcer
+      // voice) are independent: fetch them together instead of three round
+      // trips back to back. Each fetch is bounded so a hung request fails
+      // the launch with a clear status instead of a frame stuck on
+      // "files 10/10". Only the mesh bundle is required.
+      const FIGHTER_FETCH_TIMEOUT_MS = 60000;
+      const fetchFighterFile = async (url, what) => {
+        setStatus('fighter files…');
+        let resp;
+        try {
+          resp = await fetch(url, { signal: AbortSignal.timeout(FIGHTER_FETCH_TIMEOUT_MS) });
+        } catch (e) {
+          throw new Error(`fighter ${what} ${e.name === 'TimeoutError' ? 'timed out' : 'failed'} (${url}: ${e.message})`);
         }
+        if (!resp.ok) throw new Error(`fighter ${what} unavailable (${url}: ${resp.status})`);
+        return new Uint8Array(await resp.arrayBuffer());
+      };
+      const optionalFighterFile = async (param, memfsPath, envKey, what) => {
+        if (!params.has(param)) return;
+        try {
+          FS.writeFile(memfsPath, await fetchFighterFile(params.get(param), what));
+          if (typeof ENV !== 'undefined') ENV[envKey] = memfsPath;
+        } catch (e) {
+          console.warn(`optional ${e.message}`);
+        }
+      };
+      const fighterFetches = [
+        optionalFighterFile('inject_ui', '/inject.osbui', 'SSB64_INJECT_UI', 'UI'),
+        optionalFighterFile('inject_voice', '/inject-voice.wav', 'SSB64_INJECT_VOICE', 'voice'),
+      ];
+      if (params.has('inject')) {
+        fighterFetches.push(fetchFighterFile(params.get('inject'), 'bundle')
+          .then((bytes) => FS.writeFile('/inject.osb', bytes)));
       }
       if (params.has('capture')) {
         // frame-exact capture: the engine calls Module.onGameTick(frame)
@@ -678,21 +705,8 @@ var Module = {
         FS.writeFile('/replay.rpl', new Uint8Array(await resp.arrayBuffer()));
         if (typeof ENV !== 'undefined') ENV.SSB64_REPLAY_PLAY = '/replay.rpl';
       }
-      if (params.has('inject_voice')) {
-        const url = params.get('inject_voice');
-        const resp = await fetch(url);
-        if (resp.ok) {
-          FS.writeFile('/inject-voice.wav', new Uint8Array(await resp.arrayBuffer()));
-          if (typeof ENV !== 'undefined') ENV.SSB64_INJECT_VOICE = '/inject-voice.wav';
-        } else {
-          console.warn(`optional fighter voice unavailable (${url}: ${resp.status})`);
-        }
-      }
+      await Promise.all(fighterFetches);
       if (params.has('inject')) {
-        const url = params.get('inject');
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error(`fetch ${url}: ${resp.status}`);
-        FS.writeFile('/inject.osb', new Uint8Array(await resp.arrayBuffer()));
         if (typeof ENV !== 'undefined') {
           ENV.SSB64_INJECT_BUNDLE = '/inject.osb';
           ENV.SSB64_INJECT_FKIND = params.get('fkind') || '0';
@@ -984,6 +998,7 @@ var Module = {
           console.warn('roster staging failed:', e);
         }
       }
+      performance.mark('shell:staged');
       setStatus('starting…');
     } catch (e) {
       // The site closed or re-launched this frame mid-stage: the aborted
@@ -1004,6 +1019,11 @@ var Module = {
     }
   }],
   onRuntimeInitialized: function () {
+    performance.mark('shell:runtime');
+    // Launch timeline (ms since the frame's navigation start) for tuning.
+    console.warn('[shell] timing', Object.fromEntries(
+      performance.getEntriesByType('mark').filter((m) => m.name.startsWith('shell:'))
+        .map((m) => [m.name.slice(6), Math.round(m.startTime)])));
     // INVOKE_RUN=0: start the game ourselves once the FS is staged. Trailer
     // capture holds here so the parent's Start Capture click can enter main()
     // with browser activation and SDL audio is not blocked as autoplay.
@@ -1362,8 +1382,9 @@ window.pressKey = (code, ms = 120) => new Promise((resolve) => {
 window.__shellUnloading = false;
 addEventListener('pagehide', () => { window.__shellUnloading = true; });
 addEventListener('beforeunload', () => { window.__shellUnloading = true; });
+window.__engineManifest = fetch('manifest.json?v=BUILD_VERSION').then((r) => r.json());
 window.__archivePromise = (async () => {
-  const manifest = await (await fetch('manifest.json?v=BUILD_VERSION')).json();
+  const manifest = await window.__engineManifest;
   if (manifest.files.some(f => f.path === '/BattleShip.o2r')) return null;
   const entry = manifest.files.find(f => f.path === '/BattleShip.o2r.recipe');
   const recipe = entry ? (await (await fetch(entry.url)).text()).trim() : 'unknown';
@@ -1372,6 +1393,7 @@ window.__archivePromise = (async () => {
     setStatus: (t) => { if (typeof setStatus === 'function') setStatus(t); } });
 })();
 window.__archivePromise.catch(() => {}).then(() => {
+  performance.mark('shell:engine-script');
   const script = document.createElement('script');
   script.src = 'BattleShip.js?v=BUILD_VERSION';
   document.body.appendChild(script);
