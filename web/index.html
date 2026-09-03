@@ -657,6 +657,8 @@ var Module = {
           // ownership, leaving P1 blanked and invisible.
           ENV.SSB64_INJECT_PLAYER = params.get('player') || '0';
           if (params.get('inject_name')) ENV.SSB64_INJECT_NAME = params.get('inject_name');
+          // results-screen "<NAME> WINS!" letters (A-Z); falls back to inject_name
+          if (params.get('inject_short')) ENV.SSB64_INJECT_SHORT = params.get('inject_short');
         }
       }
       // Targeted direct-match roster: each repeated inject_player value is
