@@ -597,6 +597,15 @@ var Module = {
     // extra behavior: it names a bundle URL, fetched into MEMFS, and
     // sets SSB64_INJECT_BUNDLE to the staged path.
     const params = new URLSearchParams(location.search);
+    // Keep the game ticking while the document is hidden (the pacer parks
+    // otherwise, see port_wait_display_frame). Implied for unattended
+    // capture/replay runs; ?bg=1 or localStorage 'opensmash.runHidden'='1'
+    // for agents testing in a hidden browser pane; toggle any time via
+    // window.__runHidden on the engine frame.
+    let runHiddenStored = null;
+    try { runHiddenStored = localStorage.getItem('opensmash.runHidden'); } catch (_) {}
+    window.__runHidden = params.get('bg') === '1' || runHiddenStored === '1' ||
+      params.has('capture') || params.has('replay') || params.has('SSB64_TRAILER_RECORD');
     for (const [k, v] of params) {
       if (k.startsWith('SSB64_') && typeof ENV !== 'undefined') ENV[k] = v;
     }

@@ -53,6 +53,18 @@
  * Racing rAF against a 250ms timer keeps a hidden iframe ticking slowly
  * instead of freezing (rAF never fires while hidden). */
 EM_ASYNC_JS(void, port_wait_display_frame, (), {
+	/* Hidden tab: park until it is visible again. Browsers clamp timers to
+	 * 1s (or worse) for hidden documents, which drops the game to ~1fps and
+	 * starves the main-thread audio queue into audible glitches. The shell
+	 * sets window.__runHidden for runs that must keep ticking unattended
+	 * (capture/replay, or ?bg=1 for agents driving a hidden browser pane). */
+	while (document.hidden && !window.__runHidden) {
+		await new Promise(function (resolve) {
+			/* The 1s poll lets __runHidden flipped while parked take effect. */
+			var timer = setTimeout(resolve, 1000);
+			document.addEventListener('visibilitychange', function () { clearTimeout(timer); resolve(); }, { once: true });
+		});
+	}
 	await new Promise(function (resolve) {
 		var timer = setTimeout(resolve, 250);
 		requestAnimationFrame(function () { clearTimeout(timer); resolve(); });
