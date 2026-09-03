@@ -17,7 +17,7 @@
 enum {
 	PORT_KIND_AUTO = 0,     /* shell not engaged: keep libultraship's pad as-is */
 	PORT_KIND_NONE = 1,     /* nothing plugged in: report CONT_NO_RESPONSE_ERROR */
-	PORT_KIND_KEYBOARD = 2, /* the keyboard (libultraship keys it to port 1) */
+	PORT_KIND_KEYBOARD = 2, /* the keyboard; button/stick come from the shell (layout-aware) */
 	PORT_KIND_GAMEPAD = 3,  /* a browser Gamepad; button/stick come from the shell */
 };
 
@@ -116,11 +116,6 @@ void port_input_apply_pads(PortInputPad *pads)
 	}
 	port_input_quarantine_sdl_gamepads();
 
-	/* libultraship keys the keyboard (and mouse) to port 1 only. Snapshot
-	 * that pad before the loop overwrites it so a keyboard player on any
-	 * port gets the same data. */
-	PortInputPad keyboard = pads[0];
-
 	for (int i = 0; i < PORT_INPUT_PORTS; i++) {
 		const PortSample *s = &sSamples[i];
 		switch (s->kind) {
@@ -129,11 +124,7 @@ void port_input_apply_pads(PortInputPad *pads)
 			pads[i].err = PORT_INPUT_NO_RESPONSE;
 			sConnected[i] = 0;
 			break;
-		case PORT_KIND_KEYBOARD:
-			pads[i] = keyboard;
-			pads[i].err = 0;
-			sConnected[i] = 1;
-			break;
+		case PORT_KIND_KEYBOARD: /* shell resolves keys by keycap label, not scancode */
 		case PORT_KIND_GAMEPAD:
 			pads[i].button = (uint16_t)(s->button & 0xFFFF);
 			pads[i].stick_x = port_input_clamp_stick(s->stick_x);
