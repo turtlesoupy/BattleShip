@@ -1515,28 +1515,33 @@ int main(int argc, char* argv[]) {
 			auto now = std::chrono::steady_clock::now();
 			auto waitMs = std::chrono::duration_cast<std::chrono::milliseconds>(sNextFrame - now).count();
 			if (sRafPacer) {
-				/* Display-aligned pacing. Ahead of the 60Hz schedule: wait
-				 * for display frames until the deadline is within ~2ms (one
-				 * rAF on a 60Hz panel, two on 120Hz). Behind (30Hz low-power
-				 * rAF, or a slow frame): run the next game frame after a bare
-				 * yield so audio/input callbacks still get the thread, but
-				 * never more than two frames without presenting one. */
-				static int sUnpresented = 0;
+				/* Display-aligned pacing. Every frame PortPushFrame drew is
+				 * presented: wait for at least one display frame before the
+				 * next sim step, and keep waiting while the 60Hz deadline is
+				 * still clearly ahead (120Hz panels: two rAFs per frame). The
+				 * one exception is being a whole frame behind (30Hz low-power
+				 * rAF, or a slow frame): then run a catch-up step after a bare
+				 * yield so the sim keeps real-time speed at the cost of one
+				 * unpresented frame.
+				 *
+				 * The previous version tolerated only 2ms of slack and let the
+				 * sim step twice between presents whenever the deadline had
+				 * slipped behind the rAF phase. In WebKit (rAF pinned at 60Hz)
+				 * that settled into a wait/catch-up alternation: 60 sim fps but
+				 * every other frame overwritten before it was composited, i.e.
+				 * 30Hz judder in Safari (measured 2026-09-04, desktop Safari 26:
+				 * 59.9 sim / 30.9 presented). Chrome's higher-rate rAF hid it. */
 				if (waitMs < -100) {
 					sNextFrame = now; /* resync after a long stall */
 					waitMs = 0;
 				}
-				if (waitMs > 2) {
+				if (waitMs > -16) {
 					int guard = 0;
 					do {
 						port_wait_display_frame();
 						now = std::chrono::steady_clock::now();
 						waitMs = std::chrono::duration_cast<std::chrono::milliseconds>(sNextFrame - now).count();
-					} while (waitMs > 2 && ++guard < 4);
-					sUnpresented = 0;
-				} else if (++sUnpresented >= 2) {
-					port_wait_display_frame();
-					sUnpresented = 0;
+					} while (waitMs > 4 && ++guard < 4);
 				} else {
 					emscripten_sleep(0);
 				}

@@ -1391,6 +1391,27 @@ window.pressKey = (code, ms = 120) => new Promise((resolve) => {
 // cheaper. The site normally prewarms the archive during its launch
 // animation, so this usually resolves from the cache in milliseconds.
 // preRun awaits the same promise; a rejection surfaces there as a status.
+// Adopt the site's gesture-unlocked AudioContext when we are its same-origin
+// iframe. WebKit refuses to start an AudioContext without a gesture in THIS
+// document, and the player's launching click lands in the parent page, so
+// SDL's own `new AudioContext` would sit suspended until a second click on
+// the canvas. The parent creates and resumes one on its first trusted
+// gesture (web-prototype App.jsx); the first construction here returns it.
+(function () {
+  var shared = null;
+  try { shared = window.parent !== window ? window.parent.__openSmashAudioContext : null; } catch (e) { shared = null; }
+  if (!shared) return;
+  var Native = window.AudioContext || window.webkitAudioContext;
+  if (!Native) return;
+  var adopted = false;
+  function AdoptingAudioContext() {
+    if (!adopted) { adopted = true; return shared; }
+    return new Native();
+  }
+  AdoptingAudioContext.prototype = Native.prototype;
+  window.AudioContext = AdoptingAudioContext;
+  if (window.webkitAudioContext) window.webkitAudioContext = AdoptingAudioContext;
+})();
 window.__shellUnloading = false;
 addEventListener('pagehide', () => { window.__shellUnloading = true; });
 addEventListener('beforeunload', () => { window.__shellUnloading = true; });
