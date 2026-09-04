@@ -34,25 +34,32 @@ def normalize_base(name):
     return BASE_ALIASES.get(key, key)
 
 
-def assign_roster_bases(chars):
-    """Resolve undeclared bases with deterministic least-used balancing.
+def slug_hash(slug):
+    """FNV-1a 32-bit, identical to slugHash in web-prototype/server/roster.js."""
+    h = 0x811C9DC5
+    for ch in str(slug):
+        h ^= ord(ch)
+        h = (h * 0x01000193) & 0xFFFFFFFF
+    return h
 
-    A character may declare ``preferred_bases`` in character.json. Preference
-    order breaks usage-count ties; unavailable variants are ignored. An
-    explicit ``base`` continues to override assignment, including experimental
-    targets intentionally absent from DEFAULT_ROSTER_BASES.
+
+def assign_roster_bases(chars):
+    """Resolve undeclared bases as a pure function of the slug.
+
+    Hashing the slug keeps every other fighter's base fixed when the roster
+    is reordered or someone is added, removed, or pinned (round-robin by
+    position moved everyone after the edit). A character may declare
+    ``preferred_bases`` to restrict the candidate set; an explicit ``base``
+    overrides assignment, including experimental targets absent from
+    DEFAULT_ROSTER_BASES. Mirrors assignRosterBases in
+    web-prototype/server/roster.js.
     """
-    usage = {base: 0 for base in DEFAULT_ROSTER_BASES}
     for char in chars:
         explicit = normalize_base(char.get("base"))
         if explicit is not None:
             char["base"] = explicit
-            if explicit in usage:
-                usage[explicit] += 1
-            char.pop("_preferred_bases", None)
             continue
-
-        preferred = char.pop("_preferred_bases", None)
+        preferred = char.get("preferred_bases")
         if not isinstance(preferred, list) or not preferred:
             preferred = list(DEFAULT_ROSTER_BASES)
         candidates = []
@@ -68,9 +75,7 @@ def assign_roster_bases(chars):
         # Every character has a base Mario bundle, so this should only be
         # empty for malformed input. Keep None as a visible failure signal.
         if candidates:
-            char["base"] = min(candidates,
-                               key=lambda base: (usage[base], candidates.index(base)))
-            usage[char["base"]] += 1
+            char["base"] = candidates[slug_hash(char["slug"]) % len(candidates)]
     return chars
 
 
