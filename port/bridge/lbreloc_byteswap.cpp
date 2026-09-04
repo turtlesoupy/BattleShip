@@ -965,10 +965,16 @@ static void apply_fixups(void *data, size_t file_size,
 //  Public API
 // ============================================================
 
+extern "C" void portTitleBrandPatch(void *data, size_t size, unsigned int file_id);
+
 extern "C" void portRelocByteSwapBlob(void *data, size_t size, unsigned int file_id)
 {
 	if (data == nullptr || size < 4)
 		return;
+
+	// smash.fun title-screen branding: swaps the MNTitle sprite pixels while
+	// the file is still in ROM byte order (see port/title_brand.cpp).
+	portTitleBrandPatch(data, size, file_id);
 
 	if (stage_audit_enabled()) stage_audit_reset_per_file();
 
