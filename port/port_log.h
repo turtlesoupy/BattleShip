@@ -9,9 +9,14 @@
  * before any LUS initialization (which redirects stderr).
  */
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* Monotonic wall clock in nanoseconds (CLOCK_MONOTONIC / QueryPerformanceCounter). */
+uint64_t port_now_ns(void);
 
 /* Open the log file. Call once, before anything else. */
 void port_log_init(const char *path);

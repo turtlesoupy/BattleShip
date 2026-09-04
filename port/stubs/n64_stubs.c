@@ -145,11 +145,10 @@ void port_resume_service_threads(void)
 			t->state = OS_STATE_RUNNING;
 			port_watchdog_note_resume_start((int)t->id);
 			{
-				struct timespec ts0, ts1; clock_gettime(CLOCK_MONOTONIC, &ts0);
+				u64 t0 = (u64)port_now_ns();
 				port_coroutine_resume((PortCoroutine *)t->port_coroutine);
-				clock_gettime(CLOCK_MONOTONIC, &ts1);
 				if ((int)t->id >= 0 && (int)t->id < 16) {
-					gPortProfThreadNs[(int)t->id] += (u64)(ts1.tv_sec - ts0.tv_sec) * 1000000000ull + (u64)(ts1.tv_nsec - ts0.tv_nsec);
+					gPortProfThreadNs[(int)t->id] += (u64)port_now_ns() - t0;
 					gPortProfThreadResumes[(int)t->id]++;
 				}
 			}

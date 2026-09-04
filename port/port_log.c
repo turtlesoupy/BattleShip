@@ -3,6 +3,25 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <time.h>
+#endif
+
+uint64_t port_now_ns(void)
+{
+#ifdef _WIN32
+	static LARGE_INTEGER freq;
+	LARGE_INTEGER now;
+	if (freq.QuadPart == 0) QueryPerformanceFrequency(&freq);
+	QueryPerformanceCounter(&now);
+	return (uint64_t)((double)now.QuadPart * 1e9 / (double)freq.QuadPart);
+#else
+	struct timespec ts; clock_gettime(CLOCK_MONOTONIC, &ts);
+	return (uint64_t)ts.tv_sec * 1000000000ull + (uint64_t)ts.tv_nsec;
+#endif
+}
 
 static FILE *sLogFile = NULL;
 
