@@ -779,7 +779,7 @@ var Module = {
           const short = String(entry.short || slug)
             .toUpperCase()
             .replace(/[^A-Z]/g, '')
-            .slice(0, 8);
+            .slice(0, 10);
           rows.push({
             player,
             line: [slug, fkind, bundlePath, uiPath, voicePath, short, fkind,
@@ -883,7 +883,7 @@ var Module = {
             const short = String(entry.short || entry.slug)
               .toUpperCase()
               .replace(/[^A-Z]/g, '')
-              .slice(0, 8);
+              .slice(0, 10);
             return [entry.slug, entry.fkind, `${prefix}.osb`, uiPath,
                     voicePath, short, entry.base, '', portraitPath].join('|');
           } catch (error) {
