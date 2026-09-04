@@ -980,12 +980,15 @@ var Module = {
             tile++;
             // One OSB6 per character: the engine picks the block for the
             // fighter it spawns, so the same file serves every base.
+            // Production roster entries carry immutable object URLs
+            // (bundleUrl/uiUrl/voiceUrl); the relative bundles/<slug>.* names
+            // are the local-dev fallback served straight from pipeline/play.
             const bundlePath = `/roster/${c.slug}.osb`;
-            Module.__stageUrls[bundlePath] = `bundles/${c.slug}.osb6`;
+            Module.__stageUrls[bundlePath] = c.bundleUrl || `bundles/${c.slug}.osb6`;
             const ui = c.ui ? `/roster/${c.slug}.osbui` : '';
             const vox = c.voice ? `/roster/${c.slug}.wav` : '';
-            if (ui) Module.__stageUrls[ui] = `bundles/${c.slug}.osbui`;
-            if (vox) Module.__stageUrls[vox] = `bundles/${c.slug}.wav`;
+            if (ui) Module.__stageUrls[ui] = c.uiUrl || `bundles/${c.slug}.osbui`;
+            if (vox) Module.__stageUrls[vox] = c.voiceUrl || `bundles/${c.slug}.wav`;
             lines.push(`${c.slug}|${fk}|${bundlePath}|${ui}|${vox}|${c.short || ''}|${baseFk}|${(c.display || '').replace(/[|\n\r]/g, ' ')}`);
             // The select screen paints page one's portraits (.osbui) as it
             // builds; keep those eager so the first page never blocks.
