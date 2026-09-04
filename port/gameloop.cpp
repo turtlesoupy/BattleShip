@@ -1,3 +1,7 @@
+#include <cstdint>
+#include <chrono>
+extern "C" uint64_t gPortProfDlNs = 0;
+extern "C" uint32_t gPortProfSwaps = 0; /* coroutine resumes per frame (SSB64_FRAME_PROFILE) */
 /**
  * gameloop.cpp — PC game loop implementation for the SSB64 port.
  *
@@ -878,7 +882,11 @@ void PortPushFrame(void)
 		gPortGLDumpDraws = (vi >= sDumpDrawsFirst && vi <= sDumpDrawsLast) ? vi : 0;
 	}
 #endif
-	port_drain_pending_display_list();
+	{
+		auto tdl0 = std::chrono::steady_clock::now();
+		port_drain_pending_display_list();
+		gPortProfDlNs += (uint64_t)std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() - tdl0).count();
+	}
 
 	/* TCC mod hook: GamePostUpdateEvent fires once per frame AFTER game
 	 * logic + GFX submission. Most common subscription point — game state

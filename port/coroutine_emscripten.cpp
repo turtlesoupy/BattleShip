@@ -184,8 +184,10 @@ void port_coroutine_destroy(PortCoroutine *co)
 	free(co);
 }
 
+extern "C" uint32_t gPortProfSwaps; /* defined in gameloop.cpp */
 void port_coroutine_resume(PortCoroutine *co)
 {
+	gPortProfSwaps++;
 	if (co == NULL || co->finished) {
 		return;
 	}

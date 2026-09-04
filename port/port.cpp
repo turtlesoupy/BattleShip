@@ -1,3 +1,7 @@
+#include <cstdint>
+extern "C" { extern int gPortProfEnabled; extern uint64_t gPortProfStageNs[8]; extern uint64_t gPortProfThreadNs[16]; extern uint32_t gPortProfThreadResumes[16]; extern uint32_t gPortProfSwaps; extern uint64_t gPortProfDlNs;
+             extern uint64_t gPortProfSkinNs; extern uint32_t gPortProfSkinCalls;
+             extern uint64_t gPortProfTexHashNs; extern uint64_t gPortProfTexHashBytes; extern uint32_t gPortProfTexHashCalls; }
 // On desktop we own `int main` directly. On Android, SDLActivity calls into
 // the .so via dlsym("SDL_main"), so we let SDL_main.h's `#define main SDL_main`
 // rename the entry point during preprocessing — which is exactly what
@@ -170,6 +174,7 @@ extern "C" void* sModBridgeAnchorDataFilesRef = (void*)&dFTManagerDataFiles_Ref;
 #include <signal.h>
 #include <exception>
 #include <ctime>
+
 #pragma comment(lib, "dbghelp.lib")
 
 static void portCrtInvalidParameter(const wchar_t* expr, const wchar_t* func,
@@ -1390,6 +1395,14 @@ int main(int argc, char* argv[]) {
 
 	// 1. SDL_INIT_GAMECONTROLLER → HIDDeviceManager.initialize.
 	SDL_SetHint(SDL_HINT_JOYSTICK_THREAD, "1");
+#ifdef __EMSCRIPTEN__
+	/* SDL2's Emscripten_GLES_SwapWindow calls emscripten_sleep(0) when this
+	 * hint is on (the default): a full Asyncify unwind/rewind plus a
+	 * setTimeout hop on every frame, on top of the rAF wait our main loop
+	 * already does. The canvas is composited when the task returns to the
+	 * event loop either way, so the extra yield only costs time. */
+	SDL_SetHint("SDL_EMSCRIPTEN_ASYNCIFY", "0");
+#endif
 	if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) != 0) {
 		port_log("SSB64: pre-init SDL_INIT_GAMECONTROLLER failed: %s\n",
 		         SDL_GetError());
@@ -1489,8 +1502,45 @@ int main(int argc, char* argv[]) {
 		}
 		auto tWorkStart = std::chrono::steady_clock::now();
 #endif
+		/* SSB64_FRAME_PROFILE=1: per-60-frame main-thread CPU breakdown, logged
+		 * as PROF lines (all platforms; on the web read /libsdl/BattleShip/ssb64.log
+		 * from MEMFS, or add SSB64_LOG_CONSOLE=1). Natively the vsync wait sits
+		 * inside PortPushFrame, so 'work' there is ~16.7ms; the sub-timers are
+		 * what to read. Added 2026-09-04 while chasing the Steam Deck 1v3 slowdown. */
+		static int sFrameProfile = -1;
+		if (sFrameProfile < 0) {
+			const char *fp = std::getenv("SSB64_FRAME_PROFILE");
+			sFrameProfile = (fp != NULL && fp[0] == '1') ? 1 : 0;
+			gPortProfEnabled = sFrameProfile;
+		}
+		auto tProfStart = std::chrono::steady_clock::now();
 		PortPushFrame();
 		frame++;
+		if (sFrameProfile) {
+			static uint64_t sProfWorkNs = 0;
+			sProfWorkNs += (uint64_t)std::chrono::duration_cast<std::chrono::nanoseconds>(
+				std::chrono::steady_clock::now() - tProfStart).count();
+			if ((frame % 60) == 0) {
+				port_log("PROF f=%d work=%.2fms/frame skin=%.2fms/frame (%u calls) texhash=%.2fms/frame (%u calls, %.1fMB/frame)\n",
+				         frame, sProfWorkNs / 60.0 / 1e6, gPortProfSkinNs / 60.0 / 1e6, gPortProfSkinCalls / 60,
+				         gPortProfTexHashNs / 60.0 / 1e6, gPortProfTexHashCalls / 60, gPortProfTexHashBytes / 60.0 / 1048576.0);
+				/* N64 thread ids (sys/main.c): 1 idle, 3 scheduler, 4 audio, 5 game, 6 controller. */
+				port_log("PROF   dl=%.2fms swaps=%u/frame thr: sched(3)=%.2fms(%u) audio(4)=%.2fms(%u) game(5)=%.2fms(%u) ctrl(6)=%.2fms idle(1)=%.2fms\n",
+				         gPortProfDlNs / 60.0 / 1e6, gPortProfSwaps / 60,
+				         gPortProfThreadNs[3] / 60.0 / 1e6, gPortProfThreadResumes[3] / 60,
+				         gPortProfThreadNs[4] / 60.0 / 1e6, gPortProfThreadResumes[4] / 60,
+				         gPortProfThreadNs[5] / 60.0 / 1e6, gPortProfThreadResumes[5] / 60,
+				         gPortProfThreadNs[6] / 60.0 / 1e6, gPortProfThreadNs[1] / 60.0 / 1e6);
+				port_log("PROF   stages: guiStart=%.2f interpStart=%.2f run=%.2f guiEnd=%.2f endFrame=%.2f ms/frame\n",
+				         gPortProfStageNs[0] / 60.0 / 1e6, gPortProfStageNs[1] / 60.0 / 1e6, gPortProfStageNs[2] / 60.0 / 1e6,
+				         gPortProfStageNs[3] / 60.0 / 1e6, gPortProfStageNs[4] / 60.0 / 1e6);
+				for (int si = 0; si < 8; si++) gPortProfStageNs[si] = 0;
+				for (int ti = 0; ti < 16; ti++) { gPortProfThreadNs[ti] = 0; gPortProfThreadResumes[ti] = 0; }
+				gPortProfSwaps = 0; gPortProfDlNs = 0;
+				sProfWorkNs = 0; gPortProfSkinNs = 0; gPortProfSkinCalls = 0;
+				gPortProfTexHashNs = 0; gPortProfTexHashBytes = 0; gPortProfTexHashCalls = 0;
+			}
+		}
 
 #ifdef __EMSCRIPTEN__
 		/* Browser: yield to the event loop once per frame — this is the

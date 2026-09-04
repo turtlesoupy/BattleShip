@@ -70,6 +70,8 @@ static void port_register_service_thread(OSThread *t)
 	}
 }
 
+#include <time.h>
+u64 gPortProfThreadNs[16]; u32 gPortProfThreadResumes[16];
 static s32 sResumeDebugCount = 0;
 
 /* Called by PortPushFrame to resume all service thread coroutines
@@ -142,7 +144,15 @@ void port_resume_service_threads(void)
 			/* Resume this thread — it will run until it yields again. */
 			t->state = OS_STATE_RUNNING;
 			port_watchdog_note_resume_start((int)t->id);
-			port_coroutine_resume((PortCoroutine *)t->port_coroutine);
+			{
+				struct timespec ts0, ts1; clock_gettime(CLOCK_MONOTONIC, &ts0);
+				port_coroutine_resume((PortCoroutine *)t->port_coroutine);
+				clock_gettime(CLOCK_MONOTONIC, &ts1);
+				if ((int)t->id >= 0 && (int)t->id < 16) {
+					gPortProfThreadNs[(int)t->id] += (u64)(ts1.tv_sec - ts0.tv_sec) * 1000000000ull + (u64)(ts1.tv_nsec - ts0.tv_nsec);
+					gPortProfThreadResumes[(int)t->id]++;
+				}
+			}
 			port_watchdog_note_resume_end((int)t->id);
 			if (port_coroutine_is_finished((PortCoroutine *)t->port_coroutine)) {
 				t->state = OS_STATE_STOPPED;
