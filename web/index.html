@@ -741,7 +741,7 @@ var Module = {
           const player = Number(entry.player);
           const fkind = Number(entry.fkind);
           const slug = String(entry.slug || '');
-          if (!Number.isInteger(player) || player < 1 || player > 3 ||
+          if (!Number.isInteger(player) || player < 0 || player > 3 ||
               !Number.isInteger(fkind) || fkind < 0 || fkind > 11 ||
               !/^[a-z0-9]+$/.test(slug) || !entry.bundleUrl) {
             throw new Error('invalid inject_player entry');
