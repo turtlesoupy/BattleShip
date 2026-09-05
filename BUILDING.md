@@ -29,6 +29,12 @@ of the build (cached afterwards) — there is no separate extract step.
 
 `.z64` is shown above; `.n64`/`.v64` are also accepted.
 
+To keep the ROM outside the source checkout, pass
+`-DSSB64_BASEROM=/absolute/path/to/your/rom.z64` when configuring. This is
+an optional CMake cache setting; omitting it preserves the source-root
+ROM discovery and ROM-free release build behavior. An explicitly supplied
+path must exist. Clear it with `-DSSB64_BASEROM=` to resume automatic discovery.
+
 ## Linux / macOS
 
 Replace `<ver>` with `us` or `jp`.
