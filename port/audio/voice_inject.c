@@ -29,6 +29,7 @@ typedef struct
 
 static VoiceClip  sClips[MAX_CLIPS];
 static int        sNClips = 0;
+static int        sNextEviction = 0;
 static VoiceClip *sActive = NULL;  /* last clip started (results-wait uses its length) */
 static int        sCursor = -1;    /* -1 = idle */
 
@@ -165,7 +166,22 @@ static VoiceClip *clip_for_path(const char *path)
     {
         if (strcmp(sClips[i].path, path) == 0) return &sClips[i];
     }
-    if (sNClips >= MAX_CLIPS) return NULL;
+    if (sNClips >= MAX_CLIPS)
+    {
+        /* A paginated roster can play thousands of different names. Reuse
+         * an old slot instead of going silent after the first sixteen.
+         * Never free the active clip: the mixer and duration query use it. */
+        VoiceClip *clip;
+        do
+        {
+            clip = &sClips[sNextEviction];
+            sNextEviction = (sNextEviction + 1) % MAX_CLIPS;
+        } while (clip == sActive);
+        free(clip->pcm);
+        memset(clip, 0, sizeof *clip);
+        strcpy(clip->path, path);
+        return clip;
+    }
     strcpy(sClips[sNClips].path, path);
     return &sClips[sNClips++];
 }
